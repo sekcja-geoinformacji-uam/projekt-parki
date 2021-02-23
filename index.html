@@ -1,0 +1,51 @@
+<meta charset = "utf-8">
+<html lang = "pl">
+<head>
+<meta charset = "utf-8"/>
+<meta name = "description" content = ""/>
+<meta name = "keywords" content = ""/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<title>Parki narodowe i krajobrazowe w Polsce</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+<script
+	src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
+<script type="text/javascript" src="https://dl.dropboxusercontent.com/s/68l0y658o74eyk4/wojewodztwa.js?dl=0"></script>
+</head>
+<body>
+
+<div id="narodowe" class = "selected-icon">
+<span class="info2">Parki Narodowe</span>
+<input type="image" src="https://png.pngtree.com/png-vector/20190418/ourlarge/pngtree-vector-poloygon-icon-png-image_950761.jpg" name="zimowe_button" class="ikona" id="narodowe_button" width=50 height=50/>
+</div>
+
+<div id="krajobrazowe" class = "selected-icon">
+  <span class="info2">Parki Krajobrazowe</span>
+  <input type="image" src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/tree.png" name="letnie_button" class="ikona" id="krajobrazowe_button" width=50 height=50/>
+  </div>
+  
+
+<div id = "map"></div>
+<script src="script.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+
+<div id = "container">
+	<div id = "title">
+	</div>
+	<div id = "photo">
+	</div>
+	<input id = "close-button" type="button" value="x" onclick="document.getElementById('container').style.display='none'">
+
+</div>
+</body>
+</html>
