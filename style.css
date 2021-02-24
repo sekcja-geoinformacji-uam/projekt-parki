@@ -13,32 +13,98 @@ html, body {
 	height:65px !important;
 }
 #container {
-	width:100%;
-	height:60%;
+	width:600px;
+	height:100%;
 	background-color:#333;
 	display:none;
 	position:absolute;
 	bottom:0px;	
+	overflow:auto;
 }
 #photo {
 	width:450px;
 	height:300px;
-	margin-left:50px;
-	margin-top:30px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:70px;
+	position:relative;
 	display:block;
 }
 
 #title {
-	width:350px;
-	height:40px;
-	margin-left:50px;
-	margin-top:20px;
-	background-color:#222222;
+	width:100px;
+	height:100px;
+	margin-left:10px;
+	margin-top:10px;
+	background-color:#333;
 	text-align:center;
 	font-size:26px;
 	color:#cccccc;
 	padding-top:10px;
 	font-weight:bold;
+	float:left;
+}
+#title2 {
+	width:250px;
+	height:30px;
+	margin-top:10px;
+	background-color:#333;
+	text-align:center;
+	font-size:30px;
+	color:#cccccc;
+	padding-top:10px;
+	font-weight:bold;
+	float:left;
+	padding-top:30px;
+	font-family:Arial;
+}
+#natura {
+	border: 2px #777 solid;
+	border-radius:20px;
+}
+#rok {
+	width:250px;
+	height:80px;
+	margin-top:80px;
+	margin-left:50px;
+	float:left;
+	color:#ddd;
+	text-align:center;
+	font-family:arial;
+	font-size:24px;
+	font-weight:bold;
+}
+#siedziba {
+	width:250px;
+	height:80px;
+	margin-top:80px;
+	float:left;
+	color:#ddd;
+	text-align:center;
+	font-family:arial;
+	font-size:24px;
+	font-weight:bold;
+}
+#symbol {
+	width:250px;
+	height:70px;
+	margin-top:220px;
+	color:#ddd;
+	margin:auto;
+	text-align:center;
+	font-family:arial;
+	font-size:24px;
+	font-weight:bold;
+	
+}
+#photo2 {
+	width:450px;
+	height:300px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:160px;
+	position:relative;
+	display:block;
 }
 #close-button {
 	background-color:#dddddd;
@@ -48,7 +114,7 @@ html, body {
 	float:right;
 	top:10px;
 	right:10px;
-	display:bock;
+	display:block;
 	position:absolute;
 }
 #close-button:hover {
@@ -171,5 +237,7 @@ border-radius:20px;
 .leaflet-popup-tip {
 	background-color:#2e3039!important;
 }
+		
+		
 		
 		
