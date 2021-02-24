@@ -10,24 +10,6 @@ L.tileLayer( 'https://api.mapbox.com/styles/v1/adryanque/ckd99v6j000ke1jmwyr4u4p
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
 }).addTo( map );
 
-/*var wojewodztwa = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/1n6b8fa7lmhvp66/wojewodztwa.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
-	
-},style:function style(feature) {
-    return {
-        fillColor: '#666',
-        weight: 2,
-        opacity: 1,
-        color: '#333',
-        dashArray: '1',
-        fillOpacity: 0.40
-    };  }
-});
-wojewodztwa.addTo(map);
-*/
-
-
-
-
 
 	function style(feature) {
 		return {
@@ -90,30 +72,41 @@ wojewodztwa.addTo(map);
 
 
 
-
-
-
-
-
-
-var parki = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/ghh6sf9quob0u3a/parki_narodowe.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
-	
+var szlaki = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/qnhbt8fjuojsyif/szlaki_turystyczne.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
+if (feature.properties.name != null){
+layer.bindPopup('<h2>'+feature.properties.name+'</h2>')
+//layer.on('mouseclick', function (e) {
+    //this.openPopup();
+//});
+/*layer.on('mouseout', function (e) {
+    this.closePopup();
+});*/
+layer.on('click',function(e){
+	map.setView(e.latlng, 5);
+});
+}	
 },style:function style(feature) {
     return {
-        fillColor: '#164527',
+        color: getColor(feature.properties.colour),
         weight: 2,
         opacity: 1,
-        color: '#333',
-        dashArray: '1',
+        dashArray: '10',
         fillOpacity: 0.95
     };  }
 });
-parki.addTo(map);
+szlaki.addTo(map);
 
+function getColor(d) {
+    return d == "black" ? '#111111' :
+           d == "blue"  ? '#0086b3' :
+           d == "green"  ? '#00802b' :
+           d == "yellow"  ? '#e6e60a' :
+           d == "red"   ? '#cc0000' :
+                      '#888881';
+				}	
+					
 
-
-var parki_krajobrazowe = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/6m2cga98muuwuky/prki_krajobrazowe.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
-	
+var parki_krajobrazowe = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/co9xn8yjyd2tyih/parki_krajobrazowe.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
 },style:function style(feature) {
     return {
         fillColor: '#169843',
@@ -127,7 +120,7 @@ var parki_krajobrazowe = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s
 parki_krajobrazowe.addTo(map);
 
 
-var loga = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/k0ncgalt2nf9za7/parki_punkty1.json?dl=0",{onEachFeature:function (feature,layer) {
+var loga = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/6n5b892g9ra4m98/parki_punkty2.json?dl=0",{onEachFeature:function (feature,layer) {
 	if (feature.properties.Park != null){
 layer.bindPopup('<h2>'+feature.properties.Park+'</h2>')
 layer.on('mouseover', function (e) {
@@ -136,18 +129,26 @@ layer.on('mouseover', function (e) {
 layer.on('mouseout', function (e) {
     this.closePopup();
 });
+layer.on('click',function(e){
+	map.setView(e.latlng, 11);
+});
 }
 	
 		if (feature.properties.Park == "Kampinoski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Wisent.jpg" id = "maskotka_image" width = 450px height = 300px;>';
+			document.getElementById("title").innerHTML = '<img src="loga/kampinoski2.jpg" width = 70px height = 70px;>';
+			document.getElementById("title2").innerHTML = feature.properties.Park;
+			document.getElementById("photo").innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Poland_Kampinos_April_1.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
+			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;
+			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
+			document.getElementById("photo2").innerHTML = '<img src="https://naukawpolsce.pap.pl/sites/default/files/styles/strona_glowna_slider_750x420/public/201710/13130799_13130792.jpg?itok=xj9b_AF6" id = "natura" width = 450px height = 300px;>';
 			})}
 		else if (feature.properties.Park == "Babiogórski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML=feature.properties.Park;
+			document.getElementById("title").innerHTML=feature.properties.siedziba;
 			document.getElementById("photo").innerHTML = '<img src="http://www.bgpn.pl/images/gallery/vancuver_430.jpg" id = "maskotka_image" width = 450px height = 300px;>';
 			})}
 },
@@ -219,7 +220,7 @@ pointToLayer: function (feature, latlng) {
 				iconAnchor:   [32, 25], 
 				popupAnchor:  [0, -25],
 				iconSize: [60, 60]})});
-			case 'Narwiański': return L.marker(latlng,{icon:L.icon({
+			case 'Narwiański PN': return L.marker(latlng,{icon:L.icon({
 				iconUrl: 'https://dl.dropboxusercontent.com/s/u93zkdo5ywl4ksy/LOGO_NARWIA%C5%83SKIEGO_PARKU_NARODOWEGO.png?dl=0',
 				className:"logo",
 				iconAnchor:   [32, 25], 
@@ -296,8 +297,19 @@ pointToLayer: function (feature, latlng) {
 }); 
 loga.addTo(map);
 
-
-
+var parki = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/ghh6sf9quob0u3a/parki_narodowe.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
+	
+},style:function style(feature) {
+    return {
+        fillColor: '#164527',
+        weight: 2,
+        opacity: 1,
+        color: '#333',
+        dashArray: '1',
+        fillOpacity: 0.95
+    };  }
+});
+parki.addTo(map);
 
 map.on('click', function(){
     //map.setView([52, 19], 6.7);
@@ -317,4 +329,6 @@ krajobrazowe_button.addEventListener("click", function(){
     map.removeLayer(parki);
 	map.removeLayer(loga);
 })
+
+
 
