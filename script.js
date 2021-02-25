@@ -42,6 +42,12 @@ L.tileLayer( 'https://api.mapbox.com/styles/v1/adryanque/ckd99v6j000ke1jmwyr4u4p
 		});
 	}
 	
+	
+map.createPane('pane_szlaki');
+
+map.getPane('pane_szlaki').style.zIndex = 500;
+
+	
 	var geojson;
 
 	function resetHighlight(e) {
@@ -53,6 +59,8 @@ L.tileLayer( 'https://api.mapbox.com/styles/v1/adryanque/ckd99v6j000ke1jmwyr4u4p
 	}
 
 	function onEachFeature(feature, layer) {
+		if (feature.properties.name!= null){
+		layer.bindPopup('<h2>'+feature.properties.name+'</h2>')}
 		layer.on({
 			mouseover: highlightFeature,
 			mouseout: resetHighlight,
@@ -60,41 +68,39 @@ L.tileLayer( 'https://api.mapbox.com/styles/v1/adryanque/ckd99v6j000ke1jmwyr4u4p
 		});
 		layer.on({
 			click: zoomToFeature});
-	}
+		layer.on('mouseover', function (e) {
+		this.openPopup();
+});
+};
+	
 
 	geojson = L.geoJson(wojewodztwa, {
 		style: style,
 		onEachFeature: onEachFeature,
-		click: aktywne
+		click: aktywne,
 	}).addTo(map);
 
 
 
+function highlightFeature2(e) {
+		var layer = e.target;
 
-
-var szlaki = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/qnhbt8fjuojsyif/szlaki_turystyczne.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
-if (feature.properties.name != null){
-layer.bindPopup('<h2>'+feature.properties.name+'</h2>')
-//layer.on('mouseclick', function (e) {
-    //this.openPopup();
-//});
-/*layer.on('mouseout', function (e) {
-    this.closePopup();
-});*/
-layer.on('click',function(e){
-	map.setView(e.latlng, 5);
-});
-}	
-},style:function style(feature) {
+		layer.setStyle({
+			weight: 5,
+			color: '#333',
+			dashArray: '10',
+			fillOpacity: 0.7
+		});
+	}
+	
+function style2(feature) {
     return {
         color: getColor(feature.properties.colour),
-        weight: 2,
+        weight: 4,
         opacity: 1,
         dashArray: '10',
         fillOpacity: 0.95
     };  }
-});
-szlaki.addTo(map);
 
 function getColor(d) {
     return d == "black" ? '#111111' :
@@ -104,7 +110,55 @@ function getColor(d) {
            d == "red"   ? '#cc0000' :
                       '#888881';
 				}	
-					
+				
+function resetHighlight2(e) {
+	geojson1.resetStyle(e.target);
+}				
+
+	function onEachFeature2(feature, layer) {
+		if (feature.properties.name!= null){
+		layer.bindPopup('<h2>'+feature.properties.name+'</h2>')}
+		layer.on({
+			mouseover: highlightFeature2,
+			mouseout: resetHighlight2,
+		});
+		layer.on('click',function(e){
+		map.setView(e.latlng,);
+});
+};
+
+geojson1 = L.geoJson(szlaki, {
+		style: style2,
+		onEachFeature: onEachFeature2,
+		pane:'pane_szlaki'
+	}).addTo(map);
+	
+/*
+var szlaki = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/qnhbt8fjuojsyif/szlaki_turystyczne.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
+if (feature.properties.name != null){
+layer.bindPopup('<h2>'+feature.properties.name+'</h2>')
+layer.on('mouseclick', function (e) {
+    //this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});
+layer.on('click',function(e){
+	map.setView(e.latlng,);
+});
+}	
+},style:function style(feature) {
+    return {
+        color: getColor(feature.properties.colour),
+        weight: 4,
+        opacity: 1,
+        dashArray: '10',
+        fillOpacity: 0.95
+    };  }
+});
+szlaki.addTo(map);
+*/
+
 
 var parki_krajobrazowe = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/co9xn8yjyd2tyih/parki_krajobrazowe.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
 },style:function style(feature) {
@@ -329,6 +383,7 @@ krajobrazowe_button.addEventListener("click", function(){
     map.removeLayer(parki);
 	map.removeLayer(loga);
 })
+
 
 
 
