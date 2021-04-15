@@ -1,933 +1,528 @@
 var map = L.map( 'map', {
-    center: [38, -97],
-    minZoom: 4,
-	maxZoom: 9.5,
-    zoom: 5.1,
-	zoomSnap:0.02
+    center: [52, 19],
+    minZoom: 6,
+	maxZoom: 15,
+    zoom: 6.7,
+	zoomSnap:0.01
 });
 
-L.tileLayer( 'https://api.mapbox.com/styles/v1/adryanque/ckdcy52na0j701imgnwx4q8gl/tiles/512/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
+
+L.tileLayer( 'https://api.mapbox.com/styles/v1/adryanque/ckm0kaotk6l8m17o51p8vqzqj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
-}).addTo(map);
+}).addTo( map );
 
 
+	function style(feature) {
+		return {
+			fillColor: 'transparent',
+			weight: 1,
+			opacity: 0.7,
+			color: '#333',
+			dashArray: '1',
+			fillOpacity: 0.4,
+		};
+	}
 
-var zespoly = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/9vr68tj2857drze/json_zespoly.json?dl=0",{onEachFeature:function (feature,layer) {
-	if (feature.properties.Rok != null){
-layer.bindPopup('<table id = "tabela_zespoly">\
-  <caption>'+feature.properties.Zespol+'</caption>\
-  <tr class = "wiersz">\
-    <td id = "komorka_zespoly">Rok założenia</td>\
-    <td id = "komorka2_zespoly">'+feature.properties.Rok+'</td>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka_zespoly">Dywizja</td>\
-    <td id = "komorka2_zespoly">'+feature.properties.Dywizja+'</td>\
-  </tr>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka_zespoly">Występy w finałach</td>\
-    <td id = "komorka2_zespoly">'+feature.properties.Wystepy+'</td>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka_zespoly">Mistrzostwa</td>\
-    <td id = "komorka2_zespoly">'+feature.properties.Mistrzostwa+'</td>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka_zespoly">Konferencja</td>\
-    <td id = "komorka2_zespoly">'+feature.properties.Konferencja+'</td>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka_zespoly">Stan</td>\
-    <td id = "komorka2_zespoly">'+feature.properties.Stan+'</td>\
-  </tr>\
-  </table>')
- 
-  layer.on('click', function(e){
-    map.setView ([feature.properties.ycoord,feature.properties.xcoord], 6.5);
+	function highlightFeature(e) {
+		var layer = e.target;
+
+		layer.setStyle({
+			weight: 5,
+			color: '#111',
+			dashArray: '',
+			fillOpacity: 0.7
+		});
+	}
+	function aktywne(e) {
+		var layer1 = e.target;
+
+		layer1.setStyle({
+			fillColor: '#444',
+			dashArray: '',
+			fillOpacity: 0.7
+		});
+	}
+	
+	
+map.createPane('pane_szlaki');
+
+map.getPane('pane_szlaki').style.zIndex = 500;
+
+	
+	var geojson;
+
+	function resetHighlight(e) {
+		geojson.resetStyle(e.target);
+	}
+
+	function zoomToFeature(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+
+	function onEachFeature(feature, layer) {
+		if (feature.properties.name!= null){
+		layer.bindPopup('<h2>'+feature.properties.name+'</h2>')}
+		layer.on({
+			mouseover: highlightFeature,
+			mouseout: resetHighlight,
+			click: aktywne
+		});
+		layer.on({
+			click: zoomToFeature});
+		layer.on('mouseover', function (e) {
+		this.openPopup();
 });
+};
+	
+
+	geojson = L.geoJson(wojewodztwa, {
+		style: style,
+		onEachFeature: onEachFeature,
+		click: aktywne,
+	}).addTo(map);
 
 
-  if (feature.properties.Zespol =="Cleveland Cavaliers" || feature.properties.Zespol =="Dallas Mavericks"){
-layer.on('click',function(e){
-	 //var arena_1a = arena.getElementsByClassName("arena_photo")[0].style.display = "block";
-	 //var arena_1b = arena.getElementsByClassName("arena_photo")[1].style.display = "none";
-	 arena_div.scrollTo(0, 0);
-	 document.getElementById("arena").style.display='block';
-	 document.getElementById("text").innerHTML = feature.properties.Arena;
-	 document.getElementById("background").style.backgroundPosition ='0 55%';
-	 document.getElementById("background").style.backgroundImage = 'url('+feature.properties.Background+')';
-	 document.getElementById("pojemnosc").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/> Pojemność: </span></br>'  + feature.properties.Pojemnosc;
-	 document.getElementById("maskotka").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Maskotka:</span></br>'  + feature.properties.Maskotka+' & '+feature.properties.Maskotka_2;
-	 document.getElementById("otwarcie").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"> Rok otwarcia: </span></br>' + feature.properties.Otwarcie;
-	 document.getElementById("photo").style.height = "300px";
-	 document.getElementsByClassName("photo_slider")[0].style.marginTop = "10px";
-	 var arena_1 = arena.getElementsByClassName("arena_photo")[0].src = feature.properties.Image;
-	 var arena_2 = arena.getElementsByClassName("arena_photo")[1].src = feature.properties.Arena2_link;
-	 var arena_wysokosc_1 = arena.getElementsByClassName("arena_photo")[0].style.height = "300px";
-	 var arena_wysokosc_2 = arena.getElementsByClassName("arena_photo")[1].style.height = "300px";
-	 var zawodnik_photo_image_1 = zawodnik_photo_1.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_1_link;
-	 var zawodnik_tekst_1 = zawodnik_1.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_1;
-	 var zawodnik_photo_image_2 = zawodnik_photo_2.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_2_link;
-	 var zawodnik_tekst_2 = zawodnik_2.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_2;
-	 var zawodnik_photo_image_3 = zawodnik_photo_3.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_3_link;
-	 var zawodnik_tekst_3 = zawodnik_3.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_3;
-	 var zawodnik_photo_image_4 = zawodnik_photo_4.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_4_link;
-	 var zawodnik_tekst_4 = zawodnik_4.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_4;
-	 var zawodnik_photo_image_5 = zawodnik_photo_5.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_5_link;
-	 var zawodnik_tekst_5 = zawodnik_5.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_5;
-	 var numer_1 = zawodnik_photo_1.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_1;
-	 var numer_2 = zawodnik_photo_2.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_2;
-	 var numer_3 = zawodnik_photo_3.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_3;
-	 var numer_4 = zawodnik_photo_4.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_4;
-	 var numer_5 = zawodnik_photo_5.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_5;
-	 var flaga_1 = zawodnik_photo_1.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_1+")";
-	 var flaga_2 = zawodnik_photo_2.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_2+")";
-	 var flaga_3 = zawodnik_photo_3.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_3+")";
-	 var flaga_4 = zawodnik_photo_4.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_4+")";
-	 var flaga_5 = zawodnik_photo_5.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_5+")";
-	 var pozycja_1 = pierwsza_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_1;
-	 var pozycja_2 = pierwsza_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_2;
-	 var pozycja_3 = druga_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_3;
-	 var pozycja_4 = druga_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_4;
-	 var pozycja_5 = zawodnik_5.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_5;
-	 var wiek_1 = zawodnik_photo_1.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_1;
-	 var wiek_2 = zawodnik_photo_2.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_2;
-	 var wiek_3 = zawodnik_photo_3.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_3;
-	 var wiek_4 = zawodnik_photo_4.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_4;
-	 var wiek_5 = zawodnik_photo_5.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_5;
-	 var wzrost_1 = zawodnik_photo_1.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_1;
-	 var wzrost_2 = zawodnik_photo_2.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_2;
-	 var wzrost_3 = zawodnik_photo_3.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_3;
-	 var wzrost_4 = zawodnik_photo_4.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_4;
-	 var wzrost_5 = zawodnik_photo_5.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_5;
-	 document.getElementById("twitter_arena_1").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.wikimedia_arena_1+'">'+feature.properties.wikimedia_autor+'<img id = "wikipedia_logo"  src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Tango_style_Wikipedia_Icon.svg/100px-Tango_style_Wikipedia_Icon.svg.png"</a>';
-	 document.getElementById("twitter_arena_2").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_arena+'">'+feature.properties.Zespol+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_3").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka+'">'+feature.properties.Maskotka_2+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_4").style.display = "block";
-	 document.getElementById("twitter_arena_4").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka2+'">'+feature.properties.Maskotka+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("nba_link").innerHTML = '<a id = "nba_link_spodek" target="_blank" href = "'+feature.properties.nba_druzyna+'"><img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo_spodek" width=18px height = 40px><h3 id = "nba_text"></h3></a>';
-	 document.getElementById("nba_text").innerHTML = feature.properties.Zespol;
-	 document.getElementById("photo_maskotka").style.display = 'block';
-	 document.getElementById("photo_maskotka").innerHTML =  '<img class = "zespol_photo" src=" ' +feature.properties.Maskotka_link+'" id = "maskotka_image" height = 300px;>';
-	 document.getElementById("twitter").style.top = "265px";
-	 document.getElementById("twitter2").style.top = "265px";
-	 document.getElementById("twitter3").style.top = "882";
-	 }
-     	 
-)}
-else if (feature.properties.Zespol =="Minnesota Timberwolves"){
-layer.on('click',function(e){		 
-document.getElementById("arena").style.display='block';
-	 //var arena_1a = arena.getElementsByClassName("arena_photo")[0].style.display = "block";
-	 //var arena_1b = arena.getElementsByClassName("arena_photo")[1].style.display = "none";
-	 arena_div.scrollTo(0, 0);
-	 document.getElementById("text").innerHTML = feature.properties.Arena;
-	 document.getElementById("background").style.backgroundPosition ='0 25%';
-	 document.getElementById("background").style.backgroundImage = 'url('+feature.properties.Background+')';
-	 document.getElementById("pojemnosc").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/> Pojemność: </span></br>'  + feature.properties.Pojemnosc;
-	 document.getElementById("maskotka").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Maskotka:</span></br>'  + feature.properties.Maskotka;
-	 document.getElementById("otwarcie").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"> Rok otwarcia: </span></br>' + feature.properties.Otwarcie;
-	 document.getElementById("photo").style.height = "250px";
-	 document.getElementsByClassName("photo_slider")[0].style.marginTop = "10px";
-	 var arena_1 = arena.getElementsByClassName("arena_photo")[0].src = feature.properties.Image;
-	 var arena_2 = arena.getElementsByClassName("arena_photo")[1].src = feature.properties.Arena2_link;
-	 var arena_wysokosc_1 = arena.getElementsByClassName("arena_photo")[0].style.height = "250px";
-	 var arena_wysokosc_2 = arena.getElementsByClassName("arena_photo")[1].style.height = "250px";
-	 var zawodnik_photo_image_1 = zawodnik_photo_1.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_1_link;
-	 var zawodnik_tekst_1 = zawodnik_1.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_1;
-	 var zawodnik_photo_image_2 = zawodnik_photo_2.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_2_link;
-	 var zawodnik_tekst_2 = zawodnik_2.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_2;
-	 var zawodnik_photo_image_3 = zawodnik_photo_3.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_3_link;
-	 var zawodnik_tekst_3 = zawodnik_3.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_3;
-	 var zawodnik_photo_image_4 = zawodnik_photo_4.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_4_link;
-	 var zawodnik_tekst_4 = zawodnik_4.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_4;
-	 var zawodnik_photo_image_5 = zawodnik_photo_5.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_5_link;
-	 var zawodnik_tekst_5 = zawodnik_5.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_5;
-	 var numer_1 = zawodnik_photo_1.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_1;
-	 var numer_2 = zawodnik_photo_2.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_2;
-	 var numer_3 = zawodnik_photo_3.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_3;
-	 var numer_4 = zawodnik_photo_4.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_4;
-	 var numer_5 = zawodnik_photo_5.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_5;
-	 var flaga_1 = zawodnik_photo_1.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_1+")";
-	 var flaga_2 = zawodnik_photo_2.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_2+")";
-	 var flaga_3 = zawodnik_photo_3.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_3+")";
-	 var flaga_4 = zawodnik_photo_4.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_4+")";
-	 var flaga_5 = zawodnik_photo_5.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_5+")";
-	 var pozycja_1 = pierwsza_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_1;
-	 var pozycja_2 = pierwsza_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_2;
-	 var pozycja_3 = druga_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_3;
-	 var pozycja_4 = druga_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_4;
-	 var pozycja_5 = zawodnik_5.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_5;
-	 var wiek_1 = zawodnik_photo_1.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_1;
-	 var wiek_2 = zawodnik_photo_2.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_2;
-	 var wiek_3 = zawodnik_photo_3.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_3;
-	 var wiek_4 = zawodnik_photo_4.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_4;
-	 var wiek_5 = zawodnik_photo_5.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_5;
-	 var wzrost_1 = zawodnik_photo_1.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_1;
-	 var wzrost_2 = zawodnik_photo_2.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_2;
-	 var wzrost_3 = zawodnik_photo_3.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_3;
-	 var wzrost_4 = zawodnik_photo_4.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_4;
-	 var wzrost_5 = zawodnik_photo_5.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_5;
-	 document.getElementById("twitter_arena_1").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.wikimedia_arena_1+'">'+feature.properties.wikimedia_autor+'<img id = "wikipedia_logo"  src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Tango_style_Wikipedia_Icon.svg/100px-Tango_style_Wikipedia_Icon.svg.png"</a>';
-	 document.getElementById("twitter_arena_2").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_arena+'">'+feature.properties.Zespol+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_3").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka+'">'+feature.properties.Maskotka+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_4").style.display = "none";
-	 document.getElementById("nba_link").innerHTML = '<a id = "nba_link_spodek" target="_blank" href = "'+feature.properties.nba_druzyna+'"><img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo_spodek" width=18px height = 40px><h3 id = "nba_text"></h3></a>';
-	 document.getElementById("nba_text").innerHTML = feature.properties.Zespol;
-	 document.getElementById("photo_maskotka").style.display = 'block';
-	 document.getElementById("photo_maskotka").innerHTML =  '<img class = "zespol_photo" src=" ' +feature.properties.Maskotka_link+'" id = "maskotka_image" height = 300px;>';
-	 document.getElementById("twitter").style.top = "215px";
-	 document.getElementById("twitter2").style.top = "215px";
-	 document.getElementById("twitter3").style.top = "832";
-	 }	 
-)}
-else if (feature.properties.Zespol =="Brooklyn Nets" || feature.properties.Zespol =="Golden State Warriors" || feature.properties.Zespol =="New York Knicks" || feature.properties.Zespol =="Los Angeles Lakers"){
-layer.on('click',function(e){			 
-	 //var arena_1a = arena.getElementsByClassName("arena_photo")[0].style.display = "block";
-	 //var arena_1b = arena.getElementsByClassName("arena_photo")[1].style.display = "none";
-	 arena_div.scrollTo(0, 0);
-	 document.getElementById("arena").style.display='block';
-	 document.getElementById("text").innerHTML = feature.properties.Arena;
-	 document.getElementById("background").style.backgroundPosition ='0 50%';
-	 document.getElementById("background").style.backgroundImage = 'url('+feature.properties.Background+')';
-	 document.getElementById("pojemnosc").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/> Pojemność: </span></br>'  + feature.properties.Pojemnosc;
-	 document.getElementById("maskotka").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Maskotka:</span></br>'  + feature.properties.Maskotka;
-	 document.getElementById("otwarcie").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"> Rok otwarcia: </span></br>' + feature.properties.Otwarcie;
-	 document.getElementById("photo").style.height = "300px";
-	 document.getElementsByClassName("photo_slider")[0].style.marginTop = "10px";
-	 var arena_1 = arena.getElementsByClassName("arena_photo")[0].src = feature.properties.Image;
-	 var arena_2 = arena.getElementsByClassName("arena_photo")[1].src = feature.properties.Arena2_link;
-	 var arena_wysokosc_1 = arena.getElementsByClassName("arena_photo")[0].style.height = "300px";
-	 var arena_wysokosc_2 = arena.getElementsByClassName("arena_photo")[1].style.height = "300px";
-	 var zawodnik_photo_image_1 = zawodnik_photo_1.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_1_link;
-	 var zawodnik_tekst_1 = zawodnik_1.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_1;
-	 var zawodnik_photo_image_2 = zawodnik_photo_2.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_2_link;
-	 var zawodnik_tekst_2 = zawodnik_2.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_2;
-	 var zawodnik_photo_image_3 = zawodnik_photo_3.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_3_link;
-	 var zawodnik_tekst_3 = zawodnik_3.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_3;
-	 var zawodnik_photo_image_4 = zawodnik_photo_4.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_4_link;
-	 var zawodnik_tekst_4 = zawodnik_4.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_4;
-	 var zawodnik_photo_image_5 = zawodnik_photo_5.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_5_link;
-	 var zawodnik_tekst_5 = zawodnik_5.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_5;
-	 var numer_1 = zawodnik_photo_1.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_1;
-	 var numer_2 = zawodnik_photo_2.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_2;
-	 var numer_3 = zawodnik_photo_3.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_3;
-	 var numer_4 = zawodnik_photo_4.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_4;
-	 var numer_5 = zawodnik_photo_5.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_5;
-	 var flaga_1 = zawodnik_photo_1.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_1+")";
-	 var flaga_2 = zawodnik_photo_2.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_2+")";
-	 var flaga_3 = zawodnik_photo_3.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_3+")";
-	 var flaga_4 = zawodnik_photo_4.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_4+")";
-	 var flaga_5 = zawodnik_photo_5.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_5+")";
-	 var pozycja_1 = pierwsza_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_1;
-	 var pozycja_2 = pierwsza_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_2;
-	 var pozycja_3 = druga_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_3;
-	 var pozycja_4 = druga_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_4;
-	 var pozycja_5 = zawodnik_5.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_5;
-	 var wiek_1 = zawodnik_photo_1.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_1;
-	 var wiek_2 = zawodnik_photo_2.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_2;
-	 var wiek_3 = zawodnik_photo_3.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_3;
-	 var wiek_4 = zawodnik_photo_4.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_4;
-	 var wiek_5 = zawodnik_photo_5.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_5;
-	 var wzrost_1 = zawodnik_photo_1.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_1;
-	 var wzrost_2 = zawodnik_photo_2.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_2;
-	 var wzrost_3 = zawodnik_photo_3.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_3;
-	 var wzrost_4 = zawodnik_photo_4.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_4;
-	 var wzrost_5 = zawodnik_photo_5.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_5;
-	 document.getElementById("twitter_arena_1").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.wikimedia_arena_1+'">'+feature.properties.wikimedia_autor+'<img id = "wikipedia_logo"  src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Tango_style_Wikipedia_Icon.svg/100px-Tango_style_Wikipedia_Icon.svg.png"</a>';
-	 document.getElementById("twitter_arena_2").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_arena+'">'+feature.properties.Zespol+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_3").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka+'">'+feature.properties.Maskotka+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_4").style.display = "none";
-	 document.getElementById("nba_link").innerHTML = '<a id = "nba_link_spodek" target="_blank" href = "'+feature.properties.nba_druzyna+'"><img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo_spodek" width=18px height = 40px><h3 id = "nba_text"></h3></a>';
-	 document.getElementById("nba_text").innerHTML = feature.properties.Zespol;
-	 document.getElementById("photo_maskotka").style.display = 'none';
-	 document.getElementById("twitter").style.top = "265px";
-	 document.getElementById("twitter2").style.top = "265px";
-	 document.getElementById("twitter3").style.top = "882";}	 
-)}
-else if (feature.properties.Zespol =="Milwaukee Bucks" || feature.properties.Zespol =="Memphis Grizzlies" || feature.properties.Zespol =="Sacramento Kings" || feature.properties.Zespol =="Orlando Magic"){
-layer.on('click',function(e){	
-	 //var arena_1a = arena.getElementsByClassName("arena_photo")[0].style.display = "block";
-	 //var arena_1b = arena.getElementsByClassName("arena_photo")[1].style.display = "none";
-	 arena_div.scrollTo(0, 0);	 
-	 document.getElementById("arena").style.display='block';
-	 document.getElementById("text").innerHTML = feature.properties.Arena;
-	 document.getElementById("background").style.backgroundPosition ='0 70%';
-	 document.getElementById("background").style.backgroundImage = 'url('+feature.properties.Background+')';
-	 document.getElementById("pojemnosc").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/> Pojemność: </span></br>'  + feature.properties.Pojemnosc;
-	 document.getElementById("maskotka").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Maskotka:</span></br>'  + feature.properties.Maskotka;
-	 document.getElementById("otwarcie").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"> Rok otwarcia: </span></br>' + feature.properties.Otwarcie;
-	 document.getElementById("photo").style.height = "300px";
-	 document.getElementsByClassName("photo_slider")[0].style.marginTop = "10px";
-	 var arena_1 = arena.getElementsByClassName("arena_photo")[0].src = feature.properties.Image;
-	 var arena_2 = arena.getElementsByClassName("arena_photo")[1].src = feature.properties.Arena2_link;
-	 var arena_wysokosc_1 = arena.getElementsByClassName("arena_photo")[0].style.height = "300px";
-	 var arena_wysokosc_2 = arena.getElementsByClassName("arena_photo")[1].style.height = "300px";
-	 var zawodnik_photo_image_1 = zawodnik_photo_1.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_1_link;
-	 var zawodnik_tekst_1 = zawodnik_1.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_1;
-	 var zawodnik_photo_image_2 = zawodnik_photo_2.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_2_link;
-	 var zawodnik_tekst_2 = zawodnik_2.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_2;
-	 var zawodnik_photo_image_3 = zawodnik_photo_3.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_3_link;
-	 var zawodnik_tekst_3 = zawodnik_3.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_3;
-	 var zawodnik_photo_image_4 = zawodnik_photo_4.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_4_link;
-	 var zawodnik_tekst_4 = zawodnik_4.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_4;
-	 var zawodnik_photo_image_5 = zawodnik_photo_5.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_5_link;
-	 var zawodnik_tekst_5 = zawodnik_5.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_5;
-	 var numer_1 = zawodnik_photo_1.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_1;
-	 var numer_2 = zawodnik_photo_2.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_2;
-	 var numer_3 = zawodnik_photo_3.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_3;
-	 var numer_4 = zawodnik_photo_4.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_4;
-	 var numer_5 = zawodnik_photo_5.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_5;
-	 var flaga_1 = zawodnik_photo_1.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_1+")";
-	 var flaga_2 = zawodnik_photo_2.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_2+")";
-	 var flaga_3 = zawodnik_photo_3.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_3+")";
-	 var flaga_4 = zawodnik_photo_4.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_4+")";
-	 var flaga_5 = zawodnik_photo_5.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_5+")";
-	 var pozycja_1 = pierwsza_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_1;
-	 var pozycja_2 = pierwsza_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_2;
-	 var pozycja_3 = druga_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_3;
-	 var pozycja_4 = druga_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_4;
-	 var pozycja_5 = zawodnik_5.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_5;
-	 var wiek_1 = zawodnik_photo_1.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_1;
-	 var wiek_2 = zawodnik_photo_2.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_2;
-	 var wiek_3 = zawodnik_photo_3.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_3;
-	 var wiek_4 = zawodnik_photo_4.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_4;
-	 var wiek_5 = zawodnik_photo_5.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_5;
-	 var wzrost_1 = zawodnik_photo_1.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_1;
-	 var wzrost_2 = zawodnik_photo_2.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_2;
-	 var wzrost_3 = zawodnik_photo_3.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_3;
-	 var wzrost_4 = zawodnik_photo_4.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_4;
-	 var wzrost_5 = zawodnik_photo_5.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_5;
-	 document.getElementById("twitter_arena_1").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.wikimedia_arena_1+'">'+feature.properties.wikimedia_autor+'<img id = "wikipedia_logo"  src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Tango_style_Wikipedia_Icon.svg/100px-Tango_style_Wikipedia_Icon.svg.png"</a>';
-	 document.getElementById("twitter_arena_2").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_arena+'">'+feature.properties.Zespol+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_3").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka+'">'+feature.properties.Maskotka+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_4").style.display = "none";
-	 document.getElementById("nba_link").innerHTML = '<a id = "nba_link_spodek" target="_blank" href = "'+feature.properties.nba_druzyna+'"><img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo_spodek" width=18px height = 40px><h3 id = "nba_text"></h3></a>';
-	 document.getElementById("nba_text").innerHTML = feature.properties.Zespol;
-	 document.getElementById("photo_maskotka").style.display = 'block';
-	 document.getElementById("photo_maskotka").innerHTML =  '<img class = "zespol_photo" src=" ' +feature.properties.Maskotka_link+'" id = "maskotka_image" height = 300px;>';
-	 document.getElementById("twitter").style.top = "265px";
-	 document.getElementById("twitter2").style.top = "265px";
-	 document.getElementById("twitter3").style.top = "882";}	 
-)}
-else if (feature.properties.Zespol =="Phoenix Suns" || feature.properties.Zespol =="Indiana Pacers" || feature.properties.Zespol =="Detroit Pistons"){
-layer.on('click',function(e){		 
-	 //var arena_1a = arena.getElementsByClassName("arena_photo")[0].style.display = "block";
-	 //var arena_1b = arena.getElementsByClassName("arena_photo")[1].style.display = "none";
-	 arena_div.scrollTo(0, 0);
-	 document.getElementById("arena").style.display='block';
-	 document.getElementById("text").innerHTML = feature.properties.Arena;
-	 document.getElementById("background").style.backgroundPosition ='0 30%';
-	 document.getElementById("background").style.backgroundImage = 'url('+feature.properties.Background+')';
-	 document.getElementById("pojemnosc").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/> Pojemność: </span></br>'  + feature.properties.Pojemnosc;
-	 document.getElementById("maskotka").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Maskotka:</span></br>'  + feature.properties.Maskotka;
-	 document.getElementById("otwarcie").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"> Rok otwarcia: </span></br>' + feature.properties.Otwarcie;
-	 document.getElementById("photo").style.height = "300px";
-	 document.getElementsByClassName("photo_slider")[0].style.marginTop = "10px";
-	 var arena_1 = arena.getElementsByClassName("arena_photo")[0].src = feature.properties.Image;
-	 var arena_2 = arena.getElementsByClassName("arena_photo")[1].src = feature.properties.Arena2_link;
-	 var arena_wysokosc_1 = arena.getElementsByClassName("arena_photo")[0].style.height = "300px";
-	 var arena_wysokosc_2 = arena.getElementsByClassName("arena_photo")[1].style.height = "300px";
-	 var zawodnik_photo_image_1 = zawodnik_photo_1.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_1_link;
-	 var zawodnik_tekst_1 = zawodnik_1.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_1;
-	 var zawodnik_photo_image_2 = zawodnik_photo_2.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_2_link;
-	 var zawodnik_tekst_2 = zawodnik_2.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_2;
-	 var zawodnik_photo_image_3 = zawodnik_photo_3.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_3_link;
-	 var zawodnik_tekst_3 = zawodnik_3.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_3;
-	 var zawodnik_photo_image_4 = zawodnik_photo_4.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_4_link;
-	 var zawodnik_tekst_4 = zawodnik_4.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_4;
-	 var zawodnik_photo_image_5 = zawodnik_photo_5.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_5_link;
-	 var zawodnik_tekst_5 = zawodnik_5.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_5;
-	 var numer_1 = zawodnik_photo_1.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_1;
-	 var numer_2 = zawodnik_photo_2.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_2;
-	 var numer_3 = zawodnik_photo_3.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_3;
-	 var numer_4 = zawodnik_photo_4.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_4;
-	 var numer_5 = zawodnik_photo_5.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_5;
-	 var flaga_1 = zawodnik_photo_1.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_1+")";
-	 var flaga_2 = zawodnik_photo_2.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_2+")";
-	 var flaga_3 = zawodnik_photo_3.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_3+")";
-	 var flaga_4 = zawodnik_photo_4.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_4+")";
-	 var flaga_5 = zawodnik_photo_5.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_5+")";
-	 var pozycja_1 = pierwsza_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_1;
-	 var pozycja_2 = pierwsza_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_2;
-	 var pozycja_3 = druga_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_3;
-	 var pozycja_4 = druga_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_4;
-	 var pozycja_5 = zawodnik_5.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_5;
-	 var wiek_1 = zawodnik_photo_1.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_1;
-	 var wiek_2 = zawodnik_photo_2.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_2;
-	 var wiek_3 = zawodnik_photo_3.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_3;
-	 var wiek_4 = zawodnik_photo_4.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_4;
-	 var wiek_5 = zawodnik_photo_5.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_5;
-	 var wzrost_1 = zawodnik_photo_1.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_1;
-	 var wzrost_2 = zawodnik_photo_2.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_2;
-	 var wzrost_3 = zawodnik_photo_3.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_3;
-	 var wzrost_4 = zawodnik_photo_4.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_4;
-	 var wzrost_5 = zawodnik_photo_5.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_5;
-	 document.getElementById("twitter_arena_1").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.wikimedia_arena_1+'">'+feature.properties.wikimedia_autor+'<img id = "wikipedia_logo"  src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Tango_style_Wikipedia_Icon.svg/100px-Tango_style_Wikipedia_Icon.svg.png"</a>';
-	 document.getElementById("twitter_arena_2").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_arena+'">'+feature.properties.Zespol+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_3").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka+'">'+feature.properties.Maskotka+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_4").style.display = "none";
-	 document.getElementById("nba_link").innerHTML = '<a id = "nba_link_spodek" target="_blank" href = "'+feature.properties.nba_druzyna+'"><img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo_spodek" width=18px height = 40px><h3 id = "nba_text"></h3></a>';
-	 document.getElementById("nba_text").innerHTML = feature.properties.Zespol;
-	 document.getElementById("photo_maskotka").style.display = 'block';
-	 document.getElementById("photo_maskotka").innerHTML =  '<img class = "zespol_photo" src=" ' +feature.properties.Maskotka_link+'" id = "maskotka_image" height = 300px;>';
-	 document.getElementById("twitter").style.top = "265px";
-	 document.getElementById("twitter2").style.top = "265px";
-	 document.getElementById("twitter3").style.top = "882";}	 
-)}
-else if (feature.properties.Zespol =="Miami Heat" || feature.properties.Zespol =="Charlotte Hornets"){
-layer.on('click',function(e){		 
-	 //var arena_1a = arena.getElementsByClassName("arena_photo")[0].style.display = "block";
-	 //var arena_1b = arena.getElementsByClassName("arena_photo")[1].style.display = "none";
-	 arena_div.scrollTo(0, 0);
-	 document.getElementById("arena").style.display='block';
-	 document.getElementById("text").innerHTML = feature.properties.Arena;
-	 document.getElementById("background").style.backgroundPosition ='0 45%';
-	 document.getElementById("background").style.backgroundImage = 'url('+feature.properties.Background+')';
-	 document.getElementById("pojemnosc").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/> Pojemność: </span></br>'  + feature.properties.Pojemnosc;
-	 document.getElementById("maskotka").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Maskotka:</span></br>'  + feature.properties.Maskotka;
-	 document.getElementById("otwarcie").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"> Rok otwarcia: </span></br>' + feature.properties.Otwarcie;
-	 document.getElementById("photo").style.height = "300px";
-	 document.getElementsByClassName("photo_slider")[0].style.marginTop = "10px";
-	 var arena_1 = arena.getElementsByClassName("arena_photo")[0].src = feature.properties.Image;
-	 var arena_2 = arena.getElementsByClassName("arena_photo")[1].src = feature.properties.Arena2_link;
-	 var arena_wysokosc_1 = arena.getElementsByClassName("arena_photo")[0].style.height = "300px";
-	 var arena_wysokosc_2 = arena.getElementsByClassName("arena_photo")[1].style.height = "300px";
-	 var zawodnik_photo_image_1 = zawodnik_photo_1.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_1_link;
-	 var zawodnik_tekst_1 = zawodnik_1.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_1;
-	 var zawodnik_photo_image_2 = zawodnik_photo_2.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_2_link;
-	 var zawodnik_tekst_2 = zawodnik_2.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_2;
-	 var zawodnik_photo_image_3 = zawodnik_photo_3.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_3_link;
-	 var zawodnik_tekst_3 = zawodnik_3.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_3;
-	 var zawodnik_photo_image_4 = zawodnik_photo_4.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_4_link;
-	 var zawodnik_tekst_4 = zawodnik_4.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_4;
-	 var zawodnik_photo_image_5 = zawodnik_photo_5.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_5_link;
-	 var zawodnik_tekst_5 = zawodnik_5.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_5;
-	 var numer_1 = zawodnik_photo_1.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_1;
-	 var numer_2 = zawodnik_photo_2.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_2;
-	 var numer_3 = zawodnik_photo_3.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_3;
-	 var numer_4 = zawodnik_photo_4.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_4;
-	 var numer_5 = zawodnik_photo_5.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_5;
-	 var flaga_1 = zawodnik_photo_1.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_1+")";
-	 var flaga_2 = zawodnik_photo_2.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_2+")";
-	 var flaga_3 = zawodnik_photo_3.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_3+")";
-	 var flaga_4 = zawodnik_photo_4.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_4+")";
-	 var flaga_5 = zawodnik_photo_5.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_5+")";
-	 var pozycja_1 = pierwsza_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_1;
-	 var pozycja_2 = pierwsza_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_2;
-	 var pozycja_3 = druga_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_3;
-	 var pozycja_4 = druga_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_4;
-	 var pozycja_5 = zawodnik_5.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_5;
-	 var wiek_1 = zawodnik_photo_1.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_1;
-	 var wiek_2 = zawodnik_photo_2.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_2;
-	 var wiek_3 = zawodnik_photo_3.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_3;
-	 var wiek_4 = zawodnik_photo_4.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_4;
-	 var wiek_5 = zawodnik_photo_5.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_5;
-	 var wzrost_1 = zawodnik_photo_1.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_1;
-	 var wzrost_2 = zawodnik_photo_2.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_2;
-	 var wzrost_3 = zawodnik_photo_3.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_3;
-	 var wzrost_4 = zawodnik_photo_4.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_4;
-	 var wzrost_5 = zawodnik_photo_5.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_5;
-	 document.getElementById("twitter_arena_1").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.wikimedia_arena_1+'">'+feature.properties.wikimedia_autor+'<img id = "wikipedia_logo"  src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Tango_style_Wikipedia_Icon.svg/100px-Tango_style_Wikipedia_Icon.svg.png"</a>';
-	 document.getElementById("twitter_arena_2").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_arena+'">'+feature.properties.Zespol+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_3").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka+'">'+feature.properties.Maskotka+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_4").style.display = "none";
-	 document.getElementById("nba_link").innerHTML = '<a id = "nba_link_spodek" target="_blank" href = "'+feature.properties.nba_druzyna+'"><img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo_spodek" width=18px height = 40px><h3 id = "nba_text"></h3></a>';
-	 document.getElementById("nba_text").innerHTML = feature.properties.Zespol;
-	 document.getElementById("photo_maskotka").style.display = 'block';
-	 document.getElementById("photo_maskotka").innerHTML =  '<img class = "zespol_photo" src=" ' +feature.properties.Maskotka_link+'" id = "maskotka_image" height = 300px;>';
-	 document.getElementById("twitter").style.top = "265px";
-	 document.getElementById("twitter2").style.top = "265px";
-	 document.getElementById("twitter3").style.top = "882";}	 
-)}
-else if (feature.properties.Zespol =="Oklahoma City Thunder" || feature.properties.Zespol =="Boston Celtics"){
-layer.on('click',function(e){	
-	 //var arena_1a = arena.getElementsByClassName("arena_photo")[0].style.display = "block";
-	 //var arena_1b = arena.getElementsByClassName("arena_photo")[1].style.display = "none";
-	 arena_div.scrollTo(0, 0);	 
-	 document.getElementById("arena").style.display='block';
-	 document.getElementById("text").innerHTML = feature.properties.Arena;
-	 document.getElementById("background").style.backgroundPosition ='0 40%';
-	 document.getElementById("background").style.backgroundImage = 'url('+feature.properties.Background+')';
-	 document.getElementById("pojemnosc").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/> Pojemność: </span></br>'  + feature.properties.Pojemnosc;
-	 document.getElementById("maskotka").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Maskotka:</span></br>'  + feature.properties.Maskotka;
-	 document.getElementById("otwarcie").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"> Rok otwarcia: </span></br>' + feature.properties.Otwarcie;
-	 document.getElementById("photo").style.height = "300px";
-	 document.getElementsByClassName("photo_slider")[0].style.marginTop = "10px";
-	 var arena_1 = arena.getElementsByClassName("arena_photo")[0].src = feature.properties.Image;
-	 var arena_2 = arena.getElementsByClassName("arena_photo")[1].src = feature.properties.Arena2_link;
-	 var arena_wysokosc_1 = arena.getElementsByClassName("arena_photo")[0].style.height = "300px";
-	 var arena_wysokosc_2 = arena.getElementsByClassName("arena_photo")[1].style.height = "300px";
-	 var zawodnik_photo_image_1 = zawodnik_photo_1.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_1_link;
-	 var zawodnik_tekst_1 = zawodnik_1.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_1;
-	 var zawodnik_photo_image_2 = zawodnik_photo_2.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_2_link;
-	 var zawodnik_tekst_2 = zawodnik_2.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_2;
-	 var zawodnik_photo_image_3 = zawodnik_photo_3.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_3_link;
-	 var zawodnik_tekst_3 = zawodnik_3.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_3;
-	 var zawodnik_photo_image_4 = zawodnik_photo_4.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_4_link;
-	 var zawodnik_tekst_4 = zawodnik_4.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_4;
-	 var zawodnik_photo_image_5 = zawodnik_photo_5.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_5_link;
-	 var zawodnik_tekst_5 = zawodnik_5.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_5;
-	 var numer_1 = zawodnik_photo_1.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_1;
-	 var numer_2 = zawodnik_photo_2.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_2;
-	 var numer_3 = zawodnik_photo_3.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_3;
-	 var numer_4 = zawodnik_photo_4.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_4;
-	 var numer_5 = zawodnik_photo_5.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_5;
-	 var flaga_1 = zawodnik_photo_1.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_1+")";
-	 var flaga_2 = zawodnik_photo_2.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_2+")";
-	 var flaga_3 = zawodnik_photo_3.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_3+")";
-	 var flaga_4 = zawodnik_photo_4.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_4+")";
-	 var flaga_5 = zawodnik_photo_5.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_5+")";
-	 var pozycja_1 = pierwsza_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_1;
-	 var pozycja_2 = pierwsza_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_2;
-	 var pozycja_3 = druga_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_3;
-	 var pozycja_4 = druga_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_4;
-	 var pozycja_5 = zawodnik_5.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_5;
-	 var wiek_1 = zawodnik_photo_1.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_1;
-	 var wiek_2 = zawodnik_photo_2.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_2;
-	 var wiek_3 = zawodnik_photo_3.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_3;
-	 var wiek_4 = zawodnik_photo_4.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_4;
-	 var wiek_5 = zawodnik_photo_5.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_5;
-	 var wzrost_1 = zawodnik_photo_1.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_1;
-	 var wzrost_2 = zawodnik_photo_2.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_2;
-	 var wzrost_3 = zawodnik_photo_3.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_3;
-	 var wzrost_4 = zawodnik_photo_4.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_4;
-	 var wzrost_5 = zawodnik_photo_5.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_5;
-	 document.getElementById("twitter_arena_1").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.wikimedia_arena_1+'">'+feature.properties.wikimedia_autor+'<img id = "wikipedia_logo"  src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Tango_style_Wikipedia_Icon.svg/100px-Tango_style_Wikipedia_Icon.svg.png"</a>';
-	 document.getElementById("twitter_arena_2").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_arena+'">'+feature.properties.Zespol+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_3").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka+'">'+feature.properties.Maskotka+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_4").style.display = "none";
-	 document.getElementById("nba_link").innerHTML = '<a id = "nba_link_spodek" target="_blank" href = "'+feature.properties.nba_druzyna+'"><img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo_spodek" width=18px height = 40px><h3 id = "nba_text"></h3></a>';
-	 document.getElementById("nba_text").innerHTML = feature.properties.Zespol;
-	 document.getElementById("photo_maskotka").style.display = 'block';
-	 document.getElementById("photo_maskotka").innerHTML =  '<img class = "zespol_photo" src=" ' +feature.properties.Maskotka_link+'" id = "maskotka_image" height = 300px;>';
-	 document.getElementById("twitter").style.top = "265px";
-	 document.getElementById("twitter2").style.top = "265px";
-	 document.getElementById("twitter3").style.top = "882";}	 
-)}
-else  {
-   layer.on('click',function(e){
-	 //var arena_1a = arena.getElementsByClassName("arena_photo")[0].style.display = "block";
-	 //var arena_1b = arena.getElementsByClassName("arena_photo")[1].style.display = "none";
-	 arena_div.scrollTo(0, 0);
-	 document.getElementById("arena").style.display='block';
-	 document.getElementById("text").innerHTML = feature.properties.Arena;
-	 document.getElementById("background").style.backgroundPosition ='0 45%';
-	 document.getElementById("background").style.backgroundImage = 'url('+feature.properties.Background+')';
-	 document.getElementById("pojemnosc").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Pojemność:</span></br>'  + feature.properties.Pojemnosc;
-	 document.getElementById("maskotka").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Maskotka:</span></br>'  + feature.properties.Maskotka;
-	 document.getElementById("otwarcie").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"> Rok otwarcia: </span></br>' + feature.properties.Otwarcie;
-	 document.getElementById("photo").style.height = "300px";
-	 document.getElementsByClassName("photo_slider")[0].style.marginTop = "10px";
-	 var arena_1 = arena.getElementsByClassName("arena_photo")[0].src = feature.properties.Image;
-	 var arena_2 = arena.getElementsByClassName("arena_photo")[1].src = feature.properties.Arena2_link;
-	 var arena_wysokosc_1 = arena.getElementsByClassName("arena_photo")[0].style.height = "300px";
-	 var arena_wysokosc_2 = arena.getElementsByClassName("arena_photo")[1].style.height = "300px";
-	 var zawodnik_photo_image_1 = zawodnik_photo_1.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_1_link;
-	 var zawodnik_tekst_1 = zawodnik_1.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_1;
-	 var zawodnik_photo_image_2 = zawodnik_photo_2.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_2_link;
-	 var zawodnik_tekst_2 = zawodnik_2.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_2;
-	 var zawodnik_photo_image_3 = zawodnik_photo_3.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_3_link;
-	 var zawodnik_tekst_3 = zawodnik_3.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_3;
-	 var zawodnik_photo_image_4 = zawodnik_photo_4.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_4_link;
-	 var zawodnik_tekst_4 = zawodnik_4.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_4;
-	 var zawodnik_photo_image_5 = zawodnik_photo_5.getElementsByClassName("player_image")[0].src = feature.properties.Zawodnik_5_link;
-	 var zawodnik_tekst_5 = zawodnik_5.getElementsByClassName("zawodnik")[0].innerHTML = feature.properties.Zawodnik_5;
-	 var numer_1 = zawodnik_photo_1.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_1;
-	 var numer_2 = zawodnik_photo_2.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_2;
-	 var numer_3 = zawodnik_photo_3.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_3;
-	 var numer_4 = zawodnik_photo_4.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_4;
-	 var numer_5 = zawodnik_photo_5.getElementsByClassName("numer")[0].innerHTML = feature.properties.Numer_5;
-	 var flaga_1 = zawodnik_photo_1.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_1+")";
-	 var flaga_2 = zawodnik_photo_2.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_2+")";
-	 var flaga_3 = zawodnik_photo_3.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_3+")";
-	 var flaga_4 = zawodnik_photo_4.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_4+")";
-	 var flaga_5 = zawodnik_photo_5.getElementsByClassName("flaga")[0].style.backgroundImage = "url("+feature.properties.Kraj_5+")";
-	 var pozycja_1 = pierwsza_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_1;
-	 var pozycja_2 = pierwsza_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_2;
-	 var pozycja_3 = druga_dwojka.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_3;
-	 var pozycja_4 = druga_dwojka.getElementsByClassName("pozycja")[1].innerHTML = feature.properties.Pozycja_4;
-	 var pozycja_5 = zawodnik_5.getElementsByClassName("pozycja")[0].innerHTML = feature.properties.Pozycja_5;
-	 var wiek_1 = zawodnik_photo_1.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_1;
-	 var wiek_2 = zawodnik_photo_2.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_2;
-	 var wiek_3 = zawodnik_photo_3.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_3;
-	 var wiek_4 = zawodnik_photo_4.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_4;
-	 var wiek_5 = zawodnik_photo_5.getElementsByClassName("wiek")[0].innerHTML = feature.properties.wiek_5;
-	 var wzrost_1 = zawodnik_photo_1.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_1;
-	 var wzrost_2 = zawodnik_photo_2.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_2;
-	 var wzrost_3 = zawodnik_photo_3.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_3;
-	 var wzrost_4 = zawodnik_photo_4.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_4;
-	 var wzrost_5 = zawodnik_photo_5.getElementsByClassName("wzrost")[0].innerHTML = feature.properties.Wzrost_5;
-	 document.getElementById("twitter_arena_1").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.wikimedia_arena_1+'">'+feature.properties.wikimedia_autor+'<img id = "wikipedia_logo"  src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Tango_style_Wikipedia_Icon.svg/100px-Tango_style_Wikipedia_Icon.svg.png"</a>';
-	 document.getElementById("twitter_arena_2").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_arena+'">'+feature.properties.Zespol+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_3").innerHTML = '<a id = "twitter_link" target="_blank" href="'+feature.properties.twitter_maskotka+'">'+feature.properties.Maskotka+'<i id = "twitter_icon" class="fa fa-twitter"></i></a>';
-	 document.getElementById("twitter_arena_4").style.display = "none";
-	 document.getElementById("nba_link").innerHTML = '<a id = "nba_link_spodek" target="_blank" href = "'+feature.properties.nba_druzyna+'"><img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo_spodek" width=18px height = 40px><h3 id = "nba_text"></h3></a>';
-	 document.getElementById("nba_text").innerHTML = feature.properties.Zespol;
-	 document.getElementById("photo_maskotka").style.display = 'block';
-	 document.getElementById("photo_maskotka").innerHTML =  '<img class = "zespol_photo" src=" ' +feature.properties.Maskotka_link+'" id = "maskotka_image" height = 300px;>';
-	 document.getElementById("twitter").style.top = "265px";
-	 document.getElementById("twitter2").style.top = "265px";
-	 document.getElementById("twitter3").style.top = "882";
-  })} 	
-}},pointToLayer: function (feature, latlng) {
-        switch (feature.properties.Zespol) {
-            case 'Chicago Bulls': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/snb9zua05de5l2b/Chicago_Bulls_logo.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-            case 'Brooklyn Nets': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/zlhz0xm6ai21ch2/Brooklyn_Nets_newlogo.png?dl=0',
-				className:"nets",
-				iconAnchor:   [26, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [50, 65]})});
-			case 'Atlanta Hawks': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/vkxal24jhvx4uar/Atlanta_Hawks_logo.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Boston Celtics': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/srz6g3m805tinl6/Boston_Celtics.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]
-				  })});
-			case 'Charlotte Hornets': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/ojt7p2j13phvbto/Charlotte_Hornets_%282014%29.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Cleveland Cavaliers': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/gjueymj3rba7xth/Cleveland_Cavaliers_logo.png?dl=0',
-				className:"cavaliers",
-				iconAnchor:   [22, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [40, 75]})});
-			case 'Dallas Mavericks': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/drdwad8v3biej9u/Dallas_Mavericks_logo.png?dl=0',
-				className:"suns_dallas",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 65]})});
-			case 'Denver Nuggets': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/yvwiw1hpecfoo4m/Denver_Nuggets.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Golden State Warriors': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/kp0qgpye0a15s2a/Golden_State_Warriors_logo.png?dl=0',
-				className:"kings_golden",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [55, 60]})});
-			case 'Houston Rockets': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/yr7263qzg0qacbz/Houston_Rockets.png?dl=0',
-				className:"grizzlies_rockets_bucks",
-				iconAnchor:   [27, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [55, 65]})});
-			case 'Indiana Pacers': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/78fjk4qop6sn79t/Indiana_Pacers.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Los Angeles Clippers': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/eq75179aho68ajt/Los_Angeles_Clippers_%282015%29.png?dl=0',
-				className:"clippers",
-				iconAnchor:   [33, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [65, 50]})});
-			case 'Los Angeles Lakers': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/emwaka48vmup2yj/Los_Angeles_Lakers_logo.png?dl=0',
-				className:"pelicans_lakers",
-				iconAnchor:   [32, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [65, 45]})});
-			case 'Memphis Grizzlies': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/vlcb8k8nzjtj6x8/Memphis_Grizzlies.png?dl=0',
-				className:"grizzlies_rockets_bucks",
-				iconAnchor:   [27, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [55, 65]})});
-			case 'Miami Heat': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/w8wuz4iljwp2a9k/Miami_Heat_logo.png?dl=0',
-				className:"heat",
-				iconAnchor:   [22, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [45, 70]})});
-			case 'Milwaukee Bucks': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/guibb18vifr5xwz/Milwaukee_Bucks_logo.png?dl=0',
-				className:"grizzlies_rockets_bucks",
-				iconAnchor:   [27, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [55, 65]})});
-			case 'Minnesota Timberwolves': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/o4f7vt15bp2fqpp/Minnesota_Timberwolves_logo.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'New Orleans Pelicans': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/k1s0zd1itknm11s/New_Orleans_Pelicans_logo.png?dl=0',
-				className:"pelicans_lakers",
-				iconAnchor:   [33, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [65, 45]})});
-			case 'New York Knicks': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/8oiqfequizv2996/New_York_Knicks_logo.png?dl=0',
-				className:"knicks",
-				iconAnchor:   [33, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [65, 55]})});
-			case 'Oklahoma City Thunder': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/a6mdi2r5e6k9oas/Oklahoma_City_Thunder.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Orlando Magic': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/9lz5hsu8721wkvq/Orlando_Magic_logo.png?dl=0',
-				className:"orlando",
-				iconAnchor:   [35, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [70, 55]})});
-			case 'Philadelphia 76ers': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/rf9wfvoel3o9ebb/Philadelphia_76ers_logo.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Phoenix Suns': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/232h00i5wkg8y1i/Phoenix_Suns_logo.png?dl=0',
-				className:"suns_dallas",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 65]})});
-			case 'Detroit Pistons': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/7fj2w32uchd6m58/Pistons_logo17.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Portland Trail Blazers': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/u554jpb6cf3hemo/Portland_Trail_Blazers_logo.png?dl=0',
-				className:"logo",
-				iconAnchor:   [32, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Sacramento Kings': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/s9oc4ubvfxsznpk/SacramentoKings.png?dl=0',
-				className:"kings_golden",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [55, 60]})});
-			case 'San Antonio Spurs': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/z66ahros6cryc2e/San_Antonio_Spurs.png?dl=0',
-				className:"spurs",
-				iconAnchor:   [35, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [70, 35]})});
-			case 'Toronto Raptors': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/0khkggphu7u9q84/Toronto_Raptors_logo.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60]})});
-			case 'Utah Jazz': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/q4tpkwmg58lbk1n/Utah_Jazz_logo_%282016%29.png?dl=0',
-				className:"utah",
-				iconAnchor:   [38, 15],
-				popupAnchor:  [0, -25],
-				iconSize: [80, 35]})});
-			case 'Washington Wizards': return L.marker(latlng,{icon:L.icon({
-				iconUrl: 'https://dl.dropboxusercontent.com/s/9zqlber957no6k2/Washington_Wizards_logo.png?dl=0',
-				className:"logo",
-				iconAnchor:   [30, 15], 
-				popupAnchor:  [0, -25],
-				iconSize: [60, 60],})});
-        } 
-    } 
-     
-	   
 
-}); 
-zespoly.addTo(map);
+function highlightFeature2(e) {
+		var layer = e.target;
 
-
-function twitter1(){
-	document.getElementById("twitter").style.visibility = "visible", 
-	document.getElementById("twitter").style.opacity = "1";
-}
-function twitter2(){
-	document.getElementById("twitter").style.visibility = "hidden", 
-	document.getElementById("twitter").style.opacity = "0";
-}
-function twitter3(){
-	document.getElementById("twitter2").style.visibility = "visible", 
-	document.getElementById("twitter2").style.opacity = "1";
-}
-function twitter4(){
-	document.getElementById("twitter2").style.visibility = "hidden", 
-	document.getElementById("twitter2").style.opacity = "0";
-}
-function twitter5(){
-	document.getElementById("twitter3").style.visibility = "visible", 
-	document.getElementById("twitter3").style.opacity = "1";
-}
-function twitter6(){
-	document.getElementById("twitter3").style.visibility = "hidden", 
-	document.getElementById("twitter3").style.opacity = "0";
-}
-
-function twitter_zoom(){
-	document.getElementById("maskotka_image").style.transform = "scale(1.07)", 
-	document.getElementById("maskotka_image").style.opacity = "0.95";
-}
-function twitter_zoom_out(){
-	document.getElementById("maskotka_image").style.transform = "scale(1.00)", 
-	document.getElementById("maskotka_image").style.opacity = "1";
-}
-var sliderr = document.getElementsByClassName("photo_slider")[0];
-
-var arena = document.getElementById("photo");
-
- var jeden_player = document.getElementById("arena_div");
- 
-	 var pierwsza_dwojka = jeden_player.getElementsByClassName("players")[0];
-	 var zawodnik_1 = pierwsza_dwojka.getElementsByClassName("player")[0];
-	 var zawodnik_2 = pierwsza_dwojka.getElementsByClassName("player")[1];
-	 var zawodnik_photo_1 = zawodnik_1.getElementsByClassName("player_photo")[0];
-	 var zawodnik_photo_2 = zawodnik_2.getElementsByClassName("player_photo")[0];
-	 
-	 var druga_dwojka = jeden_player.getElementsByClassName("players")[1];
-	 var zawodnik_3 = druga_dwojka.getElementsByClassName("player")[0];
-	 var zawodnik_4 = druga_dwojka.getElementsByClassName("player")[1];
-	 var zawodnik_photo_3 = zawodnik_3.getElementsByClassName("player_photo")[0];
-	 var zawodnik_photo_4 = zawodnik_4.getElementsByClassName("player_photo")[0];
-	 
-	 var zawodnik_5 = jeden_player.getElementsByClassName("player5")[0];
-	 var zawodnik_photo_5 = zawodnik_5.getElementsByClassName("player_photo")[0];
-
-var dywizja = new L.GeoJSON.AJAX("https://www.dl.dropboxusercontent.com/s/skr5rtgix0t81i4/json_dywizje.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
-	if (feature.properties.Mistrzostwa != null){
-layer.bindPopup
-('<table id = "tabela">\
-  <tr class = "wiersz">\
-    <td id = "komorka">Stan</td>\
-    <td id = "komorka2">'+feature.properties.Stan+'</td>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka">Drużyny</td>\
-    <td id = "komorka2">'+feature.properties.Druzyny+'</td>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka">Mistrzostwa</td>\
-    <td id = "komorka2">'+feature.properties.Mistrzostwa+'</td>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka">Konferencja</td>\
-    <td id = "komorka2">'+feature.properties.Konferencja+'</td>\
-  </tr>\
-  <tr class = "wiersz">\
-    <td id = "komorka">Dywizja</td>\
-    <td id = "komorka2">'+feature.properties.Dywizja+'</td>\
-  </tr>\
-  </table>')
- 
-  
-  
-}}, style:function style(feature) {
+		layer.setStyle({
+			weight: 5,
+			color: '#333',
+			dashArray: '10',
+			fillOpacity: 0.7
+		});
+	}
+	
+function style2(feature) {
     return {
-        fillColor: getColor(feature.properties.Dywizja),
+        color: getColor(feature.properties.colour),
+        weight: 4,
+        opacity: 1,
+        dashArray: '10',
+        fillOpacity: 0.95
+    };  }
+
+function getColor(d) {
+    return d == "black" ? '#111111' :
+           d == "blue"  ? '#0086b3' :
+           d == "green"  ? '#00802b' :
+           d == "yellow"  ? '#e6e60a' :
+           d == "red"   ? '#cc0000' :
+                      '#888881';
+				}	
+				
+function resetHighlight2(e) {
+	warstwa_szlaki.resetStyle(e.target);
+}				
+
+	function onEachFeature2(feature, layer) {
+		if (feature.properties.name!= null){
+		layer.bindPopup('<h2>'+feature.properties.name+'</h2>')}
+		layer.on({
+			mouseover: highlightFeature2,
+			mouseout: resetHighlight2,
+		});
+		layer.on('click',function(e){
+		map.setView(e.latlng,);
+});
+};
+
+warstwa_szlaki = L.geoJson(szlaki, {
+		style: style2,
+		onEachFeature: onEachFeature2,
+		pane:'pane_szlaki'
+	})
+	
+/*
+var szlaki = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/qnhbt8fjuojsyif/szlaki_turystyczne.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
+if (feature.properties.name != null){
+layer.bindPopup('<h2>'+feature.properties.name+'</h2>')
+layer.on('mouseclick', function (e) {
+    //this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});
+layer.on('click',function(e){
+	map.setView(e.latlng,);
+});
+}	
+},style:function style(feature) {
+    return {
+        color: getColor(feature.properties.colour),
+        weight: 4,
+        opacity: 1,
+        dashArray: '10',
+        fillOpacity: 0.95
+    };  }
+});
+szlaki.addTo(map);
+*/
+
+
+var parki_krajobrazowe = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/co9xn8yjyd2tyih/parki_krajobrazowe.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
+},style:function style(feature) {
+    return {
+        fillColor: '#169843',
         weight: 2,
         opacity: 1,
         color: '#333',
         dashArray: '1',
-        fillOpacity: 0.80
-    };   
+        fillOpacity: 0.95
+    };  }
+});
+parki_krajobrazowe.addTo(map);
+
+
+var loga = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/6n5b892g9ra4m98/parki_punkty2.json?dl=0",{onEachFeature:function (feature,layer) {
+	if (feature.properties.Park != null){
+layer.bindPopup('<h2>'+feature.properties.Park+'</h2>')
+layer.on('mouseover', function (e) {
+    this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});
+layer.on('click',function(e){
+	map.setView(e.latlng, 11);
+});
 }
-
 	
+		if (feature.properties.Park == "Kampinoski PN"){
+			layer.on('click',function(e){
+			document.getElementById("container").style.display = 'block';
+			document.getElementById("title").innerHTML = '<img src="loga/kampinoski2.jpg" width = 70px height = 70px;>';
+			document.getElementById("title2").innerHTML = feature.properties.Park;
+			document.getElementById("photo").innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Poland_Kampinos_April_1.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
+			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;
+			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
+			document.getElementById("photo2").innerHTML = '<img src="https://naukawpolsce.pap.pl/sites/default/files/styles/strona_glowna_slider_750x420/public/201710/13130799_13130792.jpg?itok=xj9b_AF6" id = "natura" width = 450px height = 300px;>';
+			})}
+		else if (feature.properties.Park == "Babiogórski PN"){
+			layer.on('click',function(e){
+			document.getElementById("container").style.display = 'block';
+			document.getElementById("title").innerHTML=feature.properties.siedziba;
+			document.getElementById("photo").innerHTML = '<img src="http://www.bgpn.pl/images/gallery/vancuver_430.jpg" id = "maskotka_image" width = 450px height = 300px;>';
+			})}
+},
+pointToLayer: function (feature, latlng) {
+        switch (feature.properties.Park) {
+            case 'Kampinoski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/v1axl831if7xrpz/Kampinoski_okragle_podstawowe.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+            case 'Białowieski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/itlaikdguwhqzpp/Logo_Bia%C5%82owieskiego_Parku_Narodowego.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Gorczański PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/gxzfi82ti9gipnh/LOGO_GORCZA%C5%83SKIEGO_PARKU_NARODOWEGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'PN Ujście Warty': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/fof5zt51e62kk4e/Logo_Park_Narodowy__Uj%C5%9Bcie_Warty_.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'PN Gór Stołowych': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/gaf0t803axwz213/LOGO_PARKU_NARODOWEGO_G%C3%93R_STO%C5%81OWYCH.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Pieniński PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/jfenh0jgddtxrq3/Logo_Pieninskiego_Parku_Narodowego_Polska.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Poleski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/07iix3xep5t9x6e/Logo_Poleskiego_Parku_Narodowego.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Słowiński PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/0kv2fdvqhizlsuj/Logo_S%C5%82owi%C5%84skiego_Parku_Narodowego.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Wigierski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/r87pi73iyp7s9pr/LOGO_WIGIERSKIEGO_PARKU_NARODOWEGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Ojcowski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/65cskv6whc3kggi/Ojcowski_Park_Narodowy_LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Babiogórski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/l5qbbicmdatvh6a/POL_Babiog%C3%B3rski_Park_Narodowy_LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Narwiański PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/u93zkdo5ywl4ksy/LOGO_NARWIA%C5%83SKIEGO_PARKU_NARODOWEGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Biebrzański PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/qumwgnel44anf2n/POL_Biebrza%C5%84ski_Park_Narodowy_LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Bieszczadzki PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/8okvuhenldmump1/POL_Bieszczadzki_Park_Narodowy_LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Drawieński PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/w12smxcl9tqqltl/POL_Drawie%C5%84ski_Park_Narodowy_LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Karkonoski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/5e0icdm8oyc798k/POL_Karkonoski_Park_Narodowy_Logo.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'PN Bory Tucholskie': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/ftq76qt4qtbbqv7/POL_Park_Narodowy__Bory_Tucholskie__LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Roztoczański PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/860t5qkgdmkakf1/POL_Roztocza%C5%84ski_Park_Narodowy_LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Tatrzański PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/opm4ls11y4a2obh/Tatrzanski_PN.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Wielkopolski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/p40ldsiygwtbhct/POL_Wielkopolski_Park_Narodowy_LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Woliński PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/cb1gwqba9orcq9l/POL_Woli%C5%84ski_Park_Narodowy_LOGO.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Świętokrzyski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/6y62ji03k9fibvy/Swietokrzyski_Park_Narodowy.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+			case 'Magurski PN': return L.marker(latlng,{icon:L.icon({
+				iconUrl: 'https://dl.dropboxusercontent.com/s/ofgxhqw0a01ro1r/Logo_Magurskiego_Parku_Narodowego.png?dl=0',
+				className:"logo",
+				iconAnchor:   [32, 25], 
+				popupAnchor:  [0, -25],
+				iconSize: [60, 60]})});
+		}
+	}		
+}); 
+loga.addTo(map);
+
+var parki = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/ghh6sf9quob0u3a/parki_narodowe.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
 	
+},style:function style(feature) {
+    return {
+        fillColor: '#164527',
+        weight: 2,
+        opacity: 1,
+        color: '#333',
+        dashArray: '1',
+        fillOpacity: 0.95
+    };  }
 });
-dywizja.addTo(map);
-
-
-function getColor(d) {
-    return d == "Pacyfiku" ? '#c77575' :
-           d == "Centralna"  ? '#44a2a2' :
-           d == "Atlantyku"  ? '#c299d6' :
-           d == "Północno-zachodnia"  ? '#c7b275' :
-           d == "Południowo-wschodnia"   ? '#37ae73' :
-           d == "Południowo-zachodnia"   ? '#f6da6a' :
-                      '#7c7c6a';
-				}	
-					
-dywizja.on('click', function(e){
-    map.setView(e.latlng, 5);
-	document.getElementById('arena').style.display='none';
-});
-
+parki.addTo(map);
 
 map.on('click', function(){
-    map.setView([38, -97], 5.1);
-	document.getElementById('arena').style.display='none';
+    //map.setView([52, 19], 6.7);
+	document.getElementById('container').style.display = 'none';
 });
 
-map.zoomControl.setPosition('bottomleft');
+var narodowe = document.getElementById("narodowe_button");
+narodowe_button.addEventListener("click", function(){
+	if(!(map.hasLayer(parki))){
+		parki.addTo(map)
+	}
+	else if(map.hasLayer(parki)){
+	map.removeLayer(parki);
+}})
+var krajobrazowe = document.getElementById("krajobrazowe_button");
+krajobrazowe_button.addEventListener("click", function(){
+	if(!(map.hasLayer(parki_krajobrazowe))){
+		parki_krajobrazowe.addTo(map)
+	}
+	else if(map.hasLayer(parki_krajobrazowe)){
+	map.removeLayer(parki_krajobrazowe);
+}})
 
-	function legenda_click() {
-  var legenda = document.getElementById("legenda_dywizje");
-  if (legenda.style.opacity === "1") {
-    legenda.style.visibility = "hidden", legenda.style.opacity = "0";
-  } else  {
-    legenda.style.visibility = "visible", legenda.style.opacity = "1";
-  }
-	};
-			
 
-	
-	var slideIndex = 1;
-showDivs(slideIndex);
+var szlaki = document.getElementById("szlaki_button");
+szlaki_button.addEventListener("click", function(){
+	if(!(map.hasLayer(warstwa_szlaki))){
+		warstwa_szlaki.addTo(map);
+		document.getElementById("legenda").style.display = "block";
+	}
+	else if(map.hasLayer(warstwa_szlaki)){
+	map.removeLayer(warstwa_szlaki);
+	document.getElementById("legenda").style.display = "none";
+}})
 
-function plusDivs(n) {
-  showDivs(slideIndex += n);
+//wyswietlanie opisow szlakow po nakliknieciu
+function opis_rozwiniety(){
+	if(document.getElementById("opis_1").style.display == "none"){
+	document.getElementById("opis_1").style.display = "block"; 
+	document.getElementsByClassName("szlak_head")[0].style.backgroundColor = "#222";
+	}
+	else{
+	document.getElementById("opis_1").style.display= "none";
+	document.getElementsByClassName("szlak_head")[0].style.backgroundColor = "#333";
+	}
 }
 
-function currentDiv(n) {
-  showDivs(slideIndex = n);
+function opis_rozwiniety2(){
+	if(document.getElementById("opis_2").style.display == "none"){
+	document.getElementById("opis_2").style.display = "block"; 
+	document.getElementsByClassName("szlak_head")[1].style.backgroundColor = "#222";
+	}
+	else{
+	document.getElementById("opis_2").style.display= "none";
+	document.getElementsByClassName("szlak_head")[1].style.backgroundColor = "#333";
+	}
 }
-
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("arena_photo");
-  var dots = document.getElementsByClassName("demo");
-  var index = slideIndex;
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length}
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" white", "");
-  }
-  x[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " white";
-  
+function opis_rozwiniety3(){
+	if(document.getElementById("opis_3").style.display == "none"){
+	document.getElementById("opis_3").style.display = "block"; 
+	document.getElementsByClassName("szlak_head")[2].style.backgroundColor = "#222";
+	}
+	else{
+	document.getElementById("opis_3").style.display= "none";
+	document.getElementsByClassName("szlak_head")[2].style.backgroundColor = "#333";
+	}
 }
+function opis_rozwiniety4(){
+	if(document.getElementById("opis_4").style.display == "none"){
+	document.getElementById("opis_4").style.display = "block"; 
+	document.getElementsByClassName("szlak_head")[3].style.backgroundColor = "#222";
+	}
+	else{
+	document.getElementById("opis_4").style.display= "none";
+	document.getElementsByClassName("szlak_head")[3].style.backgroundColor = "#333";
+	}
+}
+function opis_rozwiniety5(){
+	if(document.getElementById("opis_5").style.display == "none"){
+	document.getElementById("opis_5").style.display = "block"; 
+	document.getElementsByClassName("szlak_head")[4].style.backgroundColor = "#222";
+	}
+	else{
+	document.getElementById("opis_5").style.display= "none";
+	document.getElementsByClassName("szlak_head")[4].style.backgroundColor = "#333";
+	}
+}
+function opis_rozwiniety6(){
+	if(document.getElementById("opis_6").style.display == "none"){
+	document.getElementById("opis_6").style.display = "block"; 
+	document.getElementsByClassName("szlak_head")[5].style.backgroundColor = "#222";
+	}
+	else{
+	document.getElementById("opis_6").style.display= "none";
+	document.getElementsByClassName("szlak_head")[5].style.backgroundColor = "#333";
+	}
+}
+//pojawianie sie strzalek
+function arrow(){
+	if(document.getElementById("opis_1").style.display == "none"){
+		document.getElementsByClassName("arrow")[0].style.display= "block";
+		}
+	else {document.getElementsByClassName("arrow_up")[0].style.display= "block";
+}}
+function arrow2(){
+	if(document.getElementById("opis_2").style.display == "none"){
+		document.getElementsByClassName("arrow")[1].style.display= "block";
+		}
+	else {document.getElementsByClassName("arrow_up")[1].style.display= "block";
+}}
+function arrow3(){
+	if(document.getElementById("opis_3").style.display == "none"){
+		document.getElementsByClassName("arrow")[2].style.display= "block";
+		}
+	else {document.getElementsByClassName("arrow_up")[2].style.display= "block";
+}}
+function arrow4(){
+	if(document.getElementById("opis_4").style.display == "none"){
+		document.getElementsByClassName("arrow")[3].style.display= "block";
+		}
+	else {document.getElementsByClassName("arrow_up")[3].style.display= "block";
+}}
+function arrow5(){
+	if(document.getElementById("opis_5").style.display == "none"){
+		document.getElementsByClassName("arrow")[4].style.display= "block";
+		}
+	else {document.getElementsByClassName("arrow_up")[4].style.display= "block";
+}}
+function arrow6(){
+	if(document.getElementById("opis_6").style.display == "none"){
+		document.getElementsByClassName("arrow")[5].style.display= "block";
+		}
+	else {document.getElementsByClassName("arrow_up")[5].style.display= "block";
+}}
 
-
-
-
-
-
+//znikanie strzalek
+function hidden_arrow(){
+	document.getElementsByClassName("arrow")[0].style.display= "none";
+	document.getElementsByClassName("arrow_up")[0].style.display= "none";
+}
+function hidden_arrow2(){
+	document.getElementsByClassName("arrow")[1].style.display= "none";
+	document.getElementsByClassName("arrow_up")[1].style.display= "none";
+}
+function hidden_arrow3(){
+	document.getElementsByClassName("arrow")[2].style.display= "none";
+	document.getElementsByClassName("arrow_up")[2].style.display= "none";
+}
+function hidden_arrow4(){
+	document.getElementsByClassName("arrow")[3].style.display= "none";
+	document.getElementsByClassName("arrow_up")[3].style.display= "none";
+}
+function hidden_arrow5(){
+	document.getElementsByClassName("arrow")[4].style.display= "none";
+	document.getElementsByClassName("arrow_up")[4].style.display= "none";
+}
+function hidden_arrow6(){
+	document.getElementsByClassName("arrow")[5].style.display= "none";
+	document.getElementsByClassName("arrow_up")[5].style.display= "none";
+}
 
