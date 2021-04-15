@@ -2,10 +2,10 @@
 <html lang = "pl">
 <head>
 <meta charset = "utf-8"/>
-<meta name = "description" content = ""/>
-<meta name = "keywords" content = ""/>
+<meta name = "description" content = "Interaktywna mapa ligi NBA przedstawia w przejrzysty sposób najważniejsze informacje o klubach amerykańskiej ligi koszykarskiej."/>
+<meta name = "keywords" content = "interaktywna mapa, liga NBA, koszykówka, NBA, liga koszykarska, kluby NBA, mapa, interaktywna mapa ligi NBA, netlify, interaktywna mapa ligi nba netlify"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Parki narodowe i krajobrazowe w Polsce</title>
+<title>Interaktywna mapa ligi NBA</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -15,47 +15,158 @@
 	src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
-<script type="text/javascript" src="https://dl.dropboxusercontent.com/s/68l0y658o74eyk4/wojewodztwa.js?dl=0"></script>
-<script type="text/javascript" src="https://dl.dropboxusercontent.com/s/ilxx6pyluhhyo3r/szlaki_turystyczne.js?dl=0"></script>
 </head>
 <body>
-
-<div id="narodowe" class = "selected-icon">
-<span class="info2">Parki Narodowe</span>
-<input type="image" src="https://png.pngtree.com/png-vector/20190418/ourlarge/pngtree-vector-poloygon-icon-png-image_950761.jpg" name="zimowe_button" class="ikona" id="narodowe_button" width=50 height=50/>
-</div>
-
-<div id="krajobrazowe" class = "selected-icon">
-  <span class="info2">Parki Krajobrazowe</span>
-  <input type="image" src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/tree.png" name="letnie_button" class="ikona" id="krajobrazowe_button" width=50 height=50/>
-  </div>
-  
-
+<script src="https://dl.dropboxusercontent.com/s/wnkb57r197uikl4/dywizje.js?dl=0"></script>
 <div id = "map"></div>
+
+<div>
+	<img src = "https://dl.dropboxusercontent.com/s/kqippwm4xaypogz/nba.png?dl=0" id = "nba_logo" width=30px height = 65px><h1 id = "info"> Interaktywna mapa ligi NBA</h1>
+</div>
+<div id = "arena"> 
+    <div id = "background">
+	</div>
+<input id = "close-button" type="button" value="x" onclick="document.getElementById('arena').style.display='none'">
+		<div id = "tekst">
+		
+			<h2><p id = "text"><span style="text-shadow: 3px 3px 2px #888888; z-index:5;"/></p></h2>
+		</div>
+	
+	<div id = "arena_div"> 
+	
+		<div id = "photo">
+	
+
+  <img class = "arena_photo"  onmouseover = "twitter1()" onmouseout = "twitter2()" ><div id= "twitter" onmouseover = "twitter1()" onmouseout = "twitter2()" > <h4 class = "twitter_text" id = "twitter_arena_1"></h4></div>
+  </img>
+  
+  <img class = "arena_photo"  onmouseover = "twitter3()" onmouseout = "twitter4()" ><div id = "twitter2" onmouseover = "twitter3()" onmouseout = "twitter4()"> <h4 class = "twitter_text" id = "twitter_arena_2"></h4></div>
+  </img>
+  		
+
+  
+</div>
+	<div class="photo_slider">
+		<div class="left-arrow" onclick="plusDivs(-1)">&#10094;</div>
+		<div class="right-arrow" onclick="plusDivs(1)">&#10095;</div>
+		<span class="badge demo empty active" onclick="currentDiv(1)"></span>
+		<span class="badge demo empty active" onclick="currentDiv(2)"></span>
+	  </div>
+		<div id = "pojemnosc"></div>
+		<div id = "otwarcie"></div>
+		<hr class="hr1">
+		<div id = "maskotka"></div>
+		<div id= "twitter3" onmouseover = "twitter5(), twitter_zoom()" onmouseout = "twitter6(), twitter_zoom_out()" > 	  <h4 class = "twitter_text" id = "twitter_arena_3"></h4>
+			<h4 class = "twitter_text_2" id = "twitter_arena_4"></h4></div>
+		<div id = "photo_maskotka" onmouseover = "twitter5(), twitter_zoom()" onmouseout = "twitter6(), twitter_zoom_out()">	
+		</div>
+		<hr class="hr2">
+		<div id = "sklad">Wyjściowy skład</div>
+		<div class = "players">
+			<div class = "player" style = "float:left">
+				<div class = "pozycja"></div>
+				<div class = "player_photo">
+					<div class = "wzrost"></div>
+					<div class = "wiek"></div>
+					<img class = "player_image"></img>
+					<div class = "numer"></div>
+					<div class = "flaga"></div>
+					
+				</div>
+				<div class = "zawodnik"></div>
+			</div>
+			<div class = "player" style = "float:right">
+				<div class = "pozycja"></div>
+				<div class = "player_photo">
+					<div class = "wzrost"></div>
+					<div class = "wiek"></div>
+					<img class = "player_image"></img>
+					<div class = "numer"></div>
+					<div class = "flaga"></div>
+				</div>
+				<div class = "zawodnik"></div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<div class = "players">
+			<div class = "player" style = "float:left">
+				<div class = "pozycja"></div>
+				<div class = "player_photo">
+					<div class = "wzrost"></div>
+					<div class = "wiek"></div>
+					<img class = "player_image"></img>
+					<div class = "numer"></div>
+					<div class = "flaga"></div>
+					
+				</div>
+				<div class = "zawodnik"></div>
+			</div>
+				<div class = "player" style = "float:right">
+					<div class = "pozycja"></div>
+					<div class = "player_photo">
+						<div class = "wzrost"></div>
+						<div class = "wiek"></div>
+						<img class = "player_image"></img>
+						<div class = "numer"></div>
+						<div class = "flaga"></div>
+					</div>
+					<div class = "zawodnik"></div>
+				</div>
+		</div>
+		<div class = "player5">
+			<div class = "pozycja"></div>
+			<div class = "player_photo">
+				<div class = "wzrost"></div>
+				<div class = "wiek"></div>
+				<img class = "player_image"></img>
+				<div class = "numer"></div>
+				<div class = "flaga"></div>
+			</div>
+			<div class = "zawodnik"></div>
+		</div>
+		<div id = "stopka">
+			<div id = "nba_link">
+				
+			</div>
+			<div id = "twitter_druzyna"></div>
+		</div>
+	</div>	
+</div>
+		<div id = "slide"  onclick="legenda_click()">
+<span style = "font-size:90%;">&#9776;</span>  Dywizje</div>
+		<div id = "legenda_dywizje">
+	
+			<div id = "dywizja1" class = "dywizja"></div>
+			<div class = "legenda_tekst">Pacyfiku</div>
+			<div style="clear:both;"></div>
+			<div id = "dywizja2" class = "dywizja"></div>
+			<div class = "legenda_tekst">Północno-zachodnia</div>
+			<div style="clear:both;"></div>			
+			<div id = "dywizja5" class = "dywizja"></div>
+			<div class = "legenda_tekst">Centralna</div>
+			<div style="clear:both;"></div>
+			<div id = "dywizja3" class = "dywizja"></div>
+			<div class = "legenda_tekst">Południowo-zachodnia</div>
+			<div style="clear:both;"></div>
+			<div id = "dywizja6" class = "dywizja"></div>
+			<div class = "legenda_tekst">Atlantyku</div>
+			<div style="clear:both;"></div>
+			<div id = "dywizja4" class = "dywizja"></div>
+			<div class = "legenda_tekst">Południowo-wschodnia</div>
+			<div style="clear:both;"></div>
+			<div id = "dywizja7" class = "dywizja"></div>
+			<div class = "legenda_tekst">Brak dywizji</div>
+			<div style="clear:both;"></div>
+		</div>	
+
 <script src="script.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
-<div id = "container">
-	<div id = "title">
-	</div><div id = "title2">
-	</div>
-	<div id = "photo">
-	</div>
-	<div id = "rok">
-	</div>
-	<div id = "siedziba">
-	</div>
-	<div id = "symbol">
-	</div>
-	<div id = "photo2">
-	</div>
-	<input id = "close-button" type="button" value="x" onclick="document.getElementById('container').style.display='none'">
 
-</div>
+
 </body>
 </html>
