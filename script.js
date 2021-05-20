@@ -206,6 +206,16 @@ layer.on('click',function(e){
 			document.getElementById("title").innerHTML=feature.properties.siedziba;
 			document.getElementById("photo").innerHTML = '<img src="http://www.bgpn.pl/images/gallery/vancuver_430.jpg" id = "maskotka_image" width = 450px height = 300px;>';
 			})}
+		else if (feature.properties.Park == "Woliński PN"){
+			layer.on('click',function(e){
+			document.getElementById("container").style.display = 'block';
+			document.getElementById("title2").innerHTML=feature.properties.Park;
+			document.getElementById("photo").innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Woliński_Park_narodowy_-_klif.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
+			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;
+			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
+			document.getElementById("photo2").innerHTML = '<img src="https://www.lasy.gov.pl/pl/informacje/aktualnosci/populacja-bielika-podopiecznego-lesnikow-caly-czas-rosnie/bielik-2-antoni-kasprzak.jpg/@@images/image" id = "natura" width = 450px height = 300px;>';
+			})}
 },
 pointToLayer: function (feature, latlng) {
         switch (feature.properties.Park) {
