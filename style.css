@@ -274,6 +274,56 @@ html, body {
   border-style: solid;
   border-color: transparent black transparent transparent;
 }
+#demy{
+    position: absolute;
+    z-index: 1;
+    right:10px;
+	top:230px;
+	border:1px solid black;
+	border-radius:20px;
+	#padding:3.5px;
+	box-shadow:2px -2px 6px #777;
+}
+#demy_button:focus {
+    outline: 0 !important;
+}
+#demy:hover {
+	border:2px dashed black;
+	padding:3px;
+}
+#demy .info2 {
+  visibility: hidden;
+  width: 180px;
+  background-color: #333;
+  color: #ddd;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s;
+  top: 20%;
+  right: 140%;
+  margin-left: -60px;
+  font-size:18px;
+  border:1px solid black;
+  font-weight:bold;
+}
+#demy:hover .info2 {
+  visibility: visible;
+  opacity: 1;
+}
+#demy .info2::after {
+  content: " ";
+  position: absolute;
+  top:50%;  
+  left:100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
 .ikona {
 border-radius:20px;
 }	

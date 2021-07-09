@@ -1,13 +1,13 @@
 var map = L.map( 'map', {
     center: [52, 19],
-    minZoom: 6,
+    minZoom: 1,
 	maxZoom: 15,
     zoom: 6.7,
 	zoomSnap:0.01
 });
 
 
-L.tileLayer( 'https://api.mapbox.com/styles/v1/adryanque/ckm0kaotk6l8m17o51p8vqzqj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
+var podklad = L.tileLayer('https://api.mapbox.com/styles/v1/adryanque/ckm0kaotk6l8m17o51p8vqzqj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
 }).addTo( map );
 
@@ -607,6 +607,8 @@ map.on('click', function(){
 	document.getElementById('container').style.display = 'none';
 });
 
+var warstwa_demy = L.imageOverlay('https://dl.dropboxusercontent.com/s/nau71yfimwaswu6/gory_stolowe.png?dl=0', [[50.513996196, 16.263303266], [50.419704345, 16.449414326]])
+
 var narodowe = document.getElementById("narodowe_button");
 narodowe_button.addEventListener("click", function(){
 	if(!(map.hasLayer(parki))){
@@ -636,6 +638,14 @@ szlaki_button.addEventListener("click", function(){
 	document.getElementById("legenda").style.display = "none";
 }})
 
+var demy = document.getElementById("demy_button");
+demy_button.addEventListener("click", function(){
+	if(!(map.hasLayer(warstwa_demy))){
+		warstwa_demy.addTo(map);
+	}
+	else if(map.hasLayer(warstwa_demy)){
+	map.removeLayer(warstwa_demy);
+}})
 //wyswietlanie opisow szlakow po nakliknieciu
 function opis_rozwiniety(){
 	if(document.getElementById("opis_1").style.display == "none"){
@@ -761,4 +771,6 @@ function hidden_arrow6(){
 	document.getElementsByClassName("arrow")[5].style.display= "none";
 	document.getElementsByClassName("arrow_up")[5].style.display= "none";
 }
+
+
 
