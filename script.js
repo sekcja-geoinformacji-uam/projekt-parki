@@ -1,23 +1,26 @@
+
 var map = L.map( 'map', {
     center: [52, 19],
     minZoom: 1,
 	maxZoom: 15,
     zoom: 6.7,
-	zoomSnap:0.01
+	zoomSnap:0.001,
 });
 
+//var podklad = L.tileLayer('https://api.mapbox.com/styles/v1/adryanque/ckm0kaotk6l8m17o51p8vqzqj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
+    //attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
+//}).addTo( map );
 
-var podklad = L.tileLayer('https://api.mapbox.com/styles/v1/adryanque/ckm0kaotk6l8m17o51p8vqzqj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
+var podklad = L.tileLayer('https://api.mapbox.com/styles/v1/adryanque/ckqqyye3r4st018letzv7n099/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
 }).addTo( map );
-
 
 	function style(feature) {
 		return {
 			fillColor: 'transparent',
 			weight: 1,
 			opacity: 0.7,
-			color: '#333',
+			color: '#222',
 			dashArray: '1',
 			fillOpacity: 0.4,
 		};
@@ -173,6 +176,52 @@ var parki_krajobrazowe = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s
     };  }
 });
 parki_krajobrazowe.addTo(map);
+
+
+
+
+
+
+
+
+
+var MyIcon = L.icon({
+    iconUrl: 'ikony/peak.png',
+    iconSize:     [30, 30], // size of the icon
+    shadowSize:   [100, 100], // size of the shadow
+    iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+    shadowAnchor: [20, 60],  // the same for the shadow
+    popupAnchor:  [-3, -20] // point from which the popup should open relative to the iconAnchor
+});
+
+
+var szczyty = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/fbiqsw93wyrzosv/szczyty.json?dl=0",{onEachFeature:function (feature,layer) {
+	if (feature.properties.name != null){
+layer.bindPopup('<h2>'+feature.properties.name +'</h2>')
+layer.on('mouseover', function (e) {
+    this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});
+	}},
+	pointToLayer: function(feature,latlng){
+		return L.marker(latlng,{icon: MyIcon});
+	}
+});
+
+var markery = L.markerClusterGroup()
+
+szczyty.on('data:loaded', function () {
+    markery.addLayer(szczyty);
+    console.log(markery);
+    map.addLayer(markery);
+});
+
+
+
+
+
 
 
 var loga = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/6n5b892g9ra4m98/parki_punkty2.json?dl=0",{onEachFeature:function (feature,layer) {
@@ -607,7 +656,29 @@ map.on('click', function(){
 	document.getElementById('container').style.display = 'none';
 });
 
-var warstwa_demy = L.imageOverlay('https://dl.dropboxusercontent.com/s/nau71yfimwaswu6/gory_stolowe.png?dl=0', [[50.513996196, 16.263303266], [50.419704345, 16.449414326]])
+var warstwa_gory_stolowe = L.imageOverlay('https://dl.dropboxusercontent.com/s/94xrqqw3aag0b9r/gory_stolowe.png?dl=0', [[50.511349759, 16.262960679], [50.422894720, 16.447147861]])
+
+var warstwa_karkonoski = L.imageOverlay('https://dl.dropboxusercontent.com/s/m7doaadrhsvay22/karkonoski.png?dl=0', [[50.855941611, 15.454902321], [50.72818689, 15.83475647]])
+
+var warstwa_gorczanski = L.imageOverlay('https://dl.dropboxusercontent.com/s/3xle26wfcibw934/gorczanski.png?dl=0', [[49.6297068, 20.0152318], [49.5020153, 20.2681160]])
+
+var warstwa_tatrzanski = L.imageOverlay('https://dl.dropboxusercontent.com/s/5k800s4k7b8bfzq/tatrzanski.png?dl=0', [[49.3556376, 19.7365790], [49.1685861, 20.1602903]])
+
+var warstwa_babiogorski = L.imageOverlay('https://dl.dropboxusercontent.com/s/u7wbd8p98kng789/babiogorski.png?dl=0', [[49.62215728, 19.46423408], [49.55473111, 19.61120239]])
+
+var warstwa_pieninski = L.imageOverlay('https://dl.dropboxusercontent.com/s/p8w7qewbo8jio96/pieninski.png?dl=0', [[49.44222409, 20.27924980], [49.391760307, 20.464828845]])
+
+var warstwa_ojcowski = L.imageOverlay('https://dl.dropboxusercontent.com/s/arrr00jpur15gen/ojcowski.png?dl=0', [[50.2549479, 19.7624461], [50.1530324, 19.8855363]])
+
+var warstwa_poleski = L.imageOverlay('https://dl.dropboxusercontent.com/s/671jtyls9vujyg7/poleski.png?dl=0', [[51.5164785, 23.0025527], [51.3117426, 23.3724593]])
+
+var warstwa_roztoczanski = L.imageOverlay('https://dl.dropboxusercontent.com/s/j7hyo40fj6yuszn/roztoczanski.png?dl=0', [[50.685493, 22.881411], [50.5036113, 23.1510262]])
+
+//var warstwa_swietokrzyski= L.imageOverlay('https://dl.dropboxusercontent.com/s/8ibf1zojmvu19dr/swietokrzyski.png?dl=0', [[49.351960057, 19.753060945], [49.169297496, 20.154908783]])
+
+var warstwa_ujscie_warty = L.imageOverlay('https://dl.dropboxusercontent.com/s/b2g51nmyspikc2r/ujscie_warty.png?dl=0', [[52.666038, 14.623495], [52.5339246, 14.9347796]])
+
+var warstwa_wielkopolski = L.imageOverlay('https://dl.dropboxusercontent.com/s/8ntmxu4bbh7m4ey/wielkopolski.png?dl=0', [[52.3381915, 16.6286550], [52.2206600, 16.9301937]])
 
 var narodowe = document.getElementById("narodowe_button");
 narodowe_button.addEventListener("click", function(){
@@ -638,13 +709,16 @@ szlaki_button.addEventListener("click", function(){
 	document.getElementById("legenda").style.display = "none";
 }})
 
+var warstwa_nmt = L.layerGroup([warstwa_gory_stolowe, warstwa_karkonoski, warstwa_gorczanski, warstwa_tatrzanski, warstwa_pieninski, 
+	warstwa_babiogorski, warstwa_ojcowski, warstwa_poleski, warstwa_roztoczanski, warstwa_ujscie_warty, warstwa_wielkopolski]);
+
 var demy = document.getElementById("demy_button");
 demy_button.addEventListener("click", function(){
-	if(!(map.hasLayer(warstwa_demy))){
-		warstwa_demy.addTo(map);
+	if(!(map.hasLayer(warstwa_nmt))){
+		warstwa_nmt.addTo(map);
 	}
-	else if(map.hasLayer(warstwa_demy)){
-	map.removeLayer(warstwa_demy);
+	else if(map.hasLayer(warstwa_nmt)){
+	map.removeLayer(warstwa_nmt);
 }})
 //wyswietlanie opisow szlakow po nakliknieciu
 function opis_rozwiniety(){
@@ -773,4 +847,81 @@ function hidden_arrow6(){
 }
 
 
+//wyszukiwarka po nazwach obiektów w warstwach
 
+var searchControl = new L.Control.Search({
+	layer: L.featureGroup([parki, szczyty]),
+	propertyName: 'name',
+	marker: false,
+	moveToLocation: function(latlng, title, map) {
+        map.setView(latlng, 11); 
+		//map.fitBounds( latlng.layer.getBounds() );
+		//var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+		  //map.setView(latlng, zoom); // access the zoom
+	}
+});
+
+searchControl.on('search:locationfound', function(e) {
+	
+	//console.log('search:locationfound', );
+
+	//map.removeLayer(this._markerSearch)
+	e.layer.setStyle({fillColor: '#ffffff', color: '#333'});		//ustawienie podwójnego błyskania po wyszukaniu danego obiektu
+	setTimeout(function(){
+		e.layer.setStyle({fillColor: '#169843', color: '#333'});
+		
+    },100); 
+    setTimeout(function(){
+	e.layer.setStyle({fillColor: '#ffffff', color: '#333'});
+	
+	},170); 
+	setTimeout(function(){
+		e.layer.setStyle({fillColor: '#169843', color: '#333'});
+		
+   },240); 
+   
+	if(e.layer._popup)
+		e.layer.openPopup();
+
+});
+//.on('search:collapsed', function(e) {
+
+	//loga.eachLayer(function(layer) {	//restore feature color
+	//	loga.resetStyle(layer);
+	//});	
+//});
+
+map.addControl( searchControl );  //inizialize search control
+
+
+
+
+//poligon cieniujący resztę świata oprócz Polski 
+var podklad_cien = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/4clbk4wvf8fkw31/reszta_swiata.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
+},style:function style(feature) {
+    return {
+		fillColor: '#111111',
+        color: '#111111',
+        opacity: 1,
+        fillOpacity: 0.7
+    };  }
+});
+podklad_cien.addTo(map);
+
+//przeźroczystość warstw rastrowych
+$(document).ready(function(){
+	$("#opacity-slider").on('change', function(){
+	$("#image-opacity").html(this.value);
+	warstwa_gory_stolowe.setOpacity(this.value);
+	warstwa_karkonoski.setOpacity(this.value);
+	warstwa_gorczanski.setOpacity(this.value); 
+	warstwa_tatrzanski.setOpacity(this.value);
+	warstwa_babiogorski.setOpacity(this.value); 
+	warstwa_pieninski.setOpacity(this.value);
+	warstwa_ojcowski.setOpacity(this.value);
+	warstwa_poleski.setOpacity(this.value);
+	warstwa_roztoczanski.setOpacity(this.value); 
+	warstwa_ujscie_warty.setOpacity(this.value); 
+	warstwa_wielkopolski.setOpacity(this.value);
+	})
+});
