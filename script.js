@@ -186,7 +186,7 @@ parki_krajobrazowe.addTo(map);
 
 
 var MyIcon = L.icon({
-    iconUrl: 'ikony/peak.png',
+    iconUrl: 'https://dl.dropboxusercontent.com/s/f2tugtmrtypey74/peak.png?dl=0',
     iconSize:     [30, 30], // size of the icon
     shadowSize:   [100, 100], // size of the shadow
     iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
