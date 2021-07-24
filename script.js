@@ -919,7 +919,6 @@ $(document).ready(function(){
 	})
 });
 
-
 map.zoomControl.setPosition('bottomleft');
 function myFunction() {
 	if(!(map.hasLayer(parki))){
