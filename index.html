@@ -32,7 +32,7 @@
 
 </head>
 <body>
-
+<!--
 <div id="narodowe" class = "selected-icon">
 <span class="info2">Parki Narodowe</span>
 <input type="image" src="https://png.pngtree.com/png-vector/20190418/ourlarge/pngtree-vector-poloygon-icon-png-image_950761.jpg" name="zimowe_button" class="ikona" id="narodowe_button" width=50 height=50/>
@@ -52,10 +52,10 @@
 	<span class="info2">Ukształtowanie terenu</span>
 	<input type="image" src="https://dl.dropboxusercontent.com/s/dfcd3qgf4f2i57w/isobars.png?dl=0" name="szlaki1_button" class="ikona" id="demy_button" width=50 height=50/>
   </div>
-  
 
+-->
 <div id = "map"></div>
-<script src="script.js"></script>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
@@ -138,10 +138,57 @@
 
 </div>
 
-<div id = "tytul"> Parki Narodowe
-	<h4> Przeźroczystość ukształtowania terenu: <span id = "image-opacity"></span></h4> 
-<input type = "range" id = "opacity-slider" min = '0', max = '1', step = '0.1', value = '1'>
+
+
+<div id = "menu"> 
+	<div id="menu_narodowe" class = "selected-icon">
+        <span class="info_warstwy">Parki Narodowe</span>
+        <input type="image" src="https://dl.dropboxusercontent.com/s/i3k8gtvb4pkmqhr/park_narodowy.png?dl=0" class="menu_button" id="narodowe_button" width=25 height=25/>
+    </div>
+        
+    <div id="menu_krajobrazowe" class = "selected-icon">
+        <span class="info_warstwy">Parki Krajobrazowe</span>
+        <input type="image" src="https://dl.dropboxusercontent.com/s/eg7pcp68moc64sm/landscape.png?dl=0"  class="menu_button" id="krajobrazowe_button" width=25 height=25/>
+    </div>
+          
+    <div id="menu_szlaki" class = "selected-icon">
+        <span class="info_warstwy">Szlaki turystyczne</span>
+        <input type="image" src="https://dl.dropboxusercontent.com/s/mqtmjpkatbup5se/sign-post.png?dl=0"  class="menu_button" id="szlaki_button" width=25 height=25/>
+    </div>
+	<div id="menu_nmt" class = "selected-icon">
+		<span class="info_warstwy">Ukształtowanie terenu</span>
+		<input type="image" src="https://dl.dropboxusercontent.com/s/bekojy0u2n08ovg/dem.png?dl=0"  class="menu_button" id="nmt_button" width=25 height=25/>
+	</div>
+
+	<span id = "tytuł">Parki Narodowe</span>
+
+	<div id="menu_statystyki" class = "selected-icon">
+        <span class="info_warstwy">Statystyki</span>
+        <input type="image" src="https://dl.dropboxusercontent.com/s/ltn9p9x0ugezmmt/bar-chart.png?dl=0" class="menu_button" id="statystyki_button" width=25 height=25/>
+    </div>
+        
+    <div id="menu_legenda" class = "selected-icon">
+        <span class="info_warstwy">Legenda</span>
+        <input type="image" src="https://dl.dropboxusercontent.com/s/qtp20etw67ychni/list.png?dl=0"  class="menu_button" id="legenda_button" width=25 height=25/>
+    </div>
+          
+    <div id="menu_warstwy" class = "selected-icon">
+        <span class="info_warstwy">Warstwy</span>
+        <input type="image" src="https://dl.dropboxusercontent.com/s/92k5x2cnx37qqpm/layers.png?dl=0"  class="menu_button" id="warstwy_button" width=25 height=25/>
+    </div>
+
+	<div id="menu_informacje" class = "selected-icon">
+        <span class="info_warstwy">Informacje</span>
+        <input type="image" src="https://dl.dropboxusercontent.com/s/cp1vxog4nm814n0/information-button.png?dl=0"  class="menu_button" id="informacje_button" width=25 height=25/>
+    </div>
+		
+    
+
+		<!--<h4> Przeźroczystość ukształtowania terenu: <span id = "image-opacity"></span></h4> 
+	<input type = "range" id = "opacity-slider" min = '0', max = '1', step = '0.1', value = '1'>-->
 </div>
 
+<div id = "legenda_div"></div>
+<script src="script.js"></script>
 </body>
 </html>

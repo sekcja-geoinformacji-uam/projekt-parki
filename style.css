@@ -121,212 +121,160 @@ html, body {
 	background-color:#aaa;
 	cursor:pointer;
 }
-#narodowe{
+
+
+/*warstwy po lewej stronie menu*/
+#menu_narodowe{
     position: absolute;
-    z-index: 1;
+    left: 10px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#narodowe_button, #krajobrazowe_button, #szlaki_button, #nmt_button {
+	border:1px solid #aaa;
+	padding:5px;
+	border-radius:5px;
+}
+#narodowe_button:focus, #krajobrazowe_button:focus, #szlaki_button:focus, #nmt_button:focus {
+    outline: 0 !important;
+}
+#narodowe_button:hover, #krajobrazowe_button:hover, #szlaki_button:hover, #nmt_button:hover {
+	opacity:0.5;
+}
+#menu_narodowe .info_warstwy, #menu_krajobrazowe .info_warstwy, #menu_szlaki .info_warstwy, #menu_nmt .info_warstwy{
+	visibility: hidden;
+	width: 180px;
+	background-color: #2e3039;
+	color: #ddd;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	opacity: 0;
+	transition: opacity 1s;
+	top: 170%;
+	left: 220%;
+	margin-left: -60px;
+	font-size:18px;
+	border:1px solid #aaa;
+	font-weight:bold;
+}
+#menu_narodowe:hover .info_warstwy, #menu_krajobrazowe:hover .info_warstwy, #menu_szlaki:hover .info_warstwy, #menu_nmt:hover .info_warstwy {
+  visibility: visible;
+  opacity: 1;
+}
+#menu_narodowe .info_warstwy::after, #menu_krajobrazowe .info_warstwy::after, #menu_szlaki .info_warstwy::after, #menu_nmt .info_warstwy::after {
+	content: " ";
+	position: absolute;
+	top:0%;  
+	right:90%;
+	transform: rotate(90deg);
+	margin-top: -12px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent #aaa transparent transparent;
+}
+#menu_krajobrazowe{
+    position: absolute;
+    left: 60px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#menu_szlaki{
+    position: absolute;
+    left: 110px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#menu_nmt{
+    position: absolute;
+    left: 160px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+
+
+
+/*warstwy po prawej stronie menu*/
+
+#menu_statystyki{
+    position: absolute;
     right: 10px;
-	top:50px;
-	border:1px solid black;
-	border-radius:20px;
-	#padding:3.5px;
-	box-shadow:2px -2px 6px #777;
-}
-#narodowe_button:focus {
-    outline: 0 !important;
-}
-#narodowe:hover {
-	border:2px dashed black;
-	padding:3px;
-}
-#narodowe .info2 {
-  visibility: hidden;
-  width: 180px;
-  background-color: #333;
-  color: #ddd;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 1s;
-  top: 20%;
-  right: 140%;
-  margin-left: -60px;
-  font-size:18px;
-  border:1px solid black;
-  font-weight:bold;
-}
-#narodowe:hover .info2 {
-  visibility: visible;
-  opacity: 1;
-}
-#narodowe .info2::after {
-  content: " ";
-  position: absolute;
-  top:50%;  
-  left:100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent black transparent transparent;
+	top:7.5px;
+	width:30px;
+	height:30px;
 }
 
+#statystyki_button, #legenda_button, #warstwy_button, #informacje_button {
+	border:1px solid #aaa;
+	padding:5px;
+	border-radius:5px;
+}
+#statystyki_button:focus, #legenda_button:focus, #warstwy_button:focus, #informacje_button:focus {
+    outline: 0 !important;
+}
+#statystyki_button:hover, #legenda_button:hover, #warstwy_button:hover, #informacje_button:hover {
+	opacity:0.5;
+}
+#menu_statystyki .info_warstwy, #menu_legenda .info_warstwy, #menu_warstwy .info_warstwy, #menu_informacje .info_warstwy{
+	visibility: hidden;
+	width: 180px;
+	background-color: #2e3039;
+	color: #ddd;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	opacity: 0;
+	transition: opacity 1s;
+	top: 170%;
+	right: 190%;
+	margin-right: -60px;
+	font-size:18px;
+	border:1px solid #aaa;
+	font-weight:bold;
+}
+#menu_statystyki:hover .info_warstwy, #menu_legenda:hover .info_warstwy, #menu_warstwy:hover .info_warstwy, #menu_informacje:hover .info_warstwy {
+  visibility: visible;
+  opacity: 1;
+}
+#menu_statystyki .info_warstwy::after, #menu_legenda .info_warstwy::after, #menu_warstwy .info_warstwy::after, #menu_informacje .info_warstwy::after{
+	content: " ";
+	position: absolute;
+	top:0%;  
+	left:90%;
+	transform: rotate(90deg);
+	margin-top: -12px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent #aaa transparent transparent;
+}
+#menu_legenda{
+    position: absolute;
+    right: 60px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#menu_warstwy{
+    position: absolute;
+    right: 110px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#menu_informacje{
+    position: absolute;
+    right: 160px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
 
-#krajobrazowe{
-    position: absolute;
-    z-index: 1;
-    right:10px;
-	top:110px;
-	border:1px solid black;
-	border-radius:20px;
-	#padding:3.5px;
-	box-shadow:2px -2px 6px #777;
-}
-#krajobrazowe_button:focus {
-    outline: 0 !important;
-}
-#krajobrazowe:hover {
-	border:2px dashed black;
-	padding:3px;
-}
-#krajobrazowe .info2 {
-  visibility: hidden;
-  width: 180px;
-  background-color: #333;
-  color: #ddd;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 1s;
-  top: 20%;
-  right: 140%;
-  margin-left: -60px;
-  font-size:18px;
-  border:1px solid black;
-  font-weight:bold;
-}
-#krajobrazowe:hover .info2 {
-  visibility: visible;
-  opacity: 1;
-}
-#krajobrazowe .info2::after {
-  content: " ";
-  position: absolute;
-  top:50%;  
-  left:100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent black transparent transparent;
-}
-
-#szlaki{
-    position: absolute;
-    z-index: 1;
-    right:10px;
-	top:170px;
-	border:1px solid black;
-	border-radius:20px;
-	#padding:3.5px;
-	box-shadow:2px -2px 6px #777;
-}
-#szlaki_button:focus {
-    outline: 0 !important;
-}
-#szlaki:hover {
-	border:2px dashed black;
-	padding:3px;
-}
-#szlaki .info2 {
-  visibility: hidden;
-  width: 180px;
-  background-color: #333;
-  color: #ddd;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 1s;
-  top: 20%;
-  right: 140%;
-  margin-left: -60px;
-  font-size:18px;
-  border:1px solid black;
-  font-weight:bold;
-}
-#szlaki:hover .info2 {
-  visibility: visible;
-  opacity: 1;
-}
-#szlaki .info2::after {
-  content: " ";
-  position: absolute;
-  top:50%;  
-  left:100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent black transparent transparent;
-}
-#demy{
-    position: absolute;
-    z-index: 1;
-    right:10px;
-	top:230px;
-	border:1px solid black;
-	border-radius:20px;
-	#padding:3.5px;
-	box-shadow:2px -2px 6px #777;
-}
-#demy_button:focus {
-    outline: 0 !important;
-}
-#demy:hover {
-	border:2px dashed black;
-	padding:3px;
-}
-#demy .info2 {
-  visibility: hidden;
-  width: 180px;
-  background-color: #333;
-  color: #ddd;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 1s;
-  top: 20%;
-  right: 140%;
-  margin-left: -60px;
-  font-size:18px;
-  border:1px solid black;
-  font-weight:bold;
-}
-#demy:hover .info2 {
-  visibility: visible;
-  opacity: 1;
-}
-#demy .info2::after {
-  content: " ";
-  position: absolute;
-  top:50%;  
-  left:100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent black transparent transparent;
-}
-.ikona {
-border-radius:20px;
-}	
 
 .leaflet-popup-content-wrapper{
 	background-color:#333!important;
@@ -345,6 +293,7 @@ border-radius:20px;
 	font-family:Arial;
 	background-color:#333;
 	position:absolute;
+	opacity:0.85;
 	right:30px;
 	bottom:20px;
 	color:#ddd;
@@ -461,9 +410,35 @@ margin-top:10px;
 display:none;
 }
 
+#menu {
+display:block;
+top:0;
+width:100%;
+height:50px;
+background-color:#2e3039;
+text-align:center;
+color:#cccccc;
+font-size:24px;
+position:absolute;
+}
+#tytuł {
+	padding-top:10px;
+	display:block;
+}
 
+.leaflet-control-search {
+	top:500px;
+}
 
+#legenda_div {
+height:500px;
+width:300px;
+right:20px;
+position:absolute;
+display:block;
+top:100px;
+background-color:#2e3039;
+border:1px solid #888;
+border-radius:30px;
+}
 
-
-		
-		

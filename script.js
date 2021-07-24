@@ -656,6 +656,7 @@ map.on('click', function(){
 	document.getElementById('container').style.display = 'none';
 });
 
+//warstwy rastrowe numerycznego modelu terenu parków
 var warstwa_gory_stolowe = L.imageOverlay('https://dl.dropboxusercontent.com/s/94xrqqw3aag0b9r/gory_stolowe.png?dl=0', [[50.511349759, 16.262960679], [50.422894720, 16.447147861]])
 
 var warstwa_karkonoski = L.imageOverlay('https://dl.dropboxusercontent.com/s/m7doaadrhsvay22/karkonoski.png?dl=0', [[50.855941611, 15.454902321], [50.72818689, 15.83475647]])
@@ -674,52 +675,36 @@ var warstwa_poleski = L.imageOverlay('https://dl.dropboxusercontent.com/s/671jty
 
 var warstwa_roztoczanski = L.imageOverlay('https://dl.dropboxusercontent.com/s/j7hyo40fj6yuszn/roztoczanski.png?dl=0', [[50.685493, 22.881411], [50.5036113, 23.1510262]])
 
-//var warstwa_swietokrzyski= L.imageOverlay('https://dl.dropboxusercontent.com/s/8ibf1zojmvu19dr/swietokrzyski.png?dl=0', [[49.351960057, 19.753060945], [49.169297496, 20.154908783]])
+var warstwa_swietokrzyski= L.imageOverlay('https://dl.dropboxusercontent.com/s/8ibf1zojmvu19dr/swietokrzyski.png?dl=0', [[50.9726288, 20.7928800], [50.82805624, 21.13283127]])
 
 var warstwa_ujscie_warty = L.imageOverlay('https://dl.dropboxusercontent.com/s/b2g51nmyspikc2r/ujscie_warty.png?dl=0', [[52.666038, 14.623495], [52.5339246, 14.9347796]])
 
 var warstwa_wielkopolski = L.imageOverlay('https://dl.dropboxusercontent.com/s/8ntmxu4bbh7m4ey/wielkopolski.png?dl=0', [[52.3381915, 16.6286550], [52.2206600, 16.9301937]])
 
-var narodowe = document.getElementById("narodowe_button");
-narodowe_button.addEventListener("click", function(){
-	if(!(map.hasLayer(parki))){
-		parki.addTo(map)
-	}
-	else if(map.hasLayer(parki)){
-	map.removeLayer(parki);
-}})
-var krajobrazowe = document.getElementById("krajobrazowe_button");
-krajobrazowe_button.addEventListener("click", function(){
-	if(!(map.hasLayer(parki_krajobrazowe))){
-		parki_krajobrazowe.addTo(map)
-	}
-	else if(map.hasLayer(parki_krajobrazowe)){
-	map.removeLayer(parki_krajobrazowe);
-}})
 
 
-var szlaki = document.getElementById("szlaki_button");
-szlaki_button.addEventListener("click", function(){
-	if(!(map.hasLayer(warstwa_szlaki))){
-		warstwa_szlaki.addTo(map);
-		document.getElementById("legenda").style.display = "block";
-	}
-	else if(map.hasLayer(warstwa_szlaki)){
-	map.removeLayer(warstwa_szlaki);
-	document.getElementById("legenda").style.display = "none";
-}})
 
+var warstwa_bialowieski = L.imageOverlay('https://dl.dropboxusercontent.com/s/2u27ilz6aujuax6/bialowieski.png?dl=0', [[52.8234587, 23.7066286], [52.694406, 23.953721]])
+
+var warstwa_bory_tucholskie = L.imageOverlay('https://dl.dropboxusercontent.com/s/i68jpevqu0pb4iy/bory_tucholskie.png?dl=0', [[53.85891643, 17.43980335], [53.7259034, 17.6275328]])
+
+var warstwa_drawienski = L.imageOverlay('https://dl.dropboxusercontent.com/s/54u7haak3vdyr4e/drawienski.png?dl=0', [[53.2212619, 15.7177730], [53.012987, 16.115389]])
+
+var warstwa_slowinski = L.imageOverlay('https://dl.dropboxusercontent.com/s/dtzvdbvs7vix6nt/slowinski.png?dl=0', [[54.7637991, 17.0439893], [54.6185677, 17.5554648]])
+
+var warstwa_wigierski = L.imageOverlay('https://dl.dropboxusercontent.com/s/3mtczklcb3wal6m/wigierski.png?dl=0', [[54.1727220, 22.9719895], [53.9711934, 23.2700094]])
+
+var warstwa_wolinski = L.imageOverlay('https://dl.dropboxusercontent.com/s/st3mvn2epvuegaz/wolinski2.png?dl=0', [[53.9978224, 14.2864101], [53.8289088, 14.6909706]])
+
+var warstwa_narwianski = L.imageOverlay('https://dl.dropboxusercontent.com/s/zeal4kztfaps95g/narwianski.png?dl=0', [[53.1508457, 22.7667435], [52.94717258, 22.99291044]])
+
+
+//zgrupowanie wszystkich warstw rastrowych w jedną zmienną
 var warstwa_nmt = L.layerGroup([warstwa_gory_stolowe, warstwa_karkonoski, warstwa_gorczanski, warstwa_tatrzanski, warstwa_pieninski, 
-	warstwa_babiogorski, warstwa_ojcowski, warstwa_poleski, warstwa_roztoczanski, warstwa_ujscie_warty, warstwa_wielkopolski]);
+	warstwa_babiogorski, warstwa_ojcowski, warstwa_poleski, warstwa_roztoczanski, warstwa_ujscie_warty, warstwa_wielkopolski, warstwa_swietokrzyski,
+	warstwa_bialowieski, warstwa_bory_tucholskie, warstwa_narwianski, warstwa_wolinski, warstwa_slowinski, warstwa_drawienski, warstwa_wigierski]);
 
-var demy = document.getElementById("demy_button");
-demy_button.addEventListener("click", function(){
-	if(!(map.hasLayer(warstwa_nmt))){
-		warstwa_nmt.addTo(map);
-	}
-	else if(map.hasLayer(warstwa_nmt)){
-	map.removeLayer(warstwa_nmt);
-}})
+
 //wyswietlanie opisow szlakow po nakliknieciu
 function opis_rozwiniety(){
 	if(document.getElementById("opis_1").style.display == "none"){
@@ -920,8 +905,68 @@ $(document).ready(function(){
 	warstwa_pieninski.setOpacity(this.value);
 	warstwa_ojcowski.setOpacity(this.value);
 	warstwa_poleski.setOpacity(this.value);
+	warstwa_swietokrzyski.setOpacity(this.value);
 	warstwa_roztoczanski.setOpacity(this.value); 
 	warstwa_ujscie_warty.setOpacity(this.value); 
 	warstwa_wielkopolski.setOpacity(this.value);
+	warstwa_bialowieski.setOpacity(this.value);
+	warstwa_bory_tucholskie.setOpacity(this.value);
+	warstwa_narwianski.setOpacity(this.value); 
+	warstwa_wolinski.setOpacity(this.value);
+	warstwa_slowinski.setOpacity(this.value);
+	warstwa_drawienski.setOpacity(this.value);
+	warstwa_wigierski.setOpacity(this.value);
 	})
 });
+
+
+map.zoomControl.setPosition('bottomleft');
+function myFunction() {
+	if(!(map.hasLayer(parki))){
+		parki.addTo(map)
+	}
+	else if(map.hasLayer(parki)){
+	map.removeLayer(parki);
+  }};
+
+document.getElementById("narodowe_button").addEventListener("click",myFunction);
+document.getElementById("menu_krajobrazowe").addEventListener("click", function(){
+	if(!(map.hasLayer(parki_krajobrazowe))){
+		parki_krajobrazowe.addTo(map)
+	}
+	else if(map.hasLayer(parki_krajobrazowe)){
+	map.removeLayer(parki_krajobrazowe);
+}})
+
+document.getElementById("menu_szlaki").addEventListener("click", function(){
+	if(!(map.hasLayer(warstwa_szlaki))){
+		warstwa_szlaki.addTo(map);
+		document.getElementById("legenda").style.display = "block";
+	}
+	else if(map.hasLayer(warstwa_szlaki)){
+	map.removeLayer(warstwa_szlaki);
+	document.getElementById("legenda").style.display = "none";
+}})
+
+document.getElementById("menu_nmt").addEventListener("click", function(){
+	if(!(map.hasLayer(warstwa_nmt))){
+		warstwa_nmt.addTo(map);
+	}
+	else if(map.hasLayer(warstwa_nmt)){
+	map.removeLayer(warstwa_nmt);
+}})
+
+document.getElementById("legenda_div").style.opacity = 0;
+document.getElementById("legenda_div").style.visibility = 'hidden';
+
+//ukazanie legendy po kliknięciu przycisku 
+document.getElementById("menu_legenda").addEventListener("click", function(){
+	if (document.getElementById("legenda_div").style.visibility === 'hidden'){
+		document.getElementById("legenda_div").style.visibility = 'visible';
+		document.getElementById("legenda_div").style.opacity = '0.85';
+	}
+		else {
+			document.getElementById("legenda_div").style.visibility = 'hidden';
+			document.getElementById("legenda_div").style.opacity = '0';
+		}
+	});
