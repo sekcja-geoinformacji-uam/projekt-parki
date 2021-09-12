@@ -81,62 +81,7 @@
 	<input id = "close-button" type="button" value="x" onclick="document.getElementById('container').style.display='none'">
 
 </div>
-<div id = "legenda">
-	<div id = "tytul_legendy">Oznaczenia szlaków turystycznych</div>
-	<div class = "szlak_head" onmouseover = "arrow()" onmouseout = "hidden_arrow()" onclick = "opis_rozwiniety()" >
-		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-		<div class = "kolor_szlaku" style = 'background-color:#cc0000'> </div>
-		<div class = "nazwa_szlaku">Szlak czerwony </div>
-		<div style="clear:both;"></div>
-	</div>
-		<div id = 'opis_1' style = "display:none">Główny szlak parku narodowego - wędrówka będzie przeprowadzona przez najbardziej spektakularne oraz najciekawsze miejsca. 
-		</div>
-	<div class = "szlak_head" onmouseover = "arrow2()" onmouseout = "hidden_arrow2()"  onclick = "opis_rozwiniety2()">
-	<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-		<div class = "kolor_szlaku" style = 'background-color:#e6e60a'></div>
-		<div class = "nazwa_szlaku">Szlak żółty</div>
-		<div style="clear:both;"></div>
-	</div>
-	<div id = 'opis_2' style = "display:none">Krótki szlak łączący dwa różne miejsca (szlak dojściowy).
-		</div>
-	<div class = "szlak_head" onmouseover = "arrow3()" onmouseout = "hidden_arrow3()"  onclick = "opis_rozwiniety3()">
-	<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-		<div class = "kolor_szlaku" style = 'background-color:#00802b'></div>
-		<div class = "nazwa_szlaku">Szlak zielony</div>
-		<div style="clear:both;"></div>
-	</div>
-	<div id = 'opis_3' style = "display:none">Szlak wyznaczający najkrótszą drogę do najbardziej charakterystycznych miejsc regionu.
-		</div>
-	<div class = "szlak_head" onmouseover = "arrow4()" onmouseout = "hidden_arrow4()"  onclick = "opis_rozwiniety4()">
-	<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-		<div class = "kolor_szlaku" style = 'background-color:#0086b3'></div>
-		<div class = "nazwa_szlaku">Szlak niebieski</div>
-		<div style="clear:both;"></div>
-	</div>
-	<div id = 'opis_4' style = "display:none">Dalekobieżny szlak wymagający pokonania długiej, pieszej trasy.
-		</div>
-	<div class = "szlak_head" onmouseover = "arrow5()" onmouseout = "hidden_arrow5()"  onclick = "opis_rozwiniety5()">
-	<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-		<div class = "kolor_szlaku" style = 'background-color:#111'></div>
-		<div class = "nazwa_szlaku">Szlak czarny</div>
-		<div style="clear:both;"></div>
-	</div>
-	<div id = 'opis_5' style = "display:none">Krótka trasa dojściowa 
-		</div>
-	<div class = "szlak_head" onmouseover = "arrow6()" onmouseout = "hidden_arrow6()"  onclick = "opis_rozwiniety6()">
-	<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-		<div class = "kolor_szlaku" style = 'background-color:#888881'></div>
-		<div class = "nazwa_szlaku">Pozostałe szlaki</div>
-		<div style="clear:both;"></div>
-	</div>
-	<div id = 'opis_6' style = "display:none">Trasy nieprzyporządkowane żadnemu oznaczeniu.
-		</div>
 
-
-
-
-
-</div>
 
 
 
@@ -187,7 +132,90 @@
 	<input type = "range" id = "opacity-slider" min = '0', max = '1', step = '0.1', value = '1'>-->
 </div>
 
-<div id = "legenda_div"></div>
+
+	<div class = "legendy" id = "legenda_div">
+		<div class = "tytul_legendy">Oznaczenia szlaków turystycznych</div>
+		<div class = "szlak_head" onmouseover = "arrow()" onmouseout = "hidden_arrow()" onclick = "opis_rozwiniety()" >
+			<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
+			<div class = "kolor_szlaku" style = 'background-color:#cc0000'> </div>
+			<div class = "nazwa_szlaku">Szlak czerwony </div>
+			<div style="clear:both;"></div>
+		</div>
+			<div id = 'opis_1' style = "display:none">Główny szlak parku narodowego - wędrówka będzie przeprowadzona przez najbardziej spektakularne oraz najciekawsze miejsca. 
+			</div>
+		<div class = "szlak_head" onmouseover = "arrow2()" onmouseout = "hidden_arrow2()"  onclick = "opis_rozwiniety2()">
+		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
+			<div class = "kolor_szlaku" style = 'background-color:#e6e60a'></div>
+			<div class = "nazwa_szlaku">Szlak żółty</div>
+			<div style="clear:both;"></div>
+		</div>
+		<div id = 'opis_2' style = "display:none">Krótki szlak łączący dwa różne miejsca (szlak dojściowy).
+			</div>
+		<div class = "szlak_head" onmouseover = "arrow3()" onmouseout = "hidden_arrow3()"  onclick = "opis_rozwiniety3()">
+		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
+			<div class = "kolor_szlaku" style = 'background-color:#00802b'></div>
+			<div class = "nazwa_szlaku">Szlak zielony</div>
+			<div style="clear:both;"></div>
+		</div>
+		<div id = 'opis_3' style = "display:none">Szlak wyznaczający najkrótszą drogę do najbardziej charakterystycznych miejsc regionu.
+			</div>
+		<div class = "szlak_head" onmouseover = "arrow4()" onmouseout = "hidden_arrow4()"  onclick = "opis_rozwiniety4()">
+		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
+			<div class = "kolor_szlaku" style = 'background-color:#0086b3'></div>
+			<div class = "nazwa_szlaku">Szlak niebieski</div>
+			<div style="clear:both;"></div>
+		</div>
+		<div id = 'opis_4' style = "display:none">Dalekobieżny szlak wymagający pokonania długiej, pieszej trasy.
+			</div>
+		<div class = "szlak_head" onmouseover = "arrow5()" onmouseout = "hidden_arrow5()"  onclick = "opis_rozwiniety5()">
+		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
+			<div class = "kolor_szlaku" style = 'background-color:#111'></div>
+			<div class = "nazwa_szlaku">Szlak czarny</div>
+			<div style="clear:both;"></div>
+		</div>
+		<div id = 'opis_5' style = "display:none">Krótka trasa dojściowa 
+			</div>
+		<div class = "szlak_head" onmouseover = "arrow6()" onmouseout = "hidden_arrow6()"  onclick = "opis_rozwiniety6()">
+		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
+			<div class = "kolor_szlaku" style = 'background-color:#888881'></div>
+			<div class = "nazwa_szlaku">Pozostałe szlaki</div>
+			<div style="clear:both;"></div>
+		</div>
+
+		<div id = 'opis_6' style = "display:none">Trasy nieprzyporządkowane żadnemu oznaczeniu.
+		</div>
+	</div>
+
+	<div class = "legendy" id = "warstwy_div">
+		<div class = "tytul_legendy">Mapy bazowe</div>
+		<div id = "mapa_bazowa_1">
+			<img class = "mapy_bazowe" src = "https://dl.dropboxusercontent.com/s/71ucysw9ls8ekad/podklad_osm.png?dl=0">
+		</div>
+
+		<div id = "nazwa_mapy_1">OpenStreetMap</div>
+		
+		<div id = "mapa_bazowa_2">
+			<img class = "mapy_bazowe" src = "https://dl.dropboxusercontent.com/s/qhpavzl6bl9u7zl/podklad_satelita.png?dl=0">
+		</div>
+		
+		<div id = "nazwa_mapy_2">Satelita</div>
+		
+		<div id = "mapa_bazowa_3">
+			<img class = "mapy_bazowe" src = "https://dl.dropboxusercontent.com/s/ogaiwse4a4v6lk4/podklad_rzezba.png?dl=0">
+		</div>
+		
+		<div id = "nazwa_mapy_3">Rzeźba terenu</div>
+	</div>
+
+	<div class = "legendy" id = "informacje_div">
+	</div>
+
+	<div class = "legendy" id = "statystyki_div">
+	</div>
+
+
+
+
 <script src="script.js"></script>
 </body>
 </html>

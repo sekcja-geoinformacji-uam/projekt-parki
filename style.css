@@ -15,7 +15,7 @@ html, body {
 #container {
 	width:600px;
 	height:100%;
-	background-color:#333;
+	background-color:#2e3039;
 	display:none;
 	position:absolute;
 	bottom:0px;	
@@ -230,7 +230,10 @@ html, body {
 	padding: 5px 0;
 	position: absolute;
 	opacity: 0;
-	transition: opacity 1s;
+	-moz-transition: all 0.6s ease-in-out;
+	-o-transition: all 0.6s ease-in-out;
+	-webkit-transition: all 0.6s ease-in-out;
+	transition: all 0.6s ease-in-out;
 	top: 170%;
 	right: 190%;
 	margin-right: -60px;
@@ -241,6 +244,7 @@ html, body {
 #menu_statystyki:hover .info_warstwy, #menu_legenda:hover .info_warstwy, #menu_warstwy:hover .info_warstwy, #menu_informacje:hover .info_warstwy {
   visibility: visible;
   opacity: 1;
+  z-index:1000;
 }
 #menu_statystyki .info_warstwy::after, #menu_legenda .info_warstwy::after, #menu_warstwy .info_warstwy::after, #menu_informacje .info_warstwy::after{
 	content: " ";
@@ -285,36 +289,26 @@ html, body {
 	background-color:#2e3039!important;
 }
 
-#legenda {
-	display:none;
-	width:400px;
-	height:252px;
-	font-family:Arial;
-	background-color:#333;
-	position:absolute;
-	opacity:0.85;
-	right:30px;
-	bottom:20px;
-	color:#ddd;
-	border:2px #222 solid;
-	border-radius:20px;
-	overflow-x:auto;
-}
-#tytul_legendy {
-	width:390px;
-	margin-top:10px;
+
+.tytul_legendy {
+	width:326px;
 	margin-bottom:10px;
 	height:25px;
 	text-align:center;
 	font-weight:bold;
-	font-size:20px;
+	font-size:16px;
+	font-family:'Trebuchet MS', sans-serif;
+	color:#2e3039;
+	padding-top:10px;
+	background-color:#ddd;
+	border:2px #111 solid;
 }
 .kolor_szlaku {
 	float:left;
-	width:50px;
+	width:70px;
 	height:10px;
-	margin-top:7.5px;
-	margin-bottom:2.5px;
+	margin-top:15px;
+	margin-bottom:10px;
 	margin-left:15px;
 	border-radius:10px;
 	border:2px #111 solid;
@@ -322,17 +316,16 @@ html, body {
 }
 .nazwa_szlaku {
 	float:left;
-	width:305px;
+	width:220px;
 	height:20px;
-	margin-top:7.5px;
-	margin-bottom:2.5px;
+	margin-top:15px;
+	margin-bottom:10px;
 	font-size:16px;
 	text-align:center;
 	text-shadow:2px 2px #555;
 }
 .szlak_head {
 	border:1.5px #222 dotted;
-	background-color:#333;
 }
 .szlak_head:hover {
 	background-color:#444!important;
@@ -340,40 +333,40 @@ html, body {
 }
 
 #opis_1 {
-	height:60px;
+	height:80px;
 	padding:10px;
 	text-align:justify;
-	background-color:#333;
+	background-color:#1d2028;
 }
 #opis_2 {
-	height:60px;
+	height:40px;
 	padding:10px;
 	text-align:justify;
-	background-color:#333;
+	background-color:#1d2028;
 }
 #opis_3 {
 	height:60px;
 	padding:10px;
 	text-align:justify;
-	background-color:#333;
+	background-color:#1d2028;
 }
 #opis_4 {
-	height:60px;
+	height:40px;
 	padding:10px;
 	text-align:justify;
-	background-color:#333;
+	background-color:#1d2028;
 }
 #opis_5 {
-	height:60px;
+	height:30px;
 	padding:10px;
 	text-align:justify;
-	background-color:#333;
+	background-color:#1d2028;
 }
 #opis_6 {
-	height:60px;
+	height:30px;
 	padding:10px;
 	text-align:justify;
-	background-color:#333;
+	background-color:#1d2028;
 }
 
 
@@ -397,28 +390,29 @@ html, body {
 }
 
 .arrow {
-position:absolute; 
-right:10px;
-margin-top:10px;
-display:none;
+	position:absolute; 
+	right:10px;
+	margin-top:10px;
+	display:none;
 }
 .arrow_up {
-position:absolute; 
-right:10px;
-margin-top:10px;
-display:none;
+	position:absolute; 
+	right:10px;
+	margin-top:10px;
+	display:none;
 }
 
 #menu {
-display:block;
-top:0;
-width:100%;
-height:50px;
-background-color:#2e3039;
-text-align:center;
-color:#cccccc;
-font-size:24px;
-position:absolute;
+	display:block;
+	top:0;
+	width:100%;
+	height:50px;
+	background-color:#2e3039;
+	text-align:center;
+	color:#cccccc;
+	font-size:24px;
+	position:absolute;
+	font-family:'Trebuchet MS', sans-serif;
 }
 #tytuł {
 	padding-top:10px;
@@ -428,15 +422,84 @@ position:absolute;
 .leaflet-control-search {
 	top:500px;
 }
-#legenda_div {
-height:500px;
-width:300px;
-right:20px;
-position:absolute;
-display:block;
-top:100px;
-background-color:#2e3039;
-border:1px solid #888;
-border-radius:30px;
+
+.legendy {
+	height:660px;
+	width:330px;
+	right:5px;
+	position:absolute;
+	display:block;
+	top:55px;
+	opacity:0;
+	visibility:hidden;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	background-color:#2e3039;
+	border:1px solid #888;
+	font-family:Arial;
+	color:#ddd;
+	overflow:auto;
 }
 
+#mapa_bazowa_1 {
+	width:330px;
+	height:150px;
+	display:block;	
+	text-align:center;
+}
+#nazwa_mapy_1 {
+	width:330px;
+	height:20px;
+	display:block;
+	text-align:center;	
+	margin-top:5px;
+	font-family:'Trebuchet MS', sans-serif;
+}
+#mapa_bazowa_2 {
+	width:330px;
+	height:150px;
+	display:block;
+	text-align:center;	
+	margin-top:20px;
+}
+#nazwa_mapy_2 {
+	width:330px;
+	height:20px;
+	display:block;	
+	text-align:center;
+	margin-top:5px;
+	font-family:'Trebuchet MS', sans-serif;
+}
+#mapa_bazowa_3 {
+	width:330px;
+	height:150px;
+	display:block;	
+	text-align:center;
+	margin-top:20px;
+}
+#nazwa_mapy_3 {
+	width:330px;
+	height:20px;
+	display:block;	
+	text-align:center;
+	margin-top:5px;
+	font-family:'Trebuchet MS', sans-serif;
+}
+.mapy_bazowe {
+	width:200px;
+	height:144px;
+	border:2px #111 solid;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	overflow:hidden;
+	border-radius:25px;
+	box-shadow: 0 0 0.7em #aaa;
+}
+.mapy_bazowe:hover {
+	cursor:pointer;
+	opacity:0.6;
+}

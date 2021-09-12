@@ -6,14 +6,19 @@ var map = L.map( 'map', {
     zoom: 6.7,
 	zoomSnap:0.001,
 });
+var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-//var podklad = L.tileLayer('https://api.mapbox.com/styles/v1/adryanque/ckm0kaotk6l8m17o51p8vqzqj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
-    //attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
-//}).addTo( map );
 
-var podklad = L.tileLayer('https://api.mapbox.com/styles/v1/adryanque/ckqqyye3r4st018letzv7n099/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
+var rzezba_terenu = L.tileLayer('https://api.mapbox.com/styles/v1/adryanque/cktfqqyu33jij17p7h1sv27co/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
-}).addTo( map );
+});
+
+
+var satelita = L.tileLayer('https://api.mapbox.com/styles/v1/adryanque/ckqqyye3r4st018letzv7n099/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDk5bzd3YTAyMTkycG16MnVqeDJtOTEifQ.7tl32VrqOcLSfXMTj2X-YA', {
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
+});
 
 	function style(feature) {
 		return {
@@ -713,7 +718,7 @@ function opis_rozwiniety(){
 	}
 	else{
 	document.getElementById("opis_1").style.display= "none";
-	document.getElementsByClassName("szlak_head")[0].style.backgroundColor = "#333";
+	document.getElementsByClassName("szlak_head")[0].style.backgroundColor = "#2e3039";
 	}
 }
 
@@ -724,7 +729,7 @@ function opis_rozwiniety2(){
 	}
 	else{
 	document.getElementById("opis_2").style.display= "none";
-	document.getElementsByClassName("szlak_head")[1].style.backgroundColor = "#333";
+	document.getElementsByClassName("szlak_head")[1].style.backgroundColor = "#2e3039";
 	}
 }
 function opis_rozwiniety3(){
@@ -734,7 +739,7 @@ function opis_rozwiniety3(){
 	}
 	else{
 	document.getElementById("opis_3").style.display= "none";
-	document.getElementsByClassName("szlak_head")[2].style.backgroundColor = "#333";
+	document.getElementsByClassName("szlak_head")[2].style.backgroundColor = "#2e3039";
 	}
 }
 function opis_rozwiniety4(){
@@ -744,7 +749,7 @@ function opis_rozwiniety4(){
 	}
 	else{
 	document.getElementById("opis_4").style.display= "none";
-	document.getElementsByClassName("szlak_head")[3].style.backgroundColor = "#333";
+	document.getElementsByClassName("szlak_head")[3].style.backgroundColor = "#2e3039";
 	}
 }
 function opis_rozwiniety5(){
@@ -754,7 +759,7 @@ function opis_rozwiniety5(){
 	}
 	else{
 	document.getElementById("opis_5").style.display= "none";
-	document.getElementsByClassName("szlak_head")[4].style.backgroundColor = "#333";
+	document.getElementsByClassName("szlak_head")[4].style.backgroundColor = "#2e3039";
 	}
 }
 function opis_rozwiniety6(){
@@ -764,7 +769,7 @@ function opis_rozwiniety6(){
 	}
 	else{
 	document.getElementById("opis_6").style.display= "none";
-	document.getElementsByClassName("szlak_head")[5].style.backgroundColor = "#333";
+	document.getElementsByClassName("szlak_head")[5].style.backgroundColor = "#2e3039";
 	}
 }
 //pojawianie sie strzalek
@@ -961,13 +966,88 @@ document.getElementById("legenda_div").style.visibility = 'hidden';
 
 //ukazanie legendy po kliknięciu przycisku 
 document.getElementById("menu_legenda").addEventListener("click", function(){
-	if (document.getElementById("legenda_div").style.visibility === 'hidden'){
+	if (document.getElementById("legenda_div").style.visibility == 'hidden'){
 		document.getElementById("legenda_div").style.visibility = 'visible';
+		document.getElementById("warstwy_div").style.visibility = 'hidden';
+		document.getElementById("informacje_div").style.visibility = 'hidden';
+		document.getElementById("statystyki_div").style.visibility = 'hidden';
 		document.getElementById("legenda_div").style.opacity = '0.85';
 	}
-		else {
+		else{
 			document.getElementById("legenda_div").style.visibility = 'hidden';
 			document.getElementById("legenda_div").style.opacity = '0';
 		}
 	});
 
+
+document.getElementById("warstwy_div").style.opacity = 0;
+document.getElementById("warstwy_div").style.visibility = 'hidden';
+
+//ukazanie diva z warstwami po kliknięciu przycisku 
+document.getElementById("menu_warstwy").addEventListener("click", function(){
+	if (document.getElementById("warstwy_div").style.visibility === 'hidden'){
+		document.getElementById("warstwy_div").style.visibility = 'visible';
+		document.getElementById("legenda_div").style.visibility = 'hidden';
+		document.getElementById("informacje_div").style.visibility = 'hidden';
+		document.getElementById("statystyki_div").style.visibility = 'hidden';
+		document.getElementById("warstwy_div").style.opacity = '0.85';
+	}
+		else {
+			document.getElementById("warstwy_div").style.visibility = 'hidden';
+			document.getElementById("warstwy_div").style.opacity = '0';
+		}
+	});
+
+
+document.getElementById("informacje_div").style.opacity = 0;
+document.getElementById("informacje_div").style.visibility = 'hidden';
+
+//ukazanie diva z informacjami po kliknięciu przycisku 
+document.getElementById("menu_informacje").addEventListener("click", function(){
+	if (document.getElementById("informacje_div").style.visibility === 'hidden'){
+		document.getElementById("informacje_div").style.visibility = 'visible';
+		document.getElementById("legenda_div").style.visibility = 'hidden';
+		document.getElementById("warstwy_div").style.visibility = 'hidden';
+		document.getElementById("statystyki_div").style.visibility = 'hidden';
+		document.getElementById("informacje_div").style.opacity = '0.85';
+	}
+		else {
+			document.getElementById("informacje_div").style.visibility = 'hidden';
+			document.getElementById("informacje_div").style.opacity = '0';
+		}
+	});
+
+
+document.getElementById("statystyki_div").style.opacity = 0;
+document.getElementById("statystyki_div").style.visibility = 'hidden';
+
+//ukazanie diva ze statystykami po kliknięciu przycisku 
+document.getElementById("menu_statystyki").addEventListener("click", function(){
+	if (document.getElementById("statystyki_div").style.visibility === 'hidden'){
+		document.getElementById("statystyki_div").style.visibility = 'visible';
+		document.getElementById("legenda_div").style.visibility = 'hidden';
+		document.getElementById("warstwy_div").style.visibility = 'hidden';
+		document.getElementById("informacje_div").style.visibility = 'hidden';
+		document.getElementById("statystyki_div").style.opacity = '0.85';
+	}
+		else {
+			document.getElementById("statystyki_div").style.visibility = 'hidden';
+			document.getElementById("statystyki_div").style.opacity = '0';
+		}
+	});
+
+document.getElementById("mapa_bazowa_1").addEventListener("click", function(){
+	openstreetmap.addTo(map);
+	map.removeLayer(satelita);
+	map.removeLayer(rzezba_terenu);
+});
+document.getElementById("mapa_bazowa_2").addEventListener("click", function(){
+	satelita.addTo(map);
+	map.removeLayer(openstreetmap);
+	map.removeLayer(rzezba_terenu);
+});
+document.getElementById("mapa_bazowa_3").addEventListener("click", function(){
+	rzezba_terenu.addTo(map);
+	map.removeLayer(openstreetmap);
+	map.removeLayer(satelita);
+});
