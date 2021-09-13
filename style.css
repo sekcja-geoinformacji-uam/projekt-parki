@@ -438,9 +438,10 @@ html, body {
 	transition: all 0.4s ease-in-out;
 	background-color:#2e3039;
 	border:1px solid #888;
-	font-family:Arial;
 	color:#ddd;
 	overflow:auto;
+	overflow-x: hidden;
+	font-family:'Trebuchet MS', sans-serif;
 }
 
 #mapa_bazowa_1 {
@@ -502,4 +503,25 @@ html, body {
 .mapy_bazowe:hover {
 	cursor:pointer;
 	opacity:0.6;
+}
+
+#szlaki_turystyczne {
+	display:none;
+	width:330px;
+	height:320px;
+}
+
+#uksztaltowanie_terenu {
+	display:none;
+	width:330px;
+	height:540px;
+	border-bottom:5px #ddd solid;
+}
+
+#skala {
+	display:block;
+	width:80px;
+	height:800px;
+	margin-left:20px;
+	margin-top:30px;
 }

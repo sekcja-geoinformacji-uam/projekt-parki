@@ -105,7 +105,7 @@ function highlightFeature2(e) {
 function style2(feature) {
     return {
         color: getColor(feature.properties.colour),
-        weight: 4,
+        weight: 3,
         opacity: 1,
         dashArray: '10',
         fillOpacity: 0.95
@@ -946,19 +946,21 @@ document.getElementById("menu_krajobrazowe").addEventListener("click", function(
 document.getElementById("menu_szlaki").addEventListener("click", function(){
 	if(!(map.hasLayer(warstwa_szlaki))){
 		warstwa_szlaki.addTo(map);
-		document.getElementById("legenda").style.display = "block";
+		document.getElementById("szlaki_turystyczne").style.display = "block";
 	}
 	else if(map.hasLayer(warstwa_szlaki)){
 	map.removeLayer(warstwa_szlaki);
-	document.getElementById("legenda").style.display = "none";
+	document.getElementById("szlaki_turystyczne").style.display = "none";
 }})
 
 document.getElementById("menu_nmt").addEventListener("click", function(){
 	if(!(map.hasLayer(warstwa_nmt))){
 		warstwa_nmt.addTo(map);
+		document.getElementById("uksztaltowanie_terenu").style.display = 'block';
 	}
 	else if(map.hasLayer(warstwa_nmt)){
 	map.removeLayer(warstwa_nmt);
+	document.getElementById("uksztaltowanie_terenu").style.display = 'none';
 }})
 
 document.getElementById("legenda_div").style.opacity = 0;
@@ -971,13 +973,18 @@ document.getElementById("menu_legenda").addEventListener("click", function(){
 		document.getElementById("warstwy_div").style.visibility = 'hidden';
 		document.getElementById("informacje_div").style.visibility = 'hidden';
 		document.getElementById("statystyki_div").style.visibility = 'hidden';
-		document.getElementById("legenda_div").style.opacity = '0.85';
+		document.getElementById("legenda_div").style.opacity = '0.95';
 	}
 		else{
 			document.getElementById("legenda_div").style.visibility = 'hidden';
 			document.getElementById("legenda_div").style.opacity = '0';
 		}
 	});
+//ukazanie odpowiedniej legendy, w zależności czy włączona jest turystyka, szlaki turystyczne lub ukształtowanie terenu
+
+
+
+
 
 
 document.getElementById("warstwy_div").style.opacity = 0;
@@ -990,7 +997,7 @@ document.getElementById("menu_warstwy").addEventListener("click", function(){
 		document.getElementById("legenda_div").style.visibility = 'hidden';
 		document.getElementById("informacje_div").style.visibility = 'hidden';
 		document.getElementById("statystyki_div").style.visibility = 'hidden';
-		document.getElementById("warstwy_div").style.opacity = '0.85';
+		document.getElementById("warstwy_div").style.opacity = '0.95';
 	}
 		else {
 			document.getElementById("warstwy_div").style.visibility = 'hidden';
@@ -1009,7 +1016,7 @@ document.getElementById("menu_informacje").addEventListener("click", function(){
 		document.getElementById("legenda_div").style.visibility = 'hidden';
 		document.getElementById("warstwy_div").style.visibility = 'hidden';
 		document.getElementById("statystyki_div").style.visibility = 'hidden';
-		document.getElementById("informacje_div").style.opacity = '0.85';
+		document.getElementById("informacje_div").style.opacity = '0.95';
 	}
 		else {
 			document.getElementById("informacje_div").style.visibility = 'hidden';
@@ -1028,7 +1035,7 @@ document.getElementById("menu_statystyki").addEventListener("click", function(){
 		document.getElementById("legenda_div").style.visibility = 'hidden';
 		document.getElementById("warstwy_div").style.visibility = 'hidden';
 		document.getElementById("informacje_div").style.visibility = 'hidden';
-		document.getElementById("statystyki_div").style.opacity = '0.85';
+		document.getElementById("statystyki_div").style.opacity = '0.95';
 	}
 		else {
 			document.getElementById("statystyki_div").style.visibility = 'hidden';
