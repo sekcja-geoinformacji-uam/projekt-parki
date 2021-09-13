@@ -13,20 +13,24 @@ html, body {
 	height:65px !important;
 }
 #container {
-	width:600px;
-	height:100%;
+	width:400px;/*500px*/
+	/*height:90%;*/
 	background-color:#2e3039;
-	display:none;
-	position:absolute;
-	bottom:0px;	
+	/*display:none;*/
+	margin-left: 15;
+	/*margin-bottom: 25;*/
+	position:fixed;/*absolute*/
+	/*bottom:0px;*/	
 	overflow:auto;
+	border: 2px #777 solid;
+	border-radius:20px;
 }
 #photo {
-	width:450px;
-	height:300px;
+	width:400px;/*400px*/
+	/*height:300px;*/
 	margin-left:auto;
 	margin-right:auto;
-	margin-top:70px;
+	/*margin-top:70px;*/
 	position:relative;
 	display:block;
 }
@@ -63,43 +67,44 @@ html, body {
 	border-radius:20px;
 }
 #rok {
-	width:250px;
-	height:80px;
-	margin-top:80px;
+	width:200px;
+	height:40px;
+	margin-top:30px;/*40*/
 	margin-left:50px;
 	float:left;
 	color:#ddd;
 	text-align:center;
 	font-family:arial;
-	font-size:24px;
-	font-weight:bold;
+	font-size:20px;/*24*/
+	/*font-weight:bold;*/
 }
 #siedziba {
-	width:250px;
-	height:80px;
-	margin-top:80px;
+	width:200px;
+	height:40px;
+	margin-top:30px;/*40*/
 	float:left;
 	color:#ddd;
 	text-align:center;
 	font-family:arial;
-	font-size:24px;
-	font-weight:bold;
+	font-size:20px;/*24*/
+	/*font-weight:bold;*/
 }
 #symbol {
 	width:250px;
 	height:70px;
-	margin-top:220px;
+	margin-top:300px;/*240*/
 	color:#ddd;
 	margin:auto;
 	text-align:center;
 	font-family:arial;
-	font-size:24px;
-	font-weight:bold;
+	font-size:20px;/*24*/
+	/*font-weight:bold;*/
 	
 }
 #photo2 {
-	width:450px;
-	height:300px;
+	width:400px;/*450*/
+	/*height:300px;*/
+	margin-bottom: 40px;
 	margin-left:auto;
 	margin-right:auto;
 	margin-top:160px;
