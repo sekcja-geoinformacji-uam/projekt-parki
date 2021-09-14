@@ -182,7 +182,17 @@ var parki_krajobrazowe = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s
 });
 parki_krajobrazowe.addTo(map);
 
-
+//poligon cieniujący resztę świata oprócz Polski 
+var podklad_cien = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/4clbk4wvf8fkw31/reszta_swiata.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
+},style:function style(feature) {
+    return {
+		fillColor: '#111111',
+        color: '#111111',
+        opacity: 1,
+        fillOpacity: 0.7
+    };  }
+});
+podklad_cien.addTo(map);
 
 
 
@@ -246,255 +256,255 @@ layer.on('click',function(e){
 		if (feature.properties.Park == "Kampinoski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML = '<img src="https://dl.dropboxusercontent.com/s/v1axl831if7xrpz/Kampinoski_okragle_podstawowe.png?dl=0" width = 100px height = 100px;>';
+			document.getElementById("title").innerHTML = '<img src="https://dl.dropboxusercontent.com/s/v1axl831if7xrpz/Kampinoski_okragle_podstawowe.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML = feature.properties.Park;
 			document.getElementById("photo").innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Poland_Kampinos_April_1.jpg" id = "natura" width = 400px height = 250px;>';
-			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia: </span>'  + feature.properties.rok;
-			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba: </span>'  + feature.properties.siedziba;
-			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol: </span>'  + feature.properties.symbol;
+			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
+			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;
+			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
 			document.getElementById("photo2").innerHTML = '<img src="https://naukawpolsce.pap.pl/sites/default/files/styles/strona_glowna_slider_750x420/public/201710/13130799_13130792.jpg?itok=xj9b_AF6" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Białowieski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/itlaikdguwhqzpp/Logo_Bia%C5%82owieskiego_Parku_Narodowego.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/itlaikdguwhqzpp/Logo_Bia%C5%82owieskiego_Parku_Narodowego.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://bpn.com.pl/images/stories/gallery/lotnicze/DSC_4669.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://bpn.com.pl/images/stories/gallery/lotnicze/DSC_4669.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://bpn.com.pl/images/stories/gallery/zubry1/f11.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://bpn.com.pl/images/stories/gallery/zubry1/f11.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Gorczański PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/gxzfi82ti9gipnh/LOGO_GORCZA%C5%83SKIEGO_PARKU_NARODOWEGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/gxzfi82ti9gipnh/LOGO_GORCZA%C5%83SKIEGO_PARKU_NARODOWEGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Gorczanski/g12.JPG" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Gorczanski/g12.JPG" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://przyrodniczo.pl/wp-content/uploads/2017/11/salamandra6.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://przyrodniczo.pl/wp-content/uploads/2017/11/salamandra6.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "PN Ujście Warty"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/fof5zt51e62kk4e/Logo_Park_Narodowy__Uj%C5%9Bcie_Warty_.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/fof5zt51e62kk4e/Logo_Park_Narodowy__Uj%C5%9Bcie_Warty_.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://www.pnujsciewarty.gov.pl/grafika,223,fot-o-w.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://www.pnujsciewarty.gov.pl/grafika,223,fot-o-w.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://www.pnujsciewarty.gov.pl/grafika,147,gegawa-fot-o-w.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://www.pnujsciewarty.gov.pl/grafika,147,gegawa-fot-o-w.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "PN Gór Stołowych"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/gaf0t803axwz213/LOGO_PARKU_NARODOWEGO_G%C3%93R_STO%C5%81OWYCH.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/gaf0t803axwz213/LOGO_PARKU_NARODOWEGO_G%C3%93R_STO%C5%81OWYCH.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/photo/objects14/park-narodowy-gor-stolowych-pl_6_min.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/photo/objects14/park-narodowy-gor-stolowych-pl_6_min.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://www.ziemia-klodzka.pl/wp-content/uploads/szczeliniec-650x340.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://www.ziemia-klodzka.pl/wp-content/uploads/szczeliniec-650x340.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Pieniński PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/jfenh0jgddtxrq3/Logo_Pieninskiego_Parku_Narodowego_Polska.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/jfenh0jgddtxrq3/Logo_Pieninskiego_Parku_Narodowego_Polska.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Pieninski/Pieninski%201/173.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Pieninski/Pieninski%201/173.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://pliki.portalsamorzadowy.pl/i/13/66/21/136621_r2_940.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://pliki.portalsamorzadowy.pl/i/13/66/21/136621_r2_940.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Poleski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/07iix3xep5t9x6e/Logo_Poleskiego_Parku_Narodowego.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/07iix3xep5t9x6e/Logo_Poleskiego_Parku_Narodowego.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Poleski/175.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Poleski/175.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="http://www.poleskipn.pl/images/galeria//zwierzeta/17.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="http://www.poleskipn.pl/images/galeria//zwierzeta/17.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Słowiński PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/0kv2fdvqhizlsuj/Logo_S%C5%82owi%C5%84skiego_Parku_Narodowego.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/0kv2fdvqhizlsuj/Logo_S%C5%82owi%C5%84skiego_Parku_Narodowego.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Słowinski/244.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Słowinski/244.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://dinoanimals.pl/wp-content/uploads/2016/01/Mewa_1.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://dinoanimals.pl/wp-content/uploads/2016/01/Mewa_1.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Wigierski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/r87pi73iyp7s9pr/LOGO_WIGIERSKIEGO_PARKU_NARODOWEGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/r87pi73iyp7s9pr/LOGO_WIGIERSKIEGO_PARKU_NARODOWEGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Wigierski/image01.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Wigierski/image01.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="http://1.bp.blogspot.com/-hACuJUdcCRY/UzbbF7hWlmI/AAAAAAAAAL0/Nf8c0yEYngw/s1600/10153495_623062361097363_645138807_n.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="http://1.bp.blogspot.com/-hACuJUdcCRY/UzbbF7hWlmI/AAAAAAAAAL0/Nf8c0yEYngw/s1600/10153495_623062361097363_645138807_n.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Ojcowski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/65cskv6whc3kggi/Ojcowski_Park_Narodowy_LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/65cskv6whc3kggi/Ojcowski_Park_Narodowy_LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Ojcowski/Ojcowski%201/P1100703A.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Ojcowski/Ojcowski%201/P1100703A.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://naukawpolsce.pap.pl/sites/default/files/styles/strona_glowna_slider_750x420/public/202002/35097381_35097343.jpg?h=57edc7dd&itok=TctvwwSJ" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://naukawpolsce.pap.pl/sites/default/files/styles/strona_glowna_slider_750x420/public/202002/35097381_35097343.jpg?h=57edc7dd&itok=TctvwwSJ" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Babiogórski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/l5qbbicmdatvh6a/POL_Babiog%C3%B3rski_Park_Narodowy_LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/l5qbbicmdatvh6a/POL_Babiog%C3%B3rski_Park_Narodowy_LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="http://www.bgpn.pl/images/gallery/vancuver_430.jpg" id = "maskotka_image" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="http://www.bgpn.pl/images/gallery/vancuver_430.jpg" id = "maskotka_image" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://zielnik-karpacki.pl/application/images/uploads/albums/album_24/roslina_405/2450.jpeg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://zielnik-karpacki.pl/application/images/uploads/albums/album_24/roslina_405/2450.jpeg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Narwiański PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/u93zkdo5ywl4ksy/LOGO_NARWIA%C5%83SKIEGO_PARKU_NARODOWEGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/u93zkdo5ywl4ksy/LOGO_NARWIA%C5%83SKIEGO_PARKU_NARODOWEGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Narwianski/125.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Narwianski/125.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://www.turystycznapolska.pl/var/ezwebin_site/storage/images/fotogalerie/parki-narodowe-w-polsce/narwianski-park-narodowy/blotniak-stawowy/33027-1-pol-PL/Blotniak-stawowy_imagelarge.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://www.turystycznapolska.pl/var/ezwebin_site/storage/images/fotogalerie/parki-narodowe-w-polsce/narwianski-park-narodowy/blotniak-stawowy/33027-1-pol-PL/Blotniak-stawowy_imagelarge.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Biebrzański PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/qumwgnel44anf2n/POL_Biebrza%C5%84ski_Park_Narodowy_LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/qumwgnel44anf2n/POL_Biebrza%C5%84ski_Park_Narodowy_LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Biebrzanski/18.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Biebrzanski/18.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://www.biebrza.org.pl/grafika,923,fot-pawel-swiatkiewicz.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://www.biebrza.org.pl/grafika,923,fot-pawel-swiatkiewicz.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Bieszczadzki PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/8okvuhenldmump1/POL_Bieszczadzki_Park_Narodowy_LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/8okvuhenldmump1/POL_Bieszczadzki_Park_Narodowy_LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Drawienski/75.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Drawienski/75.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://www.lasy.gov.pl/++theme++lasy/cache/img/static_161112089213/ff2fa700-f3ff-41a3-a39d-6073062ecc22.jpeg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://www.lasy.gov.pl/++theme++lasy/cache/img/static_161112089213/ff2fa700-f3ff-41a3-a39d-6073062ecc22.jpeg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Drawieński PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/w12smxcl9tqqltl/POL_Drawie%C5%84ski_Park_Narodowy_LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/w12smxcl9tqqltl/POL_Drawie%C5%84ski_Park_Narodowy_LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Bieszczadzki/41.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Bieszczadzki/41.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://zpppn.pl/img/images/Bieszczadzki/rys.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://zpppn.pl/img/images/Bieszczadzki/rys.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Karkonowski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/5e0icdm8oyc798k/POL_Karkonoski_Park_Narodowy_Logo.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/5e0icdm8oyc798k/POL_Karkonoski_Park_Narodowy_Logo.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://kpnmab.pl/img/images/Geomorfo/Sniezkaa.JPG" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://kpnmab.pl/img/images/Geomorfo/Sniezkaa.JPG" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://kpnmab.pl/img/images/Flora1/Dzwonek.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://kpnmab.pl/img/images/Flora1/Dzwonek.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "PN Bory Tucholskie"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/ftq76qt4qtbbqv7/POL_Park_Narodowy__Bory_Tucholskie__LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/ftq76qt4qtbbqv7/POL_Park_Narodowy__Bory_Tucholskie__LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="http://www.pnbt.com.pl/foto/2240" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="http://www.pnbt.com.pl/foto/2240" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://epochtimes.pl/media/2019/03/2019-03-14-David_Palmer_Capercaillie_gluszec-Wikimedia_CCBY20-800x533.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://epochtimes.pl/media/2019/03/2019-03-14-David_Palmer_Capercaillie_gluszec-Wikimedia_CCBY20-800x533.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Roztoczański PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/860t5qkgdmkakf1/POL_Roztocza%C5%84ski_Park_Narodowy_LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/860t5qkgdmkakf1/POL_Roztocza%C5%84ski_Park_Narodowy_LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Roztoczanski/202.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Roztoczanski/202.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://phr.pl/wp-content/uploads/2017/11/Konik-Polski-2.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://phr.pl/wp-content/uploads/2017/11/Konik-Polski-2.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Tatrzański PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/opm4ls11y4a2obh/Tatrzanski_PN.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/opm4ls11y4a2obh/Tatrzanski_PN.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Tatrzanski/t6.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Tatrzanski/t6.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://zasoby.ekologia.pl/artykulyNew/23377/xxl/shutterstock-1675331029_800x600.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://zasoby.ekologia.pl/artykulyNew/23377/xxl/shutterstock-1675331029_800x600.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Wielkopolski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/p40ldsiygwtbhct/POL_Wielkopolski_Park_Narodowy_LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/p40ldsiygwtbhct/POL_Wielkopolski_Park_Narodowy_LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Wielkopolski/Wielkopolski%201/image14.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Wielkopolski/Wielkopolski%201/image14.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://static.wgorysowie.pl/data/articles/s4_puszczyk_zwyczajny_1549455095_70.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://static.wgorysowie.pl/data/articles/s4_puszczyk_zwyczajny_1549455095_70.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Woliński PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML = '<img src="https://dl.dropboxusercontent.com/s/cb1gwqba9orcq9l/POL_Woli%C5%84ski_Park_Narodowy_LOGO.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML = '<img src="https://dl.dropboxusercontent.com/s/cb1gwqba9orcq9l/POL_Woli%C5%84ski_Park_Narodowy_LOGO.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Wolinski/image01.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Wolinski/image01.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://www.lasy.gov.pl/pl/informacje/aktualnosci/populacja-bielika-podopiecznego-lesnikow-caly-czas-rosnie/bielik-2-antoni-kasprzak.jpg/@@images/image" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://www.lasy.gov.pl/pl/informacje/aktualnosci/populacja-bielika-podopiecznego-lesnikow-caly-czas-rosnie/bielik-2-antoni-kasprzak.jpg/@@images/image" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Świętokrzyski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/6y62ji03k9fibvy/Swietokrzyski_Park_Narodowy.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/6y62ji03k9fibvy/Swietokrzyski_Park_Narodowy.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Swietokrzyski/154.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Swietokrzyski/154.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://www.medianauka.pl/biologia/grafika/ssaki/jelen-szlachetny.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://www.medianauka.pl/biologia/grafika/ssaki/jelen-szlachetny.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Magurski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/ofgxhqw0a01ro1r/Logo_Magurskiego_Parku_Narodowego.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML= '<img src="https://dl.dropboxusercontent.com/s/ofgxhqw0a01ro1r/Logo_Magurskiego_Parku_Narodowego.png?dl=0" width = 90px height = 90px;>';
 			document.getElementById("title2").innerHTML=feature.properties.Park;
-			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Swietokrzyski/154.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo").innerHTML = '<img src="https://zpppn.pl/img/images/Swietokrzyski/154.jpg" id = "natura" width = 400px height = 250px;>';
 			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
 			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;				
 			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
-			document.getElementById("photo2").innerHTML = '<img src="https://fajnepodroze.pl/wp-content/uploads/2020/04/Orlik-krzykliwy.jpg" id = "natura" width = 450px height = 300px;>';
+			document.getElementById("photo2").innerHTML = '<img src="https://fajnepodroze.pl/wp-content/uploads/2020/04/Orlik-krzykliwy.jpg" id = "natura" width = 400px height = 250px;>';
 			})}
 },
 pointToLayer: function (feature, latlng) {
@@ -838,7 +848,7 @@ function hidden_arrow6(){
 
 
 //wyszukiwarka po nazwach obiektów w warstwach
-
+/*
 var searchControl = new L.Control.Search({
 	layer: L.featureGroup([parki, szczyty]),
 	propertyName: 'name',
@@ -882,21 +892,11 @@ searchControl.on('search:locationfound', function(e) {
 //});
 
 map.addControl( searchControl );  //inizialize search control
+*/
 
 
 
 
-//poligon cieniujący resztę świata oprócz Polski 
-var podklad_cien = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/4clbk4wvf8fkw31/reszta_swiata.json?dl=0",{onEachFeature:function forEachFeature (feature,layer){
-},style:function style(feature) {
-    return {
-		fillColor: '#111111',
-        color: '#111111',
-        opacity: 1,
-        fillOpacity: 0.7
-    };  }
-});
-podklad_cien.addTo(map);
 
 //przeźroczystość warstw rastrowych
 $(document).ready(function(){
