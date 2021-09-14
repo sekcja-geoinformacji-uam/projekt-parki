@@ -62,12 +62,6 @@
 
 
 
-
-
-
-
-
-
 <div id = "menu"> 
 	<div id="menu_narodowe" class = "selected-icon">
         <span class="info_warstwy">Parki Narodowe</span>
@@ -207,30 +201,36 @@
 	<div class = "legendy" id = "informacje_div">
 	</div>
 
-	<div class = "legendy" id = "statystyki_div">
+	<div  id = "statystyki_div">
+		<div id = "wykres_1"> 
+			<iframe width="800" height="600" frameborder="0" scrolling="no" 
+		src="https://chart-studio.plotly.com/~adryanqe/24.embed"></iframe>
+		</div>
 	</div>
 
 
-<div id = "container">
-	<div id = "title2">
-	</div>
-	<div id = "parkInfo">
-		<div id = "rok">
+	<div id = "container">
+		<div id = "title2">
 		</div>
-		<div id = "siedziba">
+		<div id = "parkInfo">
+			<div id = "title">
+			</div>
+			<div id = "rok">
+			</div>
+			<div id = "siedziba">
+			</div>
+			
 		</div>
-		<div id = "title">
+		<div id = "photo">
 		</div>
+		<div id = "symbol">
+		</div>
+		<div id = "photo2">
+		</div>
+		<input id = "close-button" type="button" value="x" onclick="document.getElementById('container').style.display='none'">
+	
 	</div>
-	<div id = "photo">
-	</div>
-	<div id = "symbol">
-	</div>
-	<div id = "photo2">
-	</div>
-	<input id = "close-button" type="button" value="x" onclick="document.getElementById('container').style.display='none'">
 
-</div>
 
 <script src="script.js"></script>
 </body>
