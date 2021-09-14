@@ -246,12 +246,12 @@ layer.on('click',function(e){
 		if (feature.properties.Park == "Kampinoski PN"){
 			layer.on('click',function(e){
 			document.getElementById("container").style.display = 'block';
-			document.getElementById("title").innerHTML = '<img src="https://dl.dropboxusercontent.com/s/v1axl831if7xrpz/Kampinoski_okragle_podstawowe.png?dl=0" width = 70px height = 70px;>';
+			document.getElementById("title").innerHTML = '<img src="https://dl.dropboxusercontent.com/s/v1axl831if7xrpz/Kampinoski_okragle_podstawowe.png?dl=0" width = 100px height = 100px;>';
 			document.getElementById("title2").innerHTML = feature.properties.Park;
 			document.getElementById("photo").innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Poland_Kampinos_April_1.jpg" id = "natura" width = 400px height = 250px;>';
-			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia:</span></br>'  + feature.properties.rok;
-			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba:</span></br>'  + feature.properties.siedziba;
-			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol:</span></br>'  + feature.properties.symbol;
+			document.getElementById("rok").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Rok założenia: </span>'  + feature.properties.rok;
+			document.getElementById("siedziba").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Siedziba: </span>'  + feature.properties.siedziba;
+			document.getElementById("symbol").innerHTML = '<span style = "text-shadow:3px 3px 2px #999; -webkit-text-stroke: 0.6px #ccc;"/>Symbol: </span>'  + feature.properties.symbol;
 			document.getElementById("photo2").innerHTML = '<img src="https://naukawpolsce.pap.pl/sites/default/files/styles/strona_glowna_slider_750x420/public/201710/13130799_13130792.jpg?itok=xj9b_AF6" id = "natura" width = 400px height = 250px;>';
 			})}
 		else if (feature.properties.Park == "Białowieski PN"){

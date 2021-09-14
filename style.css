@@ -27,77 +27,67 @@ html, body {
 	border: 2px #777 solid;
 	border-radius:20px;
 }
+#title2 {
+	width:400px;
+	height:30px;
+	margin:0 auto;
+	text-align:center;
+	font-size:30px;
+	color:#cccccc;
+	padding-top:10px;
+	font-weight:bold;
+	padding-top:30px;
+	font-family:Arial;
+}
+#parkInfo{
+	width: 400px;
+	height:auto;
+	margin:0 auto;
+}
+#rok {
+	width:200px;
+	height:40px;
+	margin-top:37px;
+	float:left;
+	color:#ddd;
+	font-family:arial;
+	font-size:20px;
+}
+#siedziba {
+	width:200px;
+	height:40px;
+	margin-top:30px;/*40*/
+	color:#ddd;
+	font-family:arial;
+	font-size:20px;/*24*/
+	/*font-weight:bold;*/
+}
+#title {
+	bottom: 22px;
+	position: relative;
+	float:right;
+}
+
+#natura {
+	border: 2px #777 solid;
+	border-radius:20px;
+}
+
 #photo {
 	width:400px;/*400px*/
 	/*height:300px;*/
 	margin-left:auto;
 	margin-right:auto;
 	/*margin-top:70px;*/
-	position:relative;
+	margin-bottom: 20px;
 	display:block;
 }
 
-#title {
-	width:100px;
-	height:100px;
-	margin-left:10px;
-	margin-top:10px;
-	background-color:#333;
-	text-align:center;
-	font-size:26px;
-	color:#cccccc;
-	padding-top:10px;
-	font-weight:bold;
-	float:left;
-}
-#title2 {
-	width:250px;
-	height:30px;
-	margin-top:10px;
-	background-color:#333;
-	text-align:center;
-	font-size:30px;
-	color:#cccccc;
-	padding-top:10px;
-	font-weight:bold;
-	float:left;
-	padding-top:30px;
-	font-family:Arial;
-}
-#natura {
-	border: 2px #777 solid;
-	border-radius:20px;
-}
-#rok {
-	width:200px;
-	height:40px;
-	margin-top:30px;/*40*/
-	margin-left:50px;
-	float:left;
-	color:#ddd;
-	text-align:center;
-	font-family:arial;
-	font-size:20px;/*24*/
-	/*font-weight:bold;*/
-}
-#siedziba {
-	width:200px;
-	height:40px;
-	margin-top:30px;/*40*/
-	float:left;
-	color:#ddd;
-	text-align:center;
-	font-family:arial;
-	font-size:20px;/*24*/
-	/*font-weight:bold;*/
-}
 #symbol {
-	width:250px;
-	height:70px;
-	margin-top:300px;/*240*/
+	width:400px;
 	color:#ddd;
 	margin:auto;
-	text-align:center;
+	text-align:left;
 	font-family:arial;
 	font-size:20px;/*24*/
 	/*font-weight:bold;*/
@@ -106,10 +96,10 @@ html, body {
 #photo2 {
 	width:400px;/*450*/
 	/*height:300px;*/
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 	margin-left:auto;
 	margin-right:auto;
-	margin-top:70px;
+	margin-top:10px;
 	position:relative;
 	display:block;
 }
