@@ -1,242 +1,595 @@
-<meta charset = "utf-8">
-<html lang = "pl">
-<head>
-<meta charset = "utf-8"/>
-<meta name = "description" content = ""/>
-<meta name = "keywords" content = ""/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Parki narodowe i krajobrazowe w Polsce</title>
+html, body {
+	margin:0;
+}
+#map{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+	display:block;
+}
+.logo:hover { 
+	width:65px!important;
+	height:65px !important;
+}
+#container {
+	width:500px;
+	top:54px;
+	bottom:0px;
+	background-color:#2e3039;
+	display:none;	
+	margin-left: 0;
+	position:absolute;
+	overflow:auto;
+	overflow-x:hidden;
+}
+#title2 {
+	width:400px;
+	height:30px;
+	margin:0 auto;
+	text-align:center;
+	font-size:30px;
+	color:#cccccc;
+	padding-top:10px;
+	font-weight:bold;
+	padding-top:30px;
+	font-family:Arial;
+}
+#parkInfo{
+	width: 400px;
+	height:120px;
+	margin:auto;
+	margin-top:30px;
+}
+#rok {
+	float:left;
+	display:block;
+	width:310px;
+	height:50px;
+	color:#ddd;
+	font-family:arial;
+	font-size:20px;
+}
+#siedziba {
+	display:block;
+	float:left;
+	width:310px;
+	height:50px;
+	margin-top:20px;/*40*/
+	color:#ddd;
+	font-family:arial;
+	font-size:20px;/*24*/
+}
+#title {
+	position:relative;
+	float:right;
+	height:120px;
+	width:90px;
+}
 
-<link rel="stylesheet" type="text/css" href="style.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
-<link rel="stylesheet" href="leaflet-search.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-  crossorigin=""/>
-<script
-	src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-    crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-    crossorigin=""></script>  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
-<script type="text/javascript" src="https://dl.dropboxusercontent.com/s/68l0y658o74eyk4/wojewodztwa.js?dl=0"></script>
-<script type="text/javascript" src="https://dl.dropboxusercontent.com/s/ilxx6pyluhhyo3r/szlaki_turystyczne.js?dl=0"></script>
-<script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-<script type="text/javascript" src="leaflet-search.js"></script>
 
 
-</head>
-<body>
-<!--
-<div id="narodowe" class = "selected-icon">
-<span class="info2">Parki Narodowe</span>
-<input type="image" src="https://png.pngtree.com/png-vector/20190418/ourlarge/pngtree-vector-poloygon-icon-png-image_950761.jpg" name="zimowe_button" class="ikona" id="narodowe_button" width=50 height=50/>
-</div>
+#natura {
+	border: 2px #777 solid;
+	border-radius:20px;
+}
 
-<div id="krajobrazowe" class = "selected-icon">
-  <span class="info2">Parki Krajobrazowe</span>
-  <input type="image" src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/tree.png" name="letnie_button" class="ikona" id="krajobrazowe_button" width=50 height=50/>
-</div>
-  
- <div id="szlaki" class = "selected-icon">
-  <span class="info2">Szlaki turystyczne</span>
-  <input type="image" src="https://dl.dropboxusercontent.com/s/ma6oijvpywdjl1o/szlaki.png?dl=0" name="szlaki1_button" class="ikona" id="szlaki_button" width=50 height=50/>
-</div>
+#photo {
+	width:400px;
+	height:300px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:10px;
+	display:block;
+}
 
-<div id="demy" class = "selected-icon">
-	<span class="info2">Ukształtowanie terenu</span>
-	<input type="image" src="https://dl.dropboxusercontent.com/s/dfcd3qgf4f2i57w/isobars.png?dl=0" name="szlaki1_button" class="ikona" id="demy_button" width=50 height=50/>
-  </div>
-
--->
-<div id = "map"></div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-
-
-
-
-<div id = "menu"> 
-	<div id="menu_narodowe" class = "selected-icon">
-        <span class="info_warstwy">Parki Narodowe</span>
-        <input type="image" src="https://dl.dropboxusercontent.com/s/i3k8gtvb4pkmqhr/park_narodowy.png?dl=0" class="menu_button" id="narodowe_button" width=25 height=25/>
-    </div>
-        
-    <div id="menu_krajobrazowe" class = "selected-icon">
-        <span class="info_warstwy">Parki Krajobrazowe</span>
-        <input type="image" src="https://dl.dropboxusercontent.com/s/eg7pcp68moc64sm/landscape.png?dl=0"  class="menu_button" id="krajobrazowe_button" width=25 height=25/>
-    </div>
-          
-    <div id="menu_szlaki" class = "selected-icon">
-        <span class="info_warstwy">Szlaki turystyczne</span>
-        <input type="image" src="https://dl.dropboxusercontent.com/s/mqtmjpkatbup5se/sign-post.png?dl=0"  class="menu_button" id="szlaki_button" width=25 height=25/>
-    </div>
-	<div id="menu_nmt" class = "selected-icon">
-		<span class="info_warstwy">Ukształtowanie terenu</span>
-		<input type="image" src="https://dl.dropboxusercontent.com/s/bekojy0u2n08ovg/dem.png?dl=0"  class="menu_button" id="nmt_button" width=25 height=25/>
-	</div>
-
-	<span id = "tytuł">Parki Narodowe</span>
-
-	<div id="menu_statystyki" class = "selected-icon">
-        <span class="info_warstwy">Statystyki</span>
-        <input type="image" src="https://dl.dropboxusercontent.com/s/ltn9p9x0ugezmmt/bar-chart.png?dl=0" class="menu_button" id="statystyki_button" width=25 height=25/>
-    </div>
-
-    <div id="menu_legenda" class = "selected-icon">
-        <span class="info_warstwy">Legenda</span>
-        <input type="image" src="https://dl.dropboxusercontent.com/s/qtp20etw67ychni/list.png?dl=0"  class="menu_button" id="legenda_button" width=25 height=25/>
-    </div>
-          
-    <div id="menu_warstwy" class = "selected-icon">
-        <span class="info_warstwy">Warstwy</span>
-        <input type="image" src="https://dl.dropboxusercontent.com/s/92k5x2cnx37qqpm/layers.png?dl=0"  class="menu_button" id="warstwy_button" width=25 height=25/>
-    </div>
-
-	<div id="menu_informacje" class = "selected-icon">
-        <span class="info_warstwy">Informacje</span>
-        <input type="image" src="https://dl.dropboxusercontent.com/s/cp1vxog4nm814n0/information-button.png?dl=0"  class="menu_button" id="informacje_button" width=25 height=25/>
-    </div>
-		
-    
+#symbol {
+	width:400px;
+	color:#ddd;
+	margin:auto;
+	text-align:left;
+	font-family:arial;
+	font-size:20px;
 	
-</div>
+}
+#photo2 {
+	width:400px;/*450*/
+	/*height:300px;*/
+	margin-bottom: 20px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:10px;
+	position:relative;
+	display:block;
+}
+#close-button {
+	background-color:#dddddd;
+	border:none;
+	border-radius:10px;
+	outline:none;
+	float:right;
+	top:10px;
+	right:10px;
+	display:block;
+	position:absolute;
+}
+#close-button:hover {
+	background-color:#aaa;
+	cursor:pointer;
+}
 
 
-	<div class = "legendy" id = "legenda_div">
-		<div class = "tytul_legendy">Legenda</div>
-		<div id = "uksztaltowanie_terenu">
-			<div id = "skala">
-				<h4> Wysokość n.p.m. (m):</h4>
-				<img id = "legenda_png" src = "https://dl.dropboxusercontent.com/s/b4at13qm56nz295/legenda_skali.png?dl=0">
-			</div>
-			<div id = "suwak">
-				<h4> Przeźroczystość NMT: <br><br><span  id = "image-opacity"></span></h4>
-				<input type = "range" id = "opacity-slider" min = '0', max = '1', value = '1', step = '0.01'>
-			</div>	
-			
+/*warstwy po lewej stronie menu*/
+#menu_narodowe{
+    position: absolute;
+    left: 10px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#narodowe_button, #krajobrazowe_button, #szlaki_button, #nmt_button {
+	border:1px solid #aaa;
+	padding:5px;
+	border-radius:5px;
+}
+#narodowe_button:focus, #krajobrazowe_button:focus, #szlaki_button:focus, #nmt_button:focus {
+    outline: 0 !important;
+}
+#narodowe_button:hover, #krajobrazowe_button:hover, #szlaki_button:hover, #nmt_button:hover {
+	opacity:0.5;
+}
+#menu_narodowe .info_warstwy, #menu_krajobrazowe .info_warstwy, #menu_szlaki .info_warstwy, #menu_nmt .info_warstwy{
+	visibility: hidden;
+	width: 180px;
+	background-color: #2e3039;
+	color: #ddd;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	opacity: 0;
+	transition: opacity 1s;
+	top: 170%;
+	left: 220%;
+	margin-left: -60px;
+	font-size:18px;
+	border:1px solid #aaa;
+	font-weight:bold;
+}
+#menu_narodowe:hover .info_warstwy, #menu_krajobrazowe:hover .info_warstwy, #menu_szlaki:hover .info_warstwy, #menu_nmt:hover .info_warstwy {
+  visibility: visible;
+  opacity: 1;
+}
+#menu_narodowe .info_warstwy::after, #menu_krajobrazowe .info_warstwy::after, #menu_szlaki .info_warstwy::after, #menu_nmt .info_warstwy::after {
+	content: " ";
+	position: absolute;
+	top:0%;  
+	right:90%;
+	transform: rotate(90deg);
+	margin-top: -12px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent #aaa transparent transparent;
+}
+#menu_krajobrazowe{
+    position: absolute;
+    left: 60px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#menu_szlaki{
+    position: absolute;
+    left: 110px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#menu_nmt{
+    position: absolute;
+    left: 160px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
 
 
 
-		</div>
-		<div id = "szlaki_turystyczne">
-			<h4> Oznaczenia szlaków turystycznych:</h4>
-		<div class = "szlak_head" onmouseover = "arrow()" onmouseout = "hidden_arrow()" onclick = "opis_rozwiniety()" >
-			<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-			<div class = "kolor_szlaku" style = 'background-color:#cc0000'> </div>
-			<div class = "nazwa_szlaku">Szlak czerwony </div>
-			<div style="clear:both;"></div>
-		</div>
-			<div id = 'opis_1' style = "display:none">Główny szlak parku narodowego - wędrówka będzie przeprowadzona przez najbardziej spektakularne oraz najciekawsze miejsca. 
-			</div>
-		<div class = "szlak_head" onmouseover = "arrow2()" onmouseout = "hidden_arrow2()"  onclick = "opis_rozwiniety2()">
-		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-			<div class = "kolor_szlaku" style = 'background-color:#e6e60a'></div>
-			<div class = "nazwa_szlaku">Szlak żółty</div>
-			<div style="clear:both;"></div>
-		</div>
-		<div id = 'opis_2' style = "display:none">Krótki szlak łączący dwa różne miejsca (szlak dojściowy).
-			</div>
-		<div class = "szlak_head" onmouseover = "arrow3()" onmouseout = "hidden_arrow3()"  onclick = "opis_rozwiniety3()">
-		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-			<div class = "kolor_szlaku" style = 'background-color:#00802b'></div>
-			<div class = "nazwa_szlaku">Szlak zielony</div>
-			<div style="clear:both;"></div>
-		</div>
-		<div id = 'opis_3' style = "display:none">Szlak wyznaczający najkrótszą drogę do najbardziej charakterystycznych miejsc regionu.
-			</div>
-		<div class = "szlak_head" onmouseover = "arrow4()" onmouseout = "hidden_arrow4()"  onclick = "opis_rozwiniety4()">
-		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-			<div class = "kolor_szlaku" style = 'background-color:#0086b3'></div>
-			<div class = "nazwa_szlaku">Szlak niebieski</div>
-			<div style="clear:both;"></div>
-		</div>
-		<div id = 'opis_4' style = "display:none">Dalekobieżny szlak wymagający pokonania długiej, pieszej trasy.
-			</div>
-		<div class = "szlak_head" onmouseover = "arrow5()" onmouseout = "hidden_arrow5()"  onclick = "opis_rozwiniety5()">
-		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-			<div class = "kolor_szlaku" style = 'background-color:#111'></div>
-			<div class = "nazwa_szlaku">Szlak czarny</div>
-			<div style="clear:both;"></div>
-		</div>
-		<div id = 'opis_5' style = "display:none">Krótka trasa dojściowa 
-			</div>
-		<div class = "szlak_head" onmouseover = "arrow6()" onmouseout = "hidden_arrow6()"  onclick = "opis_rozwiniety6()">
-		<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
-			<div class = "kolor_szlaku" style = 'background-color:#888881'></div>
-			<div class = "nazwa_szlaku">Pozostałe szlaki</div>
-			<div style="clear:both;"></div>
-		</div>
+/*warstwy po prawej stronie menu*/
 
-		<div id = 'opis_6' style = "display:none">Trasy nieprzyporządkowane żadnemu oznaczeniu.</div>
-			
-		</div>
+#menu_statystyki{
+    position: absolute;
+    right: 10px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
 
-		
-		<div id = "turystyka"></div>
-	</div>
+#statystyki_button, #legenda_button, #warstwy_button, #informacje_button {
+	border:1px solid #aaa;
+	padding:5px;
+	border-radius:5px;
+}
+#statystyki_button:focus, #legenda_button:focus, #warstwy_button:focus, #informacje_button:focus {
+    outline: 0 !important;
+}
+#statystyki_button:hover, #legenda_button:hover, #warstwy_button:hover, #informacje_button:hover {
+	opacity:0.5;
+}
+#menu_statystyki .info_warstwy, #menu_legenda .info_warstwy, #menu_warstwy .info_warstwy, #menu_informacje .info_warstwy{
+	visibility: hidden;
+	width: 180px;
+	background-color: #2e3039;
+	color: #ddd;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	opacity: 0;
+	-moz-transition: all 0.6s ease-in-out;
+	-o-transition: all 0.6s ease-in-out;
+	-webkit-transition: all 0.6s ease-in-out;
+	transition: all 0.6s ease-in-out;
+	top: 170%;
+	right: 190%;
+	margin-right: -60px;
+	font-size:18px;
+	border:1px solid #aaa;
+	font-weight:bold;
+}
+#menu_statystyki:hover .info_warstwy, #menu_legenda:hover .info_warstwy, #menu_warstwy:hover .info_warstwy, #menu_informacje:hover .info_warstwy {
+  visibility: visible;
+  opacity: 1;
+  z-index:1000;
+}
+#menu_statystyki .info_warstwy::after, #menu_legenda .info_warstwy::after, #menu_warstwy .info_warstwy::after, #menu_informacje .info_warstwy::after{
+	content: " ";
+	position: absolute;
+	top:0%;  
+	left:90%;
+	transform: rotate(90deg);
+	margin-top: -12px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent #aaa transparent transparent;
+}
+#menu_legenda{
+    position: absolute;
+    right: 60px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#menu_warstwy{
+    position: absolute;
+    right: 110px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
+#menu_informacje{
+    position: absolute;
+    right: 160px;
+	top:7.5px;
+	width:30px;
+	height:30px;
+}
 
-	<div class = "legendy" id = "warstwy_div">
-		<div class = "tytul_legendy">Mapy bazowe</div>
-		<div id = "mapa_bazowa_1">
-			<img class = "mapy_bazowe" src = "https://dl.dropboxusercontent.com/s/71ucysw9ls8ekad/podklad_osm.png?dl=0">
-		</div>
-
-		<div id = "nazwa_mapy_1">OpenStreetMap</div>
-		
-		<div id = "mapa_bazowa_2">
-			<img class = "mapy_bazowe" src = "https://dl.dropboxusercontent.com/s/qhpavzl6bl9u7zl/podklad_satelita.png?dl=0">
-		</div>
-		
-		<div id = "nazwa_mapy_2">Satelita</div>
-		
-		<div id = "mapa_bazowa_3">
-			<img class = "mapy_bazowe" src = "https://dl.dropboxusercontent.com/s/ogaiwse4a4v6lk4/podklad_rzezba.png?dl=0">
-		</div>
-		
-		<div id = "nazwa_mapy_3">Rzeźba terenu</div>
-	</div>
-
-	<div class = "legendy" id = "informacje_div">
-	</div>
-
-	<div  id = "statystyki_div">
-		<div id = "wykres_1"> 
-			<iframe width="800" height="600" frameborder="0" scrolling="no" 
-		src="https://chart-studio.plotly.com/~adryanqe/24.embed"></iframe>
-		</div>
-	</div>
-
-
-	<div id = "container">
-		<div id = "title2">
-		</div>
-		<div id = "parkInfo">
-			<div id = "title">
-			</div>
-			<div id = "rok">
-			</div>
-			<div id = "siedziba">
-			</div>
-			
-		</div>
-		<div id = "photo">
-		</div>
-		<div id = "symbol">
-		</div>
-		<div id = "photo2">
-		</div>
-		<input id = "close-button" type="button" value="x" onclick="document.getElementById('container').style.display='none'">
+.leaflet-popup-content-wrapper{
+	background-color:#333!important;
+	color:#eee!important;
+	border: 2px solid #222;
 	
-	</div>
+}
+.leaflet-popup-tip {
+	background-color:#2e3039!important;
+}
 
 
-<script src="script.js"></script>
-</body>
-</html>
+.tytul_legendy {
+	width:326px;
+	margin-bottom:10px;
+	height:25px;
+	text-align:center;
+	font-weight:bold;
+	font-size:16px;
+	font-family:'Trebuchet MS', sans-serif;
+	color:#2e3039;
+	padding-top:10px;
+	background-color:#ddd;
+	border:2px #111 solid;
+}
+.kolor_szlaku {
+	float:left;
+	width:70px;
+	height:10px;
+	margin-top:15px;
+	margin-bottom:10px;
+	margin-left:15px;
+	border-radius:10px;
+	border:2px #111 solid;
+	box-shadow:5px 5px 5px #666;
+}
+.nazwa_szlaku {
+	float:left;
+	width:220px;
+	height:20px;
+	margin-top:15px;
+	margin-bottom:10px;
+	font-size:16px;
+	text-align:center;
+	text-shadow:2px 2px #555;
+}
+.szlak_head {
+	border:1.5px #222 dotted;
+}
+.szlak_head:hover {
+	background-color:#444!important;
+	cursor:pointer;
+}
+
+#opis_1 {
+	height:80px;
+	padding:10px;
+	text-align:justify;
+	background-color:#1d2028;
+}
+#opis_2 {
+	height:40px;
+	padding:10px;
+	text-align:justify;
+	background-color:#1d2028;
+}
+#opis_3 {
+	height:60px;
+	padding:10px;
+	text-align:justify;
+	background-color:#1d2028;
+}
+#opis_4 {
+	height:40px;
+	padding:10px;
+	text-align:justify;
+	background-color:#1d2028;
+}
+#opis_5 {
+	height:30px;
+	padding:10px;
+	text-align:justify;
+	background-color:#1d2028;
+}
+#opis_6 {
+	height:30px;
+	padding:10px;
+	text-align:justify;
+	background-color:#1d2028;
+}
+
+
+::-webkit-scrollbar-track
+{
+	display:none
+}
+::-webkit-scrollbar
+{
+	width: 10px;
+}
+::-webkit-scrollbar-thumb
+{
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, #779999),
+									   color-stop(0.72, #85adad),
+									   color-stop(0.86, #a3c2c2));
+									   border-radius:30%;
+}
+
+.arrow {
+	position:absolute; 
+	right:10px;
+	margin-top:10px;
+	display:none;
+}
+.arrow_up {
+	position:absolute; 
+	right:10px;
+	margin-top:10px;
+	display:none;
+}
+
+#menu {
+	display:block;
+	top:0;
+	width:100%;
+	height:52px;
+	background-color:#2e3039;
+	text-align:center;
+	color:#cccccc;
+	font-size:24px;
+	position:absolute;
+	font-family:'Trebuchet MS', sans-serif;
+	border-bottom:2px #ddd solid;
+}
+#tytuł {
+	padding-top:10px;
+	display:block;
+}
+
+.leaflet-control-search {
+	top:500px;
+}
+
+.legendy {
+	height:660px;
+	width:330px;
+	right:5px;
+	position:absolute;
+	display:block;
+	top:55px;
+	opacity:0;
+	visibility:hidden;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	background-color:#2e3039;
+	border:1px solid #888;
+	color:#ddd;
+	overflow:auto;
+	overflow-x: hidden;
+	font-family:'Trebuchet MS', sans-serif;
+}
+
+#mapa_bazowa_1 {
+	width:330px;
+	height:150px;
+	display:block;	
+	text-align:center;
+}
+#nazwa_mapy_1 {
+	width:330px;
+	height:20px;
+	display:block;
+	text-align:center;	
+	margin-top:5px;
+	font-family:'Trebuchet MS', sans-serif;
+}
+#mapa_bazowa_2 {
+	width:330px;
+	height:150px;
+	display:block;
+	text-align:center;	
+	margin-top:20px;
+}
+#nazwa_mapy_2 {
+	width:330px;
+	height:20px;
+	display:block;	
+	text-align:center;
+	margin-top:5px;
+	font-family:'Trebuchet MS', sans-serif;
+}
+#mapa_bazowa_3 {
+	width:330px;
+	height:150px;
+	display:block;	
+	text-align:center;
+	margin-top:20px;
+}
+#nazwa_mapy_3 {
+	width:330px;
+	height:20px;
+	display:block;	
+	text-align:center;
+	margin-top:5px;
+	font-family:'Trebuchet MS', sans-serif;
+}
+.mapy_bazowe {
+	width:200px;
+	height:144px;
+	border:2px #111 solid;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	overflow:hidden;
+	border-radius:25px;
+	box-shadow: 0 0 0.7em #aaa;
+}
+.mapy_bazowe:hover {
+	cursor:pointer;
+	opacity:0.6;
+}
+
+#szlaki_turystyczne {
+	display:none;
+	width:330px;
+	height:320px;
+	text-align:center;
+}
+
+#uksztaltowanie_terenu {
+	display:none;
+	width:330px;
+	height:730px;
+}
+
+#skala {
+	display:block;
+	width:330px;
+	height:580px;
+	text-align:center;
+}
+#legenda_png {
+	width:142px;
+	height:512px;
+}
+#suwak {
+	display:block;
+	width:330px;
+	height:170px;
+	text-align:center;
+	margin-top:20px;
+}
+#statystyki_div {
+	height:600px;
+	width:800px;
+	position:absolute;
+	display:block;
+	opacity:0;
+	visibility:hidden;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	background-color:#2e3039;
+	border:1px solid #888;
+	color:#ddd;
+	overflow:auto;
+	overflow-x: hidden;
+	font-family:'Trebuchet MS', sans-serif;
+    top: 50%;
+    left: 50%;
+    margin-top: -300px;
+    margin-left: -400px;
+	border:1.5px #ddd solid;
+}​
+
+
+#wykres_1 {
+	margin:auto;
+	display:block;
+	width:800px;
+	height:600px;
+}
+
+#opacity-slider {
+	-webkit-appearance: none;
+	width: 250px;
+	height: 8px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+	margin-left:15px;
+	margin-top:10px;
+}
+#opacity-slider:hover {
+	opacity: 1;
+}
+#opacity-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 25px;
+	height: 25px;
+	background: #13995c;
+	cursor: pointer;
+  }
+  #opacity-slider::-moz-range-thumb {
+	width: 25px;
+	height: 25px;
+	background: #13995c;
+	cursor: pointer;
+  }
