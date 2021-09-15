@@ -105,8 +105,7 @@
     </div>
 		
     
-		<!--<h4> Przeźroczystość ukształtowania terenu: <span id = "image-opacity"></span></h4> 
-	<input type = "range" id = "opacity-slider" min = '0', max = '1', step = '0.1', value = '1'>-->
+	
 </div>
 
 
@@ -114,14 +113,20 @@
 		<div class = "tytul_legendy">Legenda</div>
 		<div id = "uksztaltowanie_terenu">
 			<div id = "skala">
-				<img src = "https://dl.dropboxusercontent.com/s/b4at13qm56nz295/legenda_skali.png?dl=0" width = "142px" height = "512px">
+				<h4> Wysokość n.p.m. (m):</h4>
+				<img id = "legenda_png" src = "https://dl.dropboxusercontent.com/s/b4at13qm56nz295/legenda_skali.png?dl=0">
 			</div>
-
+			<div id = "suwak">
+				<h4> Przeźroczystość NMT: <br><br><span  id = "image-opacity"></span></h4>
+				<input type = "range" id = "opacity-slider" min = '0', max = '1', value = '1', step = '0.01'>
+			</div>	
+			
 
 
 
 		</div>
 		<div id = "szlaki_turystyczne">
+			<h4> Oznaczenia szlaków turystycznych:</h4>
 		<div class = "szlak_head" onmouseover = "arrow()" onmouseout = "hidden_arrow()" onclick = "opis_rozwiniety()" >
 			<span class = 'arrow'>&#10549;</span><span class = 'arrow_up'>&#10548;</span>
 			<div class = "kolor_szlaku" style = 'background-color:#cc0000'> </div>
