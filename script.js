@@ -209,7 +209,7 @@ var MyIcon = L.icon({
     popupAnchor:  [-3, -20] // point from which the popup should open relative to the iconAnchor
 });
 
-
+/*
 var szczyty = new L.GeoJSON.AJAX("https://dl.dropboxusercontent.com/s/fbiqsw93wyrzosv/szczyty.json?dl=0",{onEachFeature:function (feature,layer) {
 	if (feature.properties.name != null){
 layer.bindPopup('<h2>'+feature.properties.name +'</h2>')
@@ -233,7 +233,7 @@ szczyty.on('data:loaded', function () {
     map.addLayer(markery);
 });
 
-
+*/
 
 
 
@@ -696,9 +696,6 @@ var warstwa_ujscie_warty = L.imageOverlay('https://dl.dropboxusercontent.com/s/b
 
 var warstwa_wielkopolski = L.imageOverlay('https://dl.dropboxusercontent.com/s/8ntmxu4bbh7m4ey/wielkopolski.png?dl=0', [[52.3381915, 16.6286550], [52.2206600, 16.9301937]])
 
-
-
-
 var warstwa_bialowieski = L.imageOverlay('https://dl.dropboxusercontent.com/s/2u27ilz6aujuax6/bialowieski.png?dl=0', [[52.8234587, 23.7066286], [52.694406, 23.953721]])
 
 var warstwa_bory_tucholskie = L.imageOverlay('https://dl.dropboxusercontent.com/s/i68jpevqu0pb4iy/bory_tucholskie.png?dl=0', [[53.85891643, 17.43980335], [53.7259034, 17.6275328]])
@@ -713,11 +710,20 @@ var warstwa_wolinski = L.imageOverlay('https://dl.dropboxusercontent.com/s/st3mv
 
 var warstwa_narwianski = L.imageOverlay('https://dl.dropboxusercontent.com/s/zeal4kztfaps95g/narwianski.png?dl=0', [[53.1508457, 22.7667435], [52.94717258, 22.99291044]])
 
+var warstwa_kampinoski = L.imageOverlay('https://dl.dropboxusercontent.com/s/pdde49niwik86st/kampinoski.png?dl=0', [[52.4333343, 20.2272876], [52.2501970, 20.9153294]])
+
+var warstwa_bieszczadzki = L.imageOverlay('https://dl.dropboxusercontent.com/s/yr2bundrmeys257/bieszczadzki.png?dl=0', [[49.2440371, 22.3974499], [48.9949267, 22.9238512]])
+
+var warstwa_magurski = L.imageOverlay('https://dl.dropboxusercontent.com/s/53cn37m083tbzmr/magurski.png?dl=0', [[49.656019, 21.244965], [49.410191, 21.668609]])
+
+
+
 
 //zgrupowanie wszystkich warstw rastrowych w jedną zmienną
 var warstwa_nmt = L.layerGroup([warstwa_gory_stolowe, warstwa_karkonoski, warstwa_gorczanski, warstwa_tatrzanski, warstwa_pieninski, 
 	warstwa_babiogorski, warstwa_ojcowski, warstwa_poleski, warstwa_roztoczanski, warstwa_ujscie_warty, warstwa_wielkopolski, warstwa_swietokrzyski,
-	warstwa_bialowieski, warstwa_bory_tucholskie, warstwa_narwianski, warstwa_wolinski, warstwa_slowinski, warstwa_drawienski, warstwa_wigierski]);
+	warstwa_bialowieski, warstwa_bory_tucholskie, warstwa_narwianski, warstwa_wolinski, warstwa_slowinski, warstwa_drawienski, warstwa_wigierski, warstwa_kampinoski, 
+	warstwa_bieszczadzki, warstwa_magurski]);
 
 
 //wyswietlanie opisow szlakow po nakliknieciu
@@ -921,6 +927,9 @@ $(document).ready(function(){
 	warstwa_slowinski.setOpacity(this.value);
 	warstwa_drawienski.setOpacity(this.value);
 	warstwa_wigierski.setOpacity(this.value);
+	warstwa_kampinoski.setOpacity(this.value);
+	warstwa_bieszczadzki.setOpacity(this.value);
+	warstwa_magurski.setOpacity(this.value);
 	})
 });
 
@@ -947,10 +956,12 @@ document.getElementById("menu_szlaki").addEventListener("click", function(){
 	if(!(map.hasLayer(warstwa_szlaki))){
 		warstwa_szlaki.addTo(map);
 		document.getElementById("szlaki_turystyczne").style.display = "block";
+		document.getElementById("uksztaltowanie_terenu").style.borderBottom= "3px #aaa dashed";
 	}
 	else if(map.hasLayer(warstwa_szlaki)){
 	map.removeLayer(warstwa_szlaki);
 	document.getElementById("szlaki_turystyczne").style.display = "none";
+	document.getElementById("uksztaltowanie_terenu").style.borderBottom= "none";
 }})
 
 document.getElementById("menu_nmt").addEventListener("click", function(){
