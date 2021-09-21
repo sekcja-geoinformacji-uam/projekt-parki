@@ -986,11 +986,13 @@ document.getElementById("menu_legenda").addEventListener("click", function(){
 		document.getElementById("statystyki_div").style.visibility = 'hidden';
 		document.getElementById("legenda_div").style.opacity = '0.95';
 	}
-		else{
+	else if (document.getElementById("legenda_div").style.visibility == 'visible'){
 			document.getElementById("legenda_div").style.visibility = 'hidden';
 			document.getElementById("legenda_div").style.opacity = '0';
-		}
-	});
+	}
+});
+
+
 //ukazanie odpowiedniej legendy, w zależności czy włączona jest turystyka, szlaki turystyczne lub ukształtowanie terenu
 
 
