@@ -421,7 +421,7 @@ html, body {
 }
 
 .legendy {
-	height:660px;
+	bottom:5px;
 	width:330px;
 	right:5px;
 	position:absolute;
