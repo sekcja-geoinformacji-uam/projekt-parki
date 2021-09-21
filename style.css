@@ -507,12 +507,14 @@ html, body {
 	width:330px;
 	height:320px;
 	text-align:center;
+	display:none;
 }
 
 #uksztaltowanie_terenu {
 	display:none;
 	width:330px;
 	height:730px;
+	display:none;
 }
 
 #skala {
