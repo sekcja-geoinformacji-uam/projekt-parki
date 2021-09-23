@@ -423,7 +423,7 @@ html, body {
 	bottom:0px;
 	position:absolute;
 	display:block;
-	top:50px;
+	top:55px;
 	opacity:0;
 	visibility:hidden;
 	text-align:center;
@@ -532,7 +532,7 @@ html, body {
 }
 #statystyki_div {
 	height:600px;
-	width:800px;
+	width:1000px;
 	position:absolute;
 	display:block;
 	opacity:0;
@@ -547,18 +547,24 @@ html, body {
 	overflow:auto;
 	overflow-x: hidden;
 	font-family:'Trebuchet MS', sans-serif;
-    top: 50%;
+    top: 52.5%;
     left: 50%;
     margin-top: -300px;
-    margin-left: -400px;
+    margin-left: -500px;
 	border:1.5px #ddd solid;
 }​
 
 
-#wykres_1 {
+.wykres_1 {
 	margin:auto;
 	display:block;
-	width:800px;
+	width:1000px;
+	height:600px;
+	border-bottom:3px #aaa solid;
+}
+.wykres {
+	margin:auto;
+	width:1000px;
 	height:600px;
 }
 
@@ -616,9 +622,10 @@ a:hover {
 	display:block;
 }
 #logo_sekcji{
-	width:187px;
-	height:221px;
+	width:170px;
+	height:201px;
 	display:block;
 	margin:auto;
 	margin-bottom:-10px;
 }
+
